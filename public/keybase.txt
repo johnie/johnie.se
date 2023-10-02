@@ -1,0 +1,74 @@
+==================================================================
+https://keybase.io/johnie
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of http://johnie.se
+  * I am johnie (https://keybase.io/johnie) on keybase.
+  * I have a public key with fingerprint A42B C411 5BAC 7FE1 5728  150A A84A 4594 6E00 E128
+
+To do so, I am signing this object:
+
+{
+    "body": {
+        "key": {
+            "fingerprint": "a42bc4115bac7fe15728150aa84a45946e00e128",
+            "host": "keybase.io",
+            "key_id": "a84a45946e00e128",
+            "kid": "01015dc5e2761b3775bb468be7a9e9f148a601f820f46b47476959936931ee20816d0a",
+            "uid": "3fef3195df9c2333126a488d5238c219",
+            "username": "johnie"
+        },
+        "revoke": {
+            "sig_ids": [
+                "4ad4c8fbcb00b11b30f035584a1c9ddc634dcc3fae2ddac04e32b92f555696a30f"
+            ]
+        },
+        "service": {
+            "hostname": "johnie.se",
+            "protocol": "http:"
+        },
+        "type": "web_service_binding",
+        "version": 1
+    },
+    "ctime": 1430559543,
+    "expire_in": 157680000,
+    "prev": "975a44837e1442530524dc62e12f2047bfa3bf7ee88513847e65bbb441093460",
+    "seqno": 6,
+    "tag": "signature"
+}
+
+which yields the signature:
+
+-----BEGIN PGP MESSAGE-----
+Version: Keybase OpenPGP v2.0.8
+Comment: https://keybase.io/crypto
+
+yMJgAnicZZJdaBVHFMdv4kdoQowalBD0ZYyk1kuY7929KKYa81DQFk1V0HA7szub
+rGl2b/Z+aBojWPADDIpINaaiGLFVEYIifariR2JRI2pbTN68qTQtpEi8GB9UbGeD
+fSidl2Fm/ud3/uecGSyfESstiv/21/5HebSn6P7N49nY5w3fGl1ABk4nSHSBNjW9
+uZ7fosJU6PkZkACCYmlThJgUtuEqxAxsIgaFMKmgzKJcQagQNkEctAbpKEJjpEir
+Oi/Qd/qQ9JyI83992/QDRBAxx2YKGxxJYhhMSspNqQxhKctF1BQcItfE0KVcUoMa
+3GKWRbhFkFIYmog7UGhcdhpHXOUSZDHHtWxMCEGYC2qaDsPEtDGyImFahb5oV1q9
+PWj1PQW64yBUuaBNRfWnvRZtOQ0SWwEVDrVNV9oSQom0O+hCwpguBdmW49icUMe2
+iSsUdhxhQ6oIlhZ2GWPc4kLLQbNm63w5z56GRz36T+66tNKWUmGQCezgS33dmsmk
+EpGjTGcqku1QMvkekJSe7+jp6ICcCtNe4IME0ko740VERAlkzGKUxIHamfJClfQi
+BTO4CfWK0qicRloGE5SaxFCIUsx0FNZ1cKzn4mJIDekKIl1DKdNkiJjUUFwPRVKK
+oEUohyAqqcMPQIJrm6JFI3XTfJHJhrqXt25smxkrKo3NnlUc/a9Y6Qdz//113XbJ
+38lDP3+6882p0aZX1Xc/3L0onzi39/TLHyrdo10Hl52YOVhzbHi4obJvpHy8ujB6
+4Mn5urN94JffL5QdLvzYu/Bu1Z3OK7cLK88MPQ2Xvovzy5OPxto3z3g29+viZ4vK
+yk42DN9bOrhy6KuRLVO7RlK925573ww1VxRypy+vrr7U9esAflzw/PsT39dc3NT8
+U132Zf5gx4bx+qZ1T463L5jf2DpQm+v9c9WVj65dn0p8Ur++/7Oj5emFG2pYZdnk
+xLz5N968Huvl/edXH8kuqcrfKQnn7FvQX9nTdvXi2qCidk+++NpYz4vF3y2rbppX
+M9BTklzzxcPuigctjSsa3256Xv8Him/cPPp6+cf/ACGOP6Y=
+=U3Ra
+-----END PGP MESSAGE-----
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/johnie
+
+==================================================================
+

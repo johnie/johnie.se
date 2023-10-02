@@ -1,113 +1,158 @@
-import Image from 'next/image'
+import Image from 'next/image';
+import { Logo } from '@/components/logo';
+import { LucideGithub, LucideLinkedin, LucideInstagram, LucideMail } from 'lucide-react';
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <main className="mx-auto">
+      <div className="md:max-w-[460px] m-6 md:m-20 text-neutral-700 dark:text-neutral-300">
+        <div className="flex gap-x-4">
+          <div className="flex flex-col">
+            <div className="my-8">
+              <Logo />
+            </div>
+            <h1 className="mt-[6px]">
+              <span className="font-semibold">Johnie Hjelm</span> is committed to developing individuals and teams for success.
+            </h1>
+            <p className="leading-[25px] mt-8 text-neutral-500 dark:text-neutral-400">
+              Since my teens, I&lsquo;ve been immersed in both design and coding, refusing to be pigeonholed into a single specialty. I&lsquo;ve thrived as a Jack of all Trades in
+              various teams, dabbling in everything from graphic and digital design to front and backend development, as well as product and API strategy.
+            </p>
+            <p className="leading-[25px] mt-8 text-neutral-500 dark:text-neutral-400">
+              Beyond tech, I&lsquo;m passionate about effective team leadership and smart work practices. I believe that a team&lsquo;s well-being is central to smooth operations
+              and that while ideas spark innovation, it&lsquo;s execution that drives success.
+            </p>
+            <div className="flex -ml-2 mt-6 items-center">
+              <a href="mailto:johnie@hjelm.im" className="p-3 rounded-[13px] hover:bg-neutral-50 dark:hover:bg-neutral-900 border-none text-neutral-400 dark:text-neutral-400">
+                <LucideMail className="h-[18px] w-[18px] text-current" />
+              </a>
+              <a href="https://github.com/johnie" className="p-3 rounded-[13px] hover:bg-neutral-50 dark:hover:bg-neutral-900 border-none text-neutral-400 dark:text-neutral-400">
+                <LucideGithub className="h-[18px] w-[18px] text-current" />
+              </a>
+              <a
+                href="https://linkedin.com/in/johniehjelm"
+                className="p-3 rounded-[13px] hover:bg-neutral-50 dark:hover:bg-neutral-900 border-none text-neutral-400 dark:text-neutral-400"
+              >
+                <LucideLinkedin className="h-[18px] w-[18px] text-current" />
+              </a>
+              <a
+                href="https://instagram.com/johnie"
+                className="p-3 rounded-[13px] hover:bg-neutral-50 dark:hover:bg-neutral-900 border-none text-neutral-400 dark:text-neutral-400"
+              >
+                <LucideInstagram className="h-[18px] w-[18px] text-current" />
+              </a>
+            </div>
+            <h3 className="mt-10 text-sm text-neutral-400 mb-2 lowercase">Work</h3>
+            <a className="flex gap-x-4 px-4 -mx-4 pt-4 rounded-[12px] border-none hover:bg-neutral-50 dark:hover:bg-neutral-900 group" href="https://bambuser.com">
+              <div className="bg-neutral-100 dark:bg-neutral-800 w-[36px] h-[36px] rounded-full mt-[2px] flex-shrink-0 shadow-shorter overflow-hidden">
+                <div className="text-sm text-neutral-400 font-semibold flex justify-center items-center h-full">
+                  <Image src={'/bambuser.png'} alt="Bambuser logo" loading="lazy" width="36" height="36" decoding="async" data-nimg="1" className="w-[36px] h-[36px]" />
+                </div>
+              </div>
+              <div className="flex flex-col text-sm border-b border-neutral-100 dark:border-neutral-900  flex-auto  pb-4 text-neutral-700 group-hover:border-transparent dark:text-neutral-300">
+                <div>Bambuser</div>
+                <div className="text-neutral-500 dark:text-neutral-500 flex justify-between gap-x-2 items-center">
+                  <div>Technical Lead Manager</div>
+                  <div className="text-neutral-400 dark:text-neutral-500 tabular-nums">2021 – Now</div>
+                </div>
+              </div>
+            </a>
+            <a className="flex gap-x-4 px-4 -mx-4 pt-4 rounded-[12px] border-none hover:bg-neutral-50 dark:hover:bg-neutral-900 group" href="https://mrgreen.com">
+              <div className="bg-neutral-100 dark:bg-neutral-800 w-[36px] h-[36px] rounded-full mt-[2px] flex-shrink-0 shadow-shorter overflow-hidden">
+                <div className="text-sm text-neutral-400 font-semibold flex justify-center items-center h-full">
+                  <Image src={'/mrgreen.png'} alt="Mr Green logo" loading="lazy" width="36" height="36" decoding="async" data-nimg="1" className="w-[36px] h-[36px]" />
+                </div>
+              </div>
+              <div className="flex flex-col text-sm border-b border-neutral-100 dark:border-neutral-900  flex-auto  pb-4 text-neutral-700 group-hover:border-transparent dark:text-neutral-300">
+                <div>Mr Green – Gametek</div>
+                <div className="text-neutral-500 dark:text-neutral-500 flex justify-between gap-x-2 items-center">
+                  <div>Fullstack Developer & Technical Lead</div>
+                  <div className="text-neutral-400 dark:text-neutral-500 tabular-nums">2018 – 2020</div>
+                </div>
+              </div>
+            </a>
+            <a className="flex gap-x-4 px-4 -mx-4 pt-4 rounded-[12px] border-none hover:bg-neutral-50 dark:hover:bg-neutral-900 group" href="https://cloudnine.se">
+              <div className="bg-neutral-100 dark:bg-neutral-800 w-[36px] h-[36px] rounded-full mt-[2px] flex-shrink-0 shadow-shorter overflow-hidden">
+                <div className="text-sm text-neutral-400 font-semibold flex justify-center items-center h-full">
+                  <Image src={'/cloudnine.png'} alt="Cloudnine logo" loading="lazy" width="36" height="36" decoding="async" data-nimg="1" className="w-[36px] h-[36px]" />
+                </div>
+              </div>
+              <div className="flex flex-col text-sm border-b border-neutral-100 dark:border-neutral-900  flex-auto  pb-4 text-neutral-700 group-hover:border-transparent dark:text-neutral-300">
+                <div>Cloudnine</div>
+                <div className="text-neutral-500 dark:text-neutral-500 flex justify-between gap-x-2 items-center">
+                  <div>Senior Software Engineer</div>
+                  <div className="text-neutral-400 dark:text-neutral-500 tabular-nums">2016 – 2018</div>
+                </div>
+              </div>
+            </a>
+            <a className="flex gap-x-4 px-4 -mx-4 pt-4 rounded-[12px] border-none hover:bg-neutral-50 dark:hover:bg-neutral-900 group" href="https://symbio.com">
+              <div className="bg-neutral-100 dark:bg-neutral-800 w-[36px] h-[36px] rounded-full mt-[2px] flex-shrink-0 shadow-shorter overflow-hidden">
+                <div className="text-sm text-neutral-400 font-semibold flex justify-center items-center h-full">
+                  <Image src={'/symbio.png'} alt="Symbio logo" loading="lazy" width="36" height="36" decoding="async" data-nimg="1" className="w-[36px] h-[36px]" />
+                </div>
+              </div>
+              <div className="flex flex-col text-sm border-b border-transparent  flex-auto  pb-4 text-neutral-700 group-hover:border-transparent dark:text-neutral-300">
+                <div>Symbio Sweden</div>
+                <div className="text-neutral-500 dark:text-neutral-500 flex justify-between gap-x-2 items-center">
+                  <div>Fullstack Developer</div>
+                  <div className="text-neutral-400 dark:text-neutral-500 tabular-nums">2013 – 2016</div>
+                </div>
+              </div>
+            </a>
+            <h3 className="mt-10 text-sm text-neutral-400 mb-2 lowercase">Projects</h3>
+            <a className="flex gap-x-4 px-4 -mx-4 pt-4 rounded-[12px] border-none hover:bg-neutral-50 dark:hover:bg-neutral-900 group" href="https://crip.io">
+              <div className="bg-neutral-100 dark:bg-neutral-800 w-[36px] h-[36px] rounded-[10px] mt-[2px] flex-shrink-0 shadow-shorter overflow-hidden">
+                <div className="text-sm text-neutral-400 font-semibold flex justify-center items-center h-full">
+                  <Image src={'/crip.png'} alt="Crip in Tech logo" loading="lazy" width="36" height="36" decoding="async" className="w-[36px] h-[36px]" />
+                </div>
+              </div>
+              <div className="flex flex-col text-sm border-b border-neutral-100 dark:border-neutral-900  flex-auto  pb-4 text-neutral-700 group-hover:border-transparent dark:text-neutral-300">
+                <div>Crip in Tech</div>
+                <div className="text-neutral-500 dark:text-neutral-500 flex justify-between gap-x-2 items-center">
+                  <div>Incubator for crips in tech</div>
+                  <div className="bg-neutral-100 border border-black border-opacity-5 px-2 text-xs rounded-full dark:bg-neutral-800 dark:text-neutral-500">web</div>
+                </div>
+              </div>
+            </a>
+            <a className="flex gap-x-4 px-4 -mx-4 pt-4 rounded-[12px] border-none hover:bg-neutral-50 dark:hover:bg-neutral-900 group" href="https://alcocheck.se">
+              <div className="bg-neutral-100 dark:bg-neutral-800 w-[36px] h-[36px] rounded-[10px] mt-[2px] flex-shrink-0 shadow-shorter overflow-hidden">
+                <div className="text-sm text-neutral-400 font-semibold flex justify-center items-center h-full">
+                  <Image src={'/alcocheck.png'} alt="Crip in Tech logo" loading="lazy" width="36" height="36" decoding="async" className="w-[36px] h-[36px]" />
+                </div>
+              </div>
+              <div className="flex flex-col text-sm border-b border-neutral-100 dark:border-neutral-900  flex-auto  pb-4 text-neutral-700 group-hover:border-transparent dark:text-neutral-300">
+                <div>Alcocheck</div>
+                <div className="text-neutral-500 dark:text-neutral-500 flex justify-between gap-x-2 items-center">
+                  <div>Breathalyzer notfication system</div>
+                  <div className="bg-neutral-100 border border-black border-opacity-5 px-2 text-xs rounded-full dark:bg-neutral-800 dark:text-neutral-500">web</div>
+                </div>
+              </div>
+            </a>
+            <a className="flex gap-x-4 px-4 -mx-4 pt-4 rounded-[12px] border-none hover:bg-neutral-50 dark:hover:bg-neutral-900 group" href="https://allaraknas.se">
+              <div className="bg-neutral-100 dark:bg-neutral-800 w-[36px] h-[36px] rounded-[10px] mt-[2px] flex-shrink-0 shadow-shorter overflow-hidden">
+                <div className="text-sm text-neutral-400 font-semibold flex justify-center items-center h-full">
+                  <Image src={'/allaraknas.png'} alt="Crip in Tech logo" loading="lazy" width="36" height="36" decoding="async" className="w-[36px] h-[36px]" />
+                </div>
+              </div>
+              <div className="flex flex-col text-sm  flex-auto  pb-4 text-neutral-700 group-hover:border-transparent dark:text-neutral-300">
+                <div>#allaräknas</div>
+                <div className="text-neutral-500 dark:text-neutral-500 flex justify-between gap-x-2 items-center">
+                  <div>Campaign for equal medical treament</div>
+                  <div className="bg-neutral-100 border border-black border-opacity-5 px-2 text-xs rounded-full dark:bg-neutral-800 dark:text-neutral-500">web</div>
+                </div>
+              </div>
+            </a>
+            <div className="text-sm flex items-center text-neutral-400 mt-8 mb-4">
+              <div className="animate-ping rounded-full bg-green-400 h-[8px] w-[8px] inline-block mr-2 absolute"></div>
+              <div className="rounded-full bg-green-400 h-[8px] w-[8px] inline-block mr-2"></div>Actively looking for new projects.{' '}
+              <a href="mailto:johnie@hjelm.im" className="border-b border-neutral-400">
+                Get in touch!
+              </a>
+            </div>
+            <h3 className="mt-20 text-sm text-neutral-400 mb-2">© {new Date().getFullYear().toString()} Johnie Hjelm.</h3>
+          </div>
         </div>
       </div>
-
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore the Next.js 13 playground.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
     </main>
-  )
+  );
 }
