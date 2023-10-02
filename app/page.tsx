@@ -144,7 +144,7 @@ export default function Home() {
             </a>
             <div className="text-sm flex items-center text-neutral-400 mt-8 mb-4">
               <div className="animate-ping rounded-full bg-green-400 h-[8px] w-[8px] inline-block mr-2 absolute"></div>
-              <div className="rounded-full bg-green-400 h-[8px] w-[8px] inline-block mr-2"></div>Actively looking for new projects.{' '}
+              <div className="rounded-full bg-green-400 h-[8px] w-[8px] inline-block mr-2"></div>{'Actively looking for new projects. '}
               <a href="mailto:johnie@hjelm.im" className="border-b border-neutral-400">
                 Get in touch!
               </a>
