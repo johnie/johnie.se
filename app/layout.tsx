@@ -7,6 +7,7 @@ import Navigation from '@/components/nav';
 import { Footer } from '@/components/footer';
 import { Toaster } from 'sonner';
 import { CMD } from '@/components/cmd';
+import Link from 'next/link';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -52,7 +53,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <div>
             <div className="flex flex-col w-full">
               <div className="py-8 md:py-16 grid grid-cols-2 items-center text-neutral-700 dark:text-neutral-300">
-                <Logo fill="currentColor" />
+                <Link href="/" rel="home">
+                  <Logo fill="currentColor" />
+                </Link>
                 <Navigation />
               </div>
               <main role="main">{children}</main>

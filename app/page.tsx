@@ -1,7 +1,8 @@
-import { allWorks, allProjects } from '@/.contentlayer/generated';
+import { allWorks, allProjects, allPosts } from '@/.contentlayer/generated';
 import { WorkExperience } from '@/components/work';
 import { Projects } from '@/components/projects';
 import { SocialLinks } from '@/components/socialLinks';
+import { LatestWriting } from '@/components/latestWriting';
 
 export default function Home() {
   return (
@@ -18,6 +19,8 @@ export default function Home() {
         that while ideas spark innovation, it&lsquo;s execution that drives success.
       </p>
       <SocialLinks />
+      <h3 className="mt-10 text-xl text-neutral-700 dark:text-neutral-200 mb-2">Latest Writing</h3>
+      <LatestWriting items={allPosts} amount={2} />
       <h3 className="mt-10 text-xl text-neutral-700 dark:text-neutral-200 mb-2">Work</h3>
       <WorkExperience items={allWorks} />
       <h3 className="mt-10 text-xl text-neutral-700 dark:text-neutral-200 mb-2">Projects</h3>

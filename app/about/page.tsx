@@ -98,7 +98,7 @@ const About = () => {
           <span className="text-neutral-800 dark:text-neutral-200">4 years of Next.js:</span> Extensive experience in front-end and back-end technologies.
         </li>
         <li>
-          <span className="text-neutral-800 dark:text-neutral-200">5 years working with server-side JavaScript:</span> (Node + Express), REST APIs, and PostgreSQL databases.
+          <span className="text-neutral-800 dark:text-neutral-200">+8 years working with server-side JavaScript:</span> (Node + Express), REST APIs, and PostgreSQL databases.
         </li>
         <li>
           <span className="text-neutral-800 dark:text-neutral-200">Recent experience with Svelte:</span> Always staying updated with the latest technologies.
