@@ -1,10 +1,12 @@
+import * as React from 'react';
+
 type LogoProps = {
-  width: number;
-  height: number;
+  width?: number;
+  height?: number;
   fill?: string;
 };
 
-const Logo = ({ width, height, fill }: LogoProps) => {
+const Logo: React.FC<LogoProps> = ({ width, height, fill }: LogoProps) => {
   return (
     <svg width={width} height={height} viewBox="0 0 795 792">
       <g clipPath="url(#clip0)">

@@ -1,0 +1,70 @@
+[
+  {
+    "company": "Bambuser",
+    "role": "Technical Lead Manager",
+    "url": "https://bambuser.com/",
+    "startYear": 2021,
+    "present": true,
+    "image": "/bambuser.png",
+    "_id": "work/bambuser.yml",
+    "_raw": {
+      "sourceFilePath": "work/bambuser.yml",
+      "sourceFileName": "bambuser.yml",
+      "sourceFileDir": "work",
+      "contentType": "data",
+      "flattenedPath": "work/bambuser"
+    },
+    "type": "Work"
+  },
+  {
+    "company": "Cloudnine",
+    "role": "Senior Software Engineer",
+    "url": "https://cloudnine.se/",
+    "startYear": 2016,
+    "endYear": 2018,
+    "image": "/cloudnine.png",
+    "_id": "work/cloudnine.yml",
+    "_raw": {
+      "sourceFilePath": "work/cloudnine.yml",
+      "sourceFileName": "cloudnine.yml",
+      "sourceFileDir": "work",
+      "contentType": "data",
+      "flattenedPath": "work/cloudnine"
+    },
+    "type": "Work"
+  },
+  {
+    "company": "Mr Green – Gametek",
+    "role": "Fullstack Developer & Technical Lead",
+    "url": "https://mrgreen.com/",
+    "startYear": 2018,
+    "endYear": 2020,
+    "image": "/mrgreen.png",
+    "_id": "work/mrgreen.yml",
+    "_raw": {
+      "sourceFilePath": "work/mrgreen.yml",
+      "sourceFileName": "mrgreen.yml",
+      "sourceFileDir": "work",
+      "contentType": "data",
+      "flattenedPath": "work/mrgreen"
+    },
+    "type": "Work"
+  },
+  {
+    "company": "Symbio Sweden",
+    "role": "Fullstack Developer",
+    "url": "https://symbio.com/",
+    "startYear": 2013,
+    "endYear": 2016,
+    "image": "/symbio.png",
+    "_id": "work/symbio.yml",
+    "_raw": {
+      "sourceFilePath": "work/symbio.yml",
+      "sourceFileName": "symbio.yml",
+      "sourceFileDir": "work",
+      "contentType": "data",
+      "flattenedPath": "work/symbio"
+    },
+    "type": "Work"
+  }
+]

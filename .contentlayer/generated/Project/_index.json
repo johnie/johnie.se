@@ -1,0 +1,53 @@
+[
+  {
+    "name": "Alcocheck",
+    "description": "Breathalyzer notification system",
+    "url": "https://alcocheck.se/",
+    "projectType": "web",
+    "image": "/alcocheck.png",
+    "order": 2,
+    "_id": "projects/alcocheck.yml",
+    "_raw": {
+      "sourceFilePath": "projects/alcocheck.yml",
+      "sourceFileName": "alcocheck.yml",
+      "sourceFileDir": "projects",
+      "contentType": "data",
+      "flattenedPath": "projects/alcocheck"
+    },
+    "type": "Project"
+  },
+  {
+    "name": "#allaräknas",
+    "description": "Campaign for equal medical treament",
+    "url": "https://allaraknas.se/",
+    "projectType": "web",
+    "image": "/allaraknas.png",
+    "order": 3,
+    "_id": "projects/allaraknas.yml",
+    "_raw": {
+      "sourceFilePath": "projects/allaraknas.yml",
+      "sourceFileName": "allaraknas.yml",
+      "sourceFileDir": "projects",
+      "contentType": "data",
+      "flattenedPath": "projects/allaraknas"
+    },
+    "type": "Project"
+  },
+  {
+    "name": "Crip in Tech",
+    "description": "Incubator for crips in tech",
+    "url": "https://crip.io/",
+    "projectType": "web",
+    "image": "/crip.png",
+    "order": 1,
+    "_id": "projects/crip-in-tech.yml",
+    "_raw": {
+      "sourceFilePath": "projects/crip-in-tech.yml",
+      "sourceFileName": "crip-in-tech.yml",
+      "sourceFileDir": "projects",
+      "contentType": "data",
+      "flattenedPath": "projects/crip-in-tech"
+    },
+    "type": "Project"
+  }
+]
