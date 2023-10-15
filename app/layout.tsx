@@ -1,13 +1,14 @@
 import './globals.css';
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { Inter } from 'next/font/google';
+import { Analytics } from '@vercel/analytics/react';
+import { Toaster } from 'sonner';
 import { cn } from '@/lib/utils';
 import { Logo } from '@/components/logo';
 import Navigation from '@/components/nav';
 import { Footer } from '@/components/footer';
-import { Toaster } from 'sonner';
 import { CMD } from '@/components/cmd';
-import Link from 'next/link';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -65,6 +66,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </div>
         <Toaster richColors />
         <CMD />
+        <Analytics />
       </body>
     </html>
   );
