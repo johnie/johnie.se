@@ -4,5 +4,6 @@ import deClutterYourInboxOrganizeYourNewslettersWithInstapaperMdx from './de-clu
 import habitsOfHighlySuccessfulPeopleMdx from './habits-of-highly-successful-people.mdx.json' assert { type: 'json' }
 import myPersonalProductivityPracticesMdx from './my-personal-productivity-practices.mdx.json' assert { type: 'json' }
 import theRealSecretToASuccessfulSoftwareEngineeringCareerMdx from './the-real-secret-to-a-successful-software-engineering-career.mdx.json' assert { type: 'json' }
+import leadingWithEfficiencyAutomateEliminateDelegateMdx from './leading-with-efficiency-automate-eliminate-delegate.mdx.json' assert { type: 'json' }
 
-export const allPosts = [deClutterYourInboxOrganizeYourNewslettersWithInstapaperMdx, habitsOfHighlySuccessfulPeopleMdx, myPersonalProductivityPracticesMdx, theRealSecretToASuccessfulSoftwareEngineeringCareerMdx]
+export const allPosts = [deClutterYourInboxOrganizeYourNewslettersWithInstapaperMdx, habitsOfHighlySuccessfulPeopleMdx, myPersonalProductivityPracticesMdx, theRealSecretToASuccessfulSoftwareEngineeringCareerMdx, leadingWithEfficiencyAutomateEliminateDelegateMdx]

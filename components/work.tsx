@@ -14,7 +14,7 @@ export const WorkExperience = ({ items }: { items: Work[] }) => {
           <a
             key={work._id}
             href={work.url}
-            className="flex gap-x-4 px-4 -mx-4 pt-4 rounded-[12px] border-none hover:bg-neutral-50 dark:hover:bg-neutral-900 group"
+            className="flex gap-x-4 px-4 -mx-4 pt-4 rounded-[12px] border-none hover:bg-neutral-50 dark:hover:bg-neutral-900 group transition-colors ease"
             target="_blank"
             rel="noopener noreferrer"
           >

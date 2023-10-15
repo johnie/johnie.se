@@ -82,7 +82,7 @@ export default function Navigation() {
             );
           })}
         </div>
-        <button className="text-sm text-muted-foreground ml-2 mt-2 cursor-pointer group" onClick={() => setCmd(true)}>
+        <button className="text-sm text-muted-foreground ml-2 mt-2 cursor-pointer group hidden md:block" onClick={() => setCmd(true)}>
           <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100 group-hover:bg-neutral-300 group-hover:dark:bg-neutral-700 transition-colors ease">
             <span className="text-xs">⌘</span>K
           </kbd>
