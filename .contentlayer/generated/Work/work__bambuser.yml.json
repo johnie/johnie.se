@@ -1,0 +1,17 @@
+{
+  "company": "Bambuser",
+  "role": "Technical Lead Manager",
+  "url": "https://bambuser.com/",
+  "startYear": 2021,
+  "present": true,
+  "image": "/bambuser.png",
+  "_id": "work/bambuser.yml",
+  "_raw": {
+    "sourceFilePath": "work/bambuser.yml",
+    "sourceFileName": "bambuser.yml",
+    "sourceFileDir": "work",
+    "contentType": "data",
+    "flattenedPath": "work/bambuser"
+  },
+  "type": "Work"
+}

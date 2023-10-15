@@ -1,0 +1,17 @@
+{
+  "company": "Cloudnine",
+  "role": "Senior Software Engineer",
+  "url": "https://cloudnine.se/",
+  "startYear": 2016,
+  "endYear": 2018,
+  "image": "/cloudnine.png",
+  "_id": "work/cloudnine.yml",
+  "_raw": {
+    "sourceFilePath": "work/cloudnine.yml",
+    "sourceFileName": "cloudnine.yml",
+    "sourceFileDir": "work",
+    "contentType": "data",
+    "flattenedPath": "work/cloudnine"
+  },
+  "type": "Work"
+}
