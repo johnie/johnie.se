@@ -53,22 +53,21 @@ export default function Navigation() {
   return (
     <LayoutGroup>
       <nav className="flex flex-row items-center justify-end relative px-0 pb-0 fade md:relative" role="navigation">
-        <div className="flex flex-row space-x-0">
+        <div className="flex flex-row space-x-2">
           {NAV_LINKS.filter((i) => Boolean(i.enabled)).map(({ href, name }) => {
             const isActive = href === pathname;
             return (
               <Link
                 key={href}
                 href={href}
-                className={clsx('transition-all hover:text-neutral-800 dark:hover:text-neutral-200 flex align-middle ease', {
-                  'text-neutral-500 dark:text-neutral-400': !isActive,
+                className={clsx('transition-all flex align-middle ease', {
+                  'text-muted-foreground dark:text-muted-foreground': !isActive,
                 })}
               >
-                <span className="relative py-1 px-2 mx-2">
-                  {name}
+                <span className="relative py-1 px-3">
                   {href === pathname ? (
                     <motion.div
-                      className="absolute h-[2px] top-7 mx-2 inset-0 bg-neutral-800 dark:bg-neutral-200"
+                      className="absolute h-full inset-0 bg-neutral-200 dark:bg-muted rounded-md shadow-md border-t-2 border-neutral-100 dark:border-neutral-700"
                       layoutId="sidebar"
                       transition={{
                         type: 'spring',
@@ -77,6 +76,7 @@ export default function Navigation() {
                       }}
                     />
                   ) : null}
+                  <span className="z-1 relative">{name}</span>
                 </span>
               </Link>
             );

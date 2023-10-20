@@ -50,7 +50,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body className={cn('flex', inter.className)}>
-        <div className="mx-auto w-full md:max-w-[680px] text-neutral-700 dark:text-neutral-300 p-4">
+        <div className="mx-auto w-full md:max-w-[680px] text-neutral-700 dark:text-neutral-300 px-4">
           <div>
             <div className="flex flex-col w-full">
               <div className="py-8 md:py-16 grid grid-cols-2 items-center text-neutral-700 dark:text-neutral-300">
