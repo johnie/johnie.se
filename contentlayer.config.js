@@ -148,6 +148,7 @@ export default makeSource({
         rehypePrettyCode,
         {
           theme: JSON.parse(readFileSync(new URL('../../../themes/will.json', import.meta.url))),
+          keepBackground: false,
           onVisitLine(node) {
             if (node.children.length === 0) {
               node.children = [{ type: 'text', value: ' ' }];
