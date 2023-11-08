@@ -3,10 +3,6 @@ const { withContentlayer } = require('next-contentlayer');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    serverActions: true,
-    // mdxRs: true,
-  },
   images: {
     formats: ['image/avif', 'image/webp'],
   },
