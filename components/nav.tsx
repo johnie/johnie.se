@@ -53,7 +53,7 @@ export default function Navigation() {
   return (
     <LayoutGroup>
       <nav className="flex flex-row items-center justify-end relative px-0 pb-0 fade md:relative" role="navigation">
-        <div className="flex flex-row space-x-2">
+        <div className="flex flex-row space-x-2 bg-black p-1 rounded-lg text-sm">
           {NAV_LINKS.filter((i) => Boolean(i.enabled)).map(({ href, name }) => {
             const isActive = href === pathname;
             return (
@@ -67,7 +67,7 @@ export default function Navigation() {
                 <span className="relative py-1 px-3">
                   {href === pathname ? (
                     <motion.div
-                      className="absolute h-full inset-0 bg-neutral-200 dark:bg-muted rounded-md shadow-md border-t-2 border-neutral-100 dark:border-neutral-700"
+                      className="absolute h-full inset-0 bg-neutral-200 dark:bg-muted rounded-md"
                       layoutId="sidebar"
                       transition={{
                         type: 'spring',
@@ -82,7 +82,7 @@ export default function Navigation() {
             );
           })}
         </div>
-        <button className="text-sm text-muted-foreground ml-2 mt-2 cursor-pointer group hidden md:block" onClick={() => setCmd(true)}>
+        <button className="text-sm text-muted-foreground ml-2 cursor-pointer group hidden md:block" onClick={() => setCmd(true)}>
           <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100 group-hover:bg-neutral-300 group-hover:dark:bg-neutral-700 transition-colors ease">
             <span className="text-xs">⌘</span>K
           </kbd>
