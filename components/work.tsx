@@ -31,7 +31,9 @@ export const WorkExperience = ({ items }: { items: Work[] }) => {
               <div>{work.company}</div>
               <div className="text-neutral-500 dark:text-neutral-500 flex justify-between gap-x-2 items-center">
                 <div>{work.role}</div>
-                <div className="text-neutral-400 dark:text-neutral-500 tabular-nums">2021 – {work?.present ? 'Now' : work.endYear}</div>
+                <div className="text-neutral-400 dark:text-neutral-500 tabular-nums">
+                  {work.startYear} – {work?.present ? 'Now' : work.endYear}
+                </div>
               </div>
             </div>
           </a>
