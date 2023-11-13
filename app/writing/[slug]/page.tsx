@@ -46,7 +46,7 @@ export default async function Post({ params }: any) {
   }
 
   return (
-    <section>
+    <section className="content-grid">
       <script type="application/ld+json" suppressHydrationWarning>
         {JSON.stringify(post.structuredData)}
       </script>

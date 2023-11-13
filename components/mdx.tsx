@@ -30,7 +30,7 @@ type CustomImageProps = ImageProps & {
 };
 
 const RoundedImage: React.FC<CustomImageProps> = ({ alt, ...props }) => {
-  return <Image alt={props.alt} className="rounded-lg" {...props} />;
+  return <Image alt={props.alt} className="rounded-lg breakout" {...props} />;
 };
 
 interface CalloutProps {
