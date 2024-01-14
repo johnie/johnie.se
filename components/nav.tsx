@@ -53,7 +53,7 @@ export default function Navigation() {
   return (
     <LayoutGroup>
       <nav className="flex flex-row items-center justify-end relative px-0 pb-0 fade md:relative" role="navigation">
-        <div className="flex flex-row space-x-2 bg-black p-1 rounded-lg text-sm">
+        <div className="flex flex-row space-x-2 bg-neutral-50 dark:bg-black p-1 rounded-lg text-sm">
           {NAV_LINKS.filter((i) => Boolean(i.enabled)).map(({ href, name }) => {
             const isActive = href === pathname;
             return (
