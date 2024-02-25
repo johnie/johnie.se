@@ -134,6 +134,9 @@ export const Project = defineDocumentType(() => ({
     order: {
       type: 'number',
     },
+    active: {
+      type: 'boolean',
+    },
   },
 }));
 

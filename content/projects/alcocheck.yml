@@ -4,3 +4,4 @@ url: https://alcocheck.se/
 projectType: web
 image: /alcocheck.svg
 order: 2
+active: false
