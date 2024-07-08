@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { allPosts } from 'contentlayer/generated';
+import { allPosts } from '@/.contentlayer/generated';
 import { format } from 'date-fns';
 
 export const metadata: Metadata = {
@@ -15,8 +15,9 @@ export default async function BlogPage() {
         Stories. Updates. Guides.
       </h1>
       <p className="leading-[25px] mb-8 text-neutral-500 dark:text-neutral-400">
-        Here you&lsquo;ll find all the <span className="text-neutral-900 dark:text-neutral-200">{allPosts.length}</span> articles on my thoughts on software development,
-        leadership, tech career, and more. I&lsquo;ll also share updates on my projects and other things I&lsquo;m working on.
+        Here you&lsquo;ll find all the <span className="text-neutral-900 dark:text-neutral-200">{allPosts.length}</span>{' '}
+        articles on my thoughts on software development, leadership, tech career, and more. I&lsquo;ll also share
+        updates on my projects and other things I&lsquo;m working on.
       </p>
       <div>
         {allPosts
@@ -35,7 +36,9 @@ export default async function BlogPage() {
               <div className="w-full flex flex-col">
                 <p className="text-neutral-900 dark:text-neutral-100 tracking-tight">{post.title}</p>
                 <div className="flex items-center">
-                  <p className="text-sm text-neutral-600 dark:text-neutral-400">{format(new Date(post.publishedAt), 'dd MMMM, yyyy')}</p>
+                  <p className="text-sm text-neutral-600 dark:text-neutral-400">
+                    {format(new Date(post.publishedAt), 'dd MMMM, yyyy')}
+                  </p>
                   <span className="mx-4 text-sm text-neutral-600 dark:text-neutral-400">•</span>
                   <p className="text-sm text-neutral-600 dark:text-neutral-400">{post.readingTime}</p>
                 </div>
