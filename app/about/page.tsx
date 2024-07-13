@@ -29,7 +29,7 @@ const About = () => {
         </div>
         <div className="md:col-span-2 col-span-3">
           <p className="leading-[25px] text-neutral-500 dark:text-neutral-400">
-            <span className="text-neutral-800 dark:text-neutral-200">Hey, I&#39;m Johnie Hjelm!</span> 31 years old,
+            <span className="text-neutral-800 dark:text-neutral-200">Hey, I&#39;m Johnie Hjelm!</span> 32 years old,
             currently living in Solna, Stockholm with my beloved{' '}
             <a href="https://izabela.se" target="_blank" rel="noopener noreferrer">
               girlfriend
