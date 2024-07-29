@@ -2,7 +2,7 @@ import { allPages } from 'content-collections';
 import { Mdx } from '@/components/mdx';
 
 const Uses = () => {
-  const usesPage = allPages.find((page) => page._raw.flattenedPath === 'page/uses');
+  const usesPage = allPages.find((page) => page._meta.path === 'uses');
   return (
     <div>
       <h1 className="text-3xl bg-clip-text text-transparent bg-gradient-to-r from-neutral-800 to-neutral-500 dark:from-neutral-100 dark:to-neutral-400 font-semibold mb-8">
@@ -13,7 +13,7 @@ const Uses = () => {
         This not a static page, it&lsquo;s a <span className="text-neutral-200">living document</span> with everything
         that I&lsquo;m using nowadays.
       </p>
-      <Mdx code={usesPage?.body.code as string} />
+      <Mdx code={usesPage?.mdx as string} />
     </div>
   );
 };
