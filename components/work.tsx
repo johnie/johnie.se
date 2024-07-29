@@ -1,4 +1,4 @@
-import { type Work } from '@/.contentlayer/generated';
+import { type Work } from 'content-collections';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
 
@@ -20,13 +20,25 @@ export const WorkExperience = ({ items }: { items: Work[] }) => {
           >
             <div className="bg-neutral-100 dark:bg-neutral-800 w-[36px] h-[36px] rounded-full mt-[2px] flex-shrink-0 shadow-shorter overflow-hidden">
               <div className="text-sm text-neutral-400 font-semibold flex justify-center items-center h-full">
-                <Image src={work.image as string} alt={`${work.company} logo`} loading="lazy" width="36" height="36" decoding="async" data-nimg="1" className="w-[36px] h-[36px]" />
+                <Image
+                  src={work.image as string}
+                  alt={`${work.company} logo`}
+                  loading="lazy"
+                  width="36"
+                  height="36"
+                  decoding="async"
+                  data-nimg="1"
+                  className="w-[36px] h-[36px]"
+                />
               </div>
             </div>
             <div
-              className={cn('flex flex-col text-sm flex-auto pb-4 text-neutral-700 group-hover:border-transparent dark:text-neutral-300', {
-                'border-b border-neutral-100 dark:border-neutral-900': index + 1 !== length,
-              })}
+              className={cn(
+                'flex flex-col text-sm flex-auto pb-4 text-neutral-700 group-hover:border-transparent dark:text-neutral-300',
+                {
+                  'border-b border-neutral-100 dark:border-neutral-900': index + 1 !== length,
+                }
+              )}
             >
               <div>{work.company}</div>
               <div className="text-neutral-500 dark:text-neutral-500 flex justify-between gap-x-2 items-center">
