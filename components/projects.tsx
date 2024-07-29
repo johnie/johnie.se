@@ -1,4 +1,4 @@
-import { type Project } from '@/.contentlayer/generated';
+import { type Project } from 'content-collections';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
 
