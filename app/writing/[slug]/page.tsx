@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { format } from 'date-fns';
 import { notFound } from 'next/navigation';
-import { allPosts } from 'contentlayer/generated';
+import { allPosts } from 'content-collections';
 import Balancer from 'react-wrap-balancer';
 import { Mdx } from '@/components/mdx';
 
@@ -54,10 +54,12 @@ export default async function Post({ params }: any) {
         <Balancer>{post.title}</Balancer>
       </h1>
       <div className="flex justify-between items-center mt-2 mb-8 text-sm">
-        <p className="text-sm text-neutral-600 dark:text-neutral-400">{format(new Date(post.publishedAt), 'dd MMMM, yyyy')}</p>
+        <p className="text-sm text-neutral-600 dark:text-neutral-400">
+          {format(new Date(post.publishedAt), 'dd MMMM, yyyy')}
+        </p>
         <p className="text-sm text-neutral-600 dark:text-neutral-400">{post.readingTime}</p>
       </div>
-      <Mdx code={post.body.code} />
+      <Mdx code={post.mdx} />
     </section>
   );
 }
