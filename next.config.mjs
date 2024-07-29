@@ -1,5 +1,5 @@
-const { get } = require('@vercel/edge-config');
-const { withContentlayer } = require('next-contentlayer');
+import { get } from '@vercel/edge-config';
+import { withContentCollections } from '@content-collections/next';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -64,4 +64,4 @@ const securityHeaders = [
   },
 ];
 
-module.exports = withContentlayer(nextConfig);
+export default withContentCollections(nextConfig);
