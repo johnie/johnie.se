@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Link from 'next/link';
 import Image, { ImageProps } from 'next/image';
-import { useMDXComponent } from 'next-contentlayer/hooks';
+import { useMDXComponent } from '@content-collections/mdx/react';
 import type { MDXComponents } from 'mdx/types';
 
 interface CustomLinkProps {
