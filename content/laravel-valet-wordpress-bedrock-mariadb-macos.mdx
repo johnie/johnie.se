@@ -1,0 +1,115 @@
+---
+title: Setting Up Laravel Valet with WordPress Bedrock and MariaDB on MacOS
+summary: Learn how to set up a fast and lightweight local development environment for WordPress using Laravel Valet, Bedrock, and MariaDB on macOS. This step-by-step guide covers everything from installation to configuration.
+publishedAt: "2024-08-26"
+---
+
+Laravel Valet provides a fast and lightweight local development environment for WordPress on macOS. This tutorial will guide you through setting up Valet with Bedrock, a modern WordPress boilerplate, and MariaDB.
+
+### Prerequisites
+
+Before starting, ensure you have the following installed:
+
+- MacOS
+- Homebrew
+- Composer
+
+### Step 1: Install PHP and MariaDB
+
+First, install PHP and MariaDB using Homebrew:
+
+```bash
+brew install php
+brew install mariadb
+```
+
+Start MariaDB and enable it to start on boot:
+
+```bash
+brew services start mariadb
+```
+
+### Step 2: Install Composer and Valet
+
+Install Composer globally if you haven't already:
+
+```bash
+brew install composer
+```
+
+Now install Laravel Valet:
+
+```bash
+composer global require laravel/valet
+valet install
+```
+
+### Step 3: Install WP-CLI and Valet Plugin
+
+Install WP-CLI and the Valet plugin:
+
+```bash
+brew install wp-cli
+wp package install aaemnnosttv/wp-cli-valet-command:^1.0
+```
+
+### Step 4: Create a New Bedrock Project
+
+Navigate to your preferred directory and create a new Bedrock project:
+
+```bash
+composer create-project roots/bedrock your-project-name
+cd your-project-name
+```
+
+### Step 5: Configure Valet
+
+Park Valet in your project directory:
+
+```bash
+valet park
+```
+
+Your site should now be accessible at `http://your-project-name.test`.
+
+### Step 6: Set Up the Database
+
+Create a new database for your project:
+
+```bash
+mysql -uroot -e "CREATE DATABASE your_database_name"
+```
+
+### Step 7: Configure Bedrock
+
+Edit the `.env` file in your project root and update the database settings:
+
+```
+DB_NAME=your_database_name
+DB_USER=root
+DB_PASSWORD=
+```
+
+### Step 8: Install WordPress
+
+Use WP-CLI to install WordPress:
+
+```bash
+wp core install --url=http://your-project-name.test --title="Your Site Title" --admin_user=admin --admin_password=your_password --admin_email=your@email.com
+```
+
+### Step 9: Secure Your Site (Optional)
+
+To use HTTPS locally, run:
+
+```bash
+valet secure your-project-name
+```
+
+Your site will now be accessible at `https://your-project-name.test`.
+
+## Conclusion
+
+You now have a local WordPress development environment using Laravel Valet, Bedrock, and MariaDB. This setup provides a fast, lightweight solution for WordPress development on macOS.
+
+Remember to run `valet park` in any new directories where you want to serve sites, and use `valet link` for individual projects outside of parked directories.
