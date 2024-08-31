@@ -47,9 +47,26 @@ export default async function Post({ params }: any) {
 
   return (
     <section>
-      <script type="application/ld+json" suppressHydrationWarning>
-        {JSON.stringify(post.structuredData)}
-      </script>
+      <script
+        type="application/ld+json"
+        suppressHydrationWarning
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'BlogPosting',
+            headline: post.title,
+            datePublished: post.publishedAt,
+            dateModified: post.lastModified,
+            description: post.summary,
+            image: post.image ? `https://johnie.se${post.image}` : `https://johnie.se/og?title=${post.title}`,
+            url: `https://johnie.se/writing/${post.slug}`,
+            author: {
+              '@type': 'Person',
+              name: 'Johnie Hjelm',
+            },
+          }),
+        }}
+      />
       <h1 className="text-3xl bg-clip-text text-transparent bg-gradient-to-r from-neutral-800 to-neutral-500 dark:from-neutral-100 dark:to-neutral-400 font-bold tracking-tighter">
         <Balancer>{post.title}</Balancer>
       </h1>
