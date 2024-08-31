@@ -87,6 +87,7 @@ const Post = defineCollection({
       .transform<string>((value) => new Date(value).toISOString()),
     summary: z.string().optional(),
     image: z.string().optional(),
+    leading: z.boolean().optional().default(false),
   }),
   transform: async (document, context) => {
     const mdx = await compileMDX(context, document, mdxOptions);

@@ -49,7 +49,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={cn('flex', inter.className)}>
+      <body className={cn('flex antialiased', inter.className)}>
         <div className="mx-auto w-full md:max-w-[680px] text-neutral-700 dark:text-neutral-300 px-4">
           <div>
             <div className="flex flex-col w-full">
