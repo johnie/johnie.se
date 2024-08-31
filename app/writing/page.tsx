@@ -38,13 +38,11 @@ export default async function BlogPage() {
             >
               <div className="w-full flex flex-col space-y-1">
                 <p className="text-neutral-900 dark:text-neutral-100 tracking-tight leading-snug">{post.title}</p>
-                <div className="flex items-center">
-                  <p className="text-sm text-neutral-600 dark:text-neutral-400">
-                    {format(new Date(post.publishedAt), 'dd MMMM, yyyy')}
-                  </p>
-                  <span className="mx-4 text-sm text-neutral-600 dark:text-neutral-400">•</span>
-                  <p className="text-sm text-neutral-600 dark:text-neutral-400">{post.readingTime}</p>
-                  <span className="mx-4 text-sm text-neutral-600 dark:text-neutral-400">•</span>
+                <div className="flex items-center text-sm text-neutral-600 dark:text-neutral-400 gap-3">
+                  <p>{format(new Date(post.publishedAt), 'dd MMMM, yyyy')}</p>
+                  <span>•</span>
+                  <p>{post.readingTime}</p>
+                  <span>•</span>
                   <Suspense fallback={<p className="h-4" />}>
                     <Views slug={post.slug} />
                   </Suspense>

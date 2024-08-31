@@ -90,12 +90,10 @@ export default async function Post({ params }: any) {
       <h1 className="text-3xl bg-clip-text text-transparent bg-gradient-to-r from-neutral-800 to-neutral-500 dark:from-neutral-100 dark:to-neutral-400 font-bold tracking-tighter title">
         {post.title}
       </h1>
-      <div className="flex justify-between items-center mt-2 mb-8 text-sm">
-        <p className="text-sm text-neutral-600 dark:text-neutral-400">
-          {format(new Date(post.publishedAt), 'dd MMMM, yyyy')}
-        </p>
+      <div className="flex justify-between items-center mt-2 mb-8 text-sm text-neutral-600 dark:text-neutral-400">
+        <p>{format(new Date(post.publishedAt), 'dd MMMM, yyyy')}</p>
         <div className="flex gap-2">
-          <p className="text-sm text-neutral-600 dark:text-neutral-400">{post.readingTime}</p>
+          <p>{post.readingTime}</p>
           <span>•</span>
           <Suspense fallback={<p className="h-5" />}>
             <Views slug={post.slug} />
