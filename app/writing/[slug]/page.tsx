@@ -74,7 +74,7 @@ export default async function Post({ params }: any) {
       />
       <Link
         href="/writing"
-        className="text-neutral-600 dark:text-neutral-500 font-semibold text-sm mb-4 relative inline-block -ml-5 hover:text-neutral-700 dark:hover:text-neutral-400 transition-colors duration-150"
+        className="text-neutral-600 dark:text-neutral-500 font-semibold text-sm mb-4 relative inline-block hover:text-neutral-700 dark:hover:text-neutral-400 transition-colors duration-150"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
