@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+::selection {
+  background-color: #4c527c;
+  color: #fefefe;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -196,6 +201,12 @@ table {
 
 .prose .callout > p {
   margin: 0 !important;
+}
+
+.leadertext > p:first-of-type {
+  font-size: 1.1rem;
+  line-height: 1.4;
+  @apply dark:text-neutral-50 text-neutral-950;
 }
 
 [data-rehype-pretty-code-fragment] code {
