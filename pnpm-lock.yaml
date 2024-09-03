@@ -42,11 +42,11 @@ importers:
         specifier: ^3.6.0
         version: 3.6.0
       framer-motion:
-        specifier: ^11.3.31
-        version: 11.3.31(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: ^11.4.0
+        version: 11.4.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       lucide-react:
-        specifier: ^0.437.0
-        version: 0.437.0(react@18.2.0)
+        specifier: ^0.438.0
+        version: 0.438.0(react@18.2.0)
       next:
         specifier: latest
         version: 14.0.1(@opentelemetry/api@1.7.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -67,7 +67,7 @@ importers:
         version: 7.1.0
       rehype-pretty-code:
         specifier: ^0.14.0
-        version: 0.14.0(shiki@1.15.1)
+        version: 0.14.0(shiki@1.16.1)
       rehype-slug:
         specifier: ^6.0.0
         version: 6.0.0
@@ -75,8 +75,8 @@ importers:
         specifier: ^4.0.0
         version: 4.0.0
       shiki:
-        specifier: ^1.15.1
-        version: 1.15.1
+        specifier: ^1.16.1
+        version: 1.16.1
       sonner:
         specifier: ^1.5.0
         version: 1.5.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -113,7 +113,7 @@ importers:
         version: 18.2.15
       autoprefixer:
         specifier: ^10.4.20
-        version: 10.4.20(postcss@8.4.41)
+        version: 10.4.20(postcss@8.4.44)
       eslint:
         specifier: latest
         version: 8.53.0
@@ -121,8 +121,8 @@ importers:
         specifier: latest
         version: 14.0.1(eslint@8.53.0)(typescript@5.2.2)
       postcss:
-        specifier: ^8.4.41
-        version: 8.4.41
+        specifier: ^8.4.44
+        version: 8.4.44
       tailwindcss:
         specifier: ^3.4.10
         version: 3.4.10
@@ -1009,8 +1009,11 @@ packages:
   '@rushstack/eslint-patch@1.5.1':
     resolution: {integrity: sha512-6i/8UoL0P5y4leBIGzvkZdS85RDMG9y1ihZzmTZQ5LdHUYmZ7pKFoj8X0236s3lusPs1Fa5HTQUpwI+UfTcmeA==}
 
-  '@shikijs/core@1.15.1':
-    resolution: {integrity: sha512-DwkQTDNlhr7PwZMJswdvWIKts+2mqjIn8txByr88fhBRBtUSsIQR43RRoATjRrbeu4hyNTSTMBdxgp/vlxnxvA==}
+  '@shikijs/core@1.16.1':
+    resolution: {integrity: sha512-aI0hBtw+a6KsJp2jcD4YuQqKpeCbURMZbhHVozDknJpm+KJqeMRkEnfBC8BaKE/5XC+uofPgCLsa/TkTk0Ba0w==}
+
+  '@shikijs/vscode-textmate@9.2.0':
+    resolution: {integrity: sha512-5FinaOp6Vdh/dl4/yaOTh0ZeKch+rYS8DUb38V3GMKYVkdqzxw53lViRKUYkVILRiVQT7dcPC7VvAKOR73zVtQ==}
 
   '@swc/helpers@0.5.2':
     resolution: {integrity: sha512-E4KcWTpoLHqwPHLxidpOqQbcrZVgi0rsmmZXUle1jXmJfuIf/UWpczUJ7MZZ5tlxytgJXyp0w4PGkkeLiuIdZw==}
@@ -1064,6 +1067,9 @@ packages:
 
   '@types/node@22.5.1':
     resolution: {integrity: sha512-KkHsxej0j9IW1KKOOAA/XBA0z08UFSrRQHErzEfA3Vgq57eXIMYboIlHJuYIfd+lwCQjtKqUu3UnmKbtUc9yRw==}
+
+  '@types/node@22.5.2':
+    resolution: {integrity: sha512-acJsPTEqYqulZS/Yp/S3GgeE6GZ0qYODUR8aVr/DkhHQ8l9nd4j5x1/ZJy9/gHrRlFMqkO6i0I3E27Alu4jjPg==}
 
   '@types/pg@8.11.6':
     resolution: {integrity: sha512-/2WmmBXHLsfRqzfHW7BNZ8SbYzE8OSk7i3WjFYvfgRHj7S1xj+16Je5fUKv3lVdVzk/zn9TXOqf+avFCFIE0yQ==}
@@ -1778,8 +1784,8 @@ packages:
   fraction.js@4.3.7:
     resolution: {integrity: sha512-ZsDfxO51wGAXREY55a7la9LScWpwv9RxIrYABrlvOFBlH/ShPnrtsXeuUIfXKKOVicNxQ+o8JTbJvjS4M89yew==}
 
-  framer-motion@11.3.31:
-    resolution: {integrity: sha512-Xmxs08WBXnc2tNzNZbFSpquI33lvleJg4Y+hmZ+vFkn+laN9ZnR3gbZnNGKDtuz7c/x3u8dLg05OU3EhLobCsg==}
+  framer-motion@11.4.0:
+    resolution: {integrity: sha512-gHKUZr88OTMFubkIPkaIZxxX18PhQ6IbYxBoXUVdBLQQKZ3teH2BtxMVVRUsuzIfKs259MlL0elgAiZf82fiHg==}
     peerDependencies:
       '@emotion/is-prop-valid': '*'
       react: ^18.0.0
@@ -2178,8 +2184,8 @@ packages:
     resolution: {integrity: sha512-Jo6dJ04CmSjuznwJSS3pUeWmd/H0ffTlkXXgwZi+eq1UCmqQwCh+eLsYOYCwY991i2Fah4h1BEMCx4qThGbsiA==}
     engines: {node: '>=10'}
 
-  lucide-react@0.437.0:
-    resolution: {integrity: sha512-RXQq6tnm1FlXDUtOwLaoXET2TOEGpQULrQlPOjGHgIVsPhicHNat9sWF33OAe2UCLMFiWF1oL+FtAg43BqVY4Q==}
+  lucide-react@0.438.0:
+    resolution: {integrity: sha512-uq6yCB+IzVfgIPMK8ibkecXSWTTSOMs9UjUgZigfrDCVqgdwkpIgYg1fSYnf0XXF2AoSyCJZhoZXQwzoai7VGw==}
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0-rc
 
@@ -2609,8 +2615,8 @@ packages:
     resolution: {integrity: sha512-PS08Iboia9mts/2ygV3eLpY5ghnUcfLV/EXTOW1E2qYxJKGGBUtNjN76FYHnMs36RmARn41bC0AZmn+rR0OVpQ==}
     engines: {node: ^10 || ^12 || >=14}
 
-  postcss@8.4.41:
-    resolution: {integrity: sha512-TesUflQ0WKZqAvg52PWL6kHgLKP6xB6heTOdoYM0Wt2UHyxNa4K25EZZMgKns3BH1RLVbZCREPpLY0rhnNoHVQ==}
+  postcss@8.4.44:
+    resolution: {integrity: sha512-Aweb9unOEpQ3ezu4Q00DPvvM2ZTUitJdNKeP/+uQgr1IBIqu574IaZoURId7BKtWMREwzKa9OgzPzezWGPWFQw==}
     engines: {node: ^10 || ^12 || >=14}
 
   postgres-array@3.0.2:
@@ -2844,8 +2850,8 @@ packages:
     resolution: {integrity: sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==}
     engines: {node: '>=8'}
 
-  shiki@1.15.1:
-    resolution: {integrity: sha512-QPtVwbafyHmH9Z90iEZgZL4BhqFh5RMnRq2Bic0Cqp5lgbpbkn4nNmed0zzXbh/yPFs2PpkCviM9qcrbN+9zAA==}
+  shiki@1.16.1:
+    resolution: {integrity: sha512-tCJIMaxDVB1mEIJ5TvfZU7kCPB5eo9fli5+21Olc/bmyv+w8kye3JOp+LZRmGkAyT71hrkefQhTiY+o9mBikRQ==}
 
   side-channel@1.0.4:
     resolution: {integrity: sha512-q5XPytqFEIKHkGdiMIrY10mvLRvnQh42/+GoBlFW3b2LXLE2xxJpZFdm94we0BaoV3RwJyGqg5wS7epxTv0Zvw==}
@@ -2859,10 +2865,6 @@ packages:
     peerDependencies:
       react: ^18.0.0
       react-dom: ^18.0.0
-
-  source-map-js@1.0.2:
-    resolution: {integrity: sha512-R0XvVJ9WusLiqTCEiGCmICCMplcCkIwwR11mOSD9CR5u+IXYdiseeEuXCVAjS54zqwkLcPNnmU4OeJ6tUrWhDw==}
-    engines: {node: '>=0.10.0'}
 
   source-map-js@1.2.0:
     resolution: {integrity: sha512-itJW8lvSA0TXEphiRoawsCksnlf8SyvmFzIhltqAHluXd88pkCd+cXJVHTDwdCr0IzwptSm035IHQktUu1QUMg==}
@@ -3948,9 +3950,12 @@ snapshots:
 
   '@rushstack/eslint-patch@1.5.1': {}
 
-  '@shikijs/core@1.15.1':
+  '@shikijs/core@1.16.1':
     dependencies:
+      '@shikijs/vscode-textmate': 9.2.0
       '@types/hast': 3.0.4
+
+  '@shikijs/vscode-textmate@9.2.0': {}
 
   '@swc/helpers@0.5.2':
     dependencies:
@@ -4013,6 +4018,10 @@ snapshots:
       undici-types: 5.26.5
 
   '@types/node@22.5.1':
+    dependencies:
+      undici-types: 6.19.8
+
+  '@types/node@22.5.2':
     dependencies:
       undici-types: 6.19.8
 
@@ -4298,14 +4307,14 @@ snapshots:
     dependencies:
       has-symbols: 1.0.3
 
-  autoprefixer@10.4.20(postcss@8.4.41):
+  autoprefixer@10.4.20(postcss@8.4.44):
     dependencies:
       browserslist: 4.23.3
       caniuse-lite: 1.0.30001655
       fraction.js: 4.3.7
       normalize-range: 0.1.2
       picocolors: 1.0.1
-      postcss: 8.4.41
+      postcss: 8.4.44
       postcss-value-parser: 4.2.0
 
   available-typed-arrays@1.0.5: {}
@@ -4941,7 +4950,7 @@ snapshots:
 
   fraction.js@4.3.7: {}
 
-  framer-motion@11.3.31(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
+  framer-motion@11.4.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
       tslib: 2.6.2
     optionalDependencies:
@@ -5318,7 +5327,7 @@ snapshots:
 
   jest-worker@27.5.1:
     dependencies:
-      '@types/node': 22.5.1
+      '@types/node': 22.5.2
       merge-stream: 2.0.0
       supports-color: 8.1.1
 
@@ -5397,7 +5406,7 @@ snapshots:
     dependencies:
       yallist: 4.0.0
 
-  lucide-react@0.437.0(react@18.2.0):
+  lucide-react@0.438.0(react@18.2.0):
     dependencies:
       react: 18.2.0
 
@@ -6076,28 +6085,28 @@ snapshots:
 
   pluralize@8.0.0: {}
 
-  postcss-import@15.1.0(postcss@8.4.41):
+  postcss-import@15.1.0(postcss@8.4.44):
     dependencies:
-      postcss: 8.4.41
+      postcss: 8.4.44
       postcss-value-parser: 4.2.0
       read-cache: 1.0.0
       resolve: 1.22.8
 
-  postcss-js@4.0.1(postcss@8.4.41):
+  postcss-js@4.0.1(postcss@8.4.44):
     dependencies:
       camelcase-css: 2.0.1
-      postcss: 8.4.41
+      postcss: 8.4.44
 
-  postcss-load-config@4.0.1(postcss@8.4.41):
+  postcss-load-config@4.0.1(postcss@8.4.44):
     dependencies:
       lilconfig: 2.1.0
       yaml: 2.5.0
     optionalDependencies:
-      postcss: 8.4.41
+      postcss: 8.4.44
 
-  postcss-nested@6.0.1(postcss@8.4.41):
+  postcss-nested@6.0.1(postcss@8.4.44):
     dependencies:
-      postcss: 8.4.41
+      postcss: 8.4.44
       postcss-selector-parser: 6.0.13
 
   postcss-selector-parser@6.0.10:
@@ -6115,10 +6124,10 @@ snapshots:
   postcss@8.4.31:
     dependencies:
       nanoid: 3.3.7
-      picocolors: 1.0.0
-      source-map-js: 1.0.2
+      picocolors: 1.0.1
+      source-map-js: 1.2.0
 
-  postcss@8.4.41:
+  postcss@8.4.44:
     dependencies:
       nanoid: 3.3.7
       picocolors: 1.0.1
@@ -6251,13 +6260,13 @@ snapshots:
       hast-util-from-html: 2.0.1
       unified: 11.0.5
 
-  rehype-pretty-code@0.14.0(shiki@1.15.1):
+  rehype-pretty-code@0.14.0(shiki@1.16.1):
     dependencies:
       '@types/hast': 3.0.4
       hast-util-to-string: 3.0.0
       parse-numeric-range: 1.3.0
       rehype-parse: 9.0.0
-      shiki: 1.15.1
+      shiki: 1.16.1
       unified: 11.0.5
       unist-util-visit: 5.0.0
 
@@ -6415,9 +6424,10 @@ snapshots:
 
   shebang-regex@3.0.0: {}
 
-  shiki@1.15.1:
+  shiki@1.16.1:
     dependencies:
-      '@shikijs/core': 1.15.1
+      '@shikijs/core': 1.16.1
+      '@shikijs/vscode-textmate': 9.2.0
       '@types/hast': 3.0.4
 
   side-channel@1.0.4:
@@ -6432,8 +6442,6 @@ snapshots:
     dependencies:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-
-  source-map-js@1.0.2: {}
 
   source-map-js@1.2.0: {}
 
@@ -6552,11 +6560,11 @@ snapshots:
       normalize-path: 3.0.0
       object-hash: 3.0.0
       picocolors: 1.0.0
-      postcss: 8.4.41
-      postcss-import: 15.1.0(postcss@8.4.41)
-      postcss-js: 4.0.1(postcss@8.4.41)
-      postcss-load-config: 4.0.1(postcss@8.4.41)
-      postcss-nested: 6.0.1(postcss@8.4.41)
+      postcss: 8.4.44
+      postcss-import: 15.1.0(postcss@8.4.44)
+      postcss-js: 4.0.1(postcss@8.4.44)
+      postcss-load-config: 4.0.1(postcss@8.4.44)
+      postcss-nested: 6.0.1(postcss@8.4.44)
       postcss-selector-parser: 6.0.13
       resolve: 1.22.8
       sucrase: 3.34.0
