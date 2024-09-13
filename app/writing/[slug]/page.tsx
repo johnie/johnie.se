@@ -1,13 +1,9 @@
-import { Suspense, cache } from 'react';
 import type { Metadata } from 'next';
-import { unstable_noStore as noStore } from 'next/cache';
-import { increment, getViewsCount } from '@/lib/actions';
 import Link from 'next/link';
 import { format } from 'date-fns';
 import { notFound } from 'next/navigation';
 import { allPosts } from 'content-collections';
 import { Mdx } from '@/components/mdx';
-import ViewCounter from '@/components/ViewCounter';
 import { cn } from '@/lib/utils';
 
 export async function generateMetadata({ params }: any): Promise<Metadata | undefined> {
@@ -94,10 +90,6 @@ export default async function Post({ params }: any) {
         <p>{format(new Date(post.publishedAt), 'dd MMMM, yyyy')}</p>
         <div className="flex gap-2">
           <p>{post.readingTime}</p>
-          <span>•</span>
-          <Suspense fallback={<p className="h-5" />}>
-            <Views slug={post.slug} />
-          </Suspense>
         </div>
       </div>
       <article
@@ -109,12 +101,4 @@ export default async function Post({ params }: any) {
       </article>
     </section>
   );
-}
-
-let incrementViews = cache(increment);
-
-async function Views({ slug }: { slug: string }) {
-  let views = await getViewsCount();
-  incrementViews(slug);
-  return <ViewCounter allViews={views} slug={slug} />;
 }

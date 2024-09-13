@@ -2,9 +2,6 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { allPosts } from 'content-collections';
 import { format } from 'date-fns';
-import { Suspense } from 'react';
-import { getViewsCount } from '@/lib/actions';
-import ViewCounter from '@/components/ViewCounter';
 
 export const metadata: Metadata = {
   title: 'Writing',
@@ -42,10 +39,6 @@ export default async function BlogPage() {
                   <p>{format(new Date(post.publishedAt), 'dd MMMM, yyyy')}</p>
                   <span>•</span>
                   <p>{post.readingTime}</p>
-                  <span>•</span>
-                  <Suspense fallback={<p className="h-4" />}>
-                    <Views slug={post.slug} />
-                  </Suspense>
                 </div>
               </div>
             </Link>
@@ -53,9 +46,4 @@ export default async function BlogPage() {
       </div>
     </section>
   );
-}
-
-async function Views({ slug }: { slug: string }) {
-  let views = await getViewsCount();
-  return <ViewCounter slug={slug} allViews={views} />;
 }

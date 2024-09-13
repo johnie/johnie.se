@@ -1,9 +1,6 @@
 import { type Post } from 'content-collections';
 import Link from 'next/link';
 import { format } from 'date-fns';
-import { Suspense } from 'react';
-import { getViewsCount } from '@/lib/actions';
-import ViewCounter from '@/components/ViewCounter';
 
 export const LatestWriting = ({ items, amount }: { items: Post[]; amount: number }) => {
   if (!items) {
@@ -31,10 +28,6 @@ export const LatestWriting = ({ items, amount }: { items: Post[]; amount: number
                 <p>{format(new Date(post.publishedAt), 'dd MMMM, yyyy')}</p>
                 <span className="mx-4 ">•</span>
                 <p>{post.readingTime}</p>
-                <span className="mx-4 ">•</span>
-                <Suspense fallback={null}>
-                  <Views slug={post.slug} />
-                </Suspense>
               </div>
             </div>
           </Link>
@@ -42,8 +35,3 @@ export const LatestWriting = ({ items, amount }: { items: Post[]; amount: number
     </div>
   );
 };
-
-async function Views({ slug }: { slug: string }) {
-  let views = await getViewsCount();
-  return <ViewCounter slug={slug} allViews={views} />;
-}
