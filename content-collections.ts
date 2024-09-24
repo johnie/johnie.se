@@ -1,5 +1,5 @@
 import { createHash } from 'crypto';
-import { readFileSync } from 'fs';
+import { readFileSync, statSync } from 'fs';
 import { exec } from 'child_process';
 import { defineCollection, defineConfig } from '@content-collections/core';
 import { compileMDX, Options } from '@content-collections/mdx';
@@ -27,6 +27,11 @@ function generateId(inputString: string): string {
   return shortId;
 }
 
+const getFileCreationDate = (filePath: string) => {
+  const stats = statSync(filePath);
+  return new Date(stats.birthtime).toISOString();
+};
+
 const mdxOptions: Options = {
   remarkPlugins: [remarkGfm],
   rehypePlugins: [
@@ -34,7 +39,7 @@ const mdxOptions: Options = {
     [
       rehypePrettyCode,
       {
-        theme: JSON.parse(readFileSync(new URL('../../themes/will.json', import.meta.url)).toString()),
+        theme: 'tokyo-night',
         keepBackground: false,
         onVisitLine(node: any) {
           if (node.children.length === 0) {
@@ -181,6 +186,33 @@ const Project = defineCollection({
   },
 });
 
+export const TodayILearned = defineCollection({
+  name: 'TodayILearned',
+  directory: 'content/til',
+  include: '*.mdx',
+  schema: (z) => ({
+    publishedAt: z
+      .string()
+      .refine((value) => !isNaN(Date.parse(value)), 'Invalid date string')
+      .transform<string>((value) => new Date(value).toISOString())
+      .optional(),
+    type: z.enum(['article', 'code', 'podcast', 'general']).optional(),
+    url: z.string().optional(),
+  }),
+  transform: async (document, context) => {
+    const mdx = await compileMDX(context, document, mdxOptions);
+    const slug = document._meta.path;
+    const publishedAt = document.publishedAt ?? getFileCreationDate(document._meta.filePath);
+
+    return {
+      ...document,
+      slug,
+      mdx,
+      publishedAt,
+    };
+  },
+});
+
 export default defineConfig({
-  collections: [Post, Page, Work, Project],
+  collections: [Post, Page, Work, Project, TodayILearned],
 });
