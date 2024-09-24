@@ -1,0 +1,17 @@
+---
+publishedAt: '2024-09-24'
+type: code
+tags: ['git', 'cli', 'code review']
+---
+
+### Formatting Commit Messages with `fmt` 
+
+You can use the `fmt` command to format commit messages in Git for better readability. Here's a useful command:
+
+```bash
+fmt -n -p -w 80
+```
+
+- `-n`: Preserves indented lines, making bullet points or code snippets in the message clear.
+- `-p`: Avoids formatting lines that already begin with indentation, useful for keeping lists and indented code unchanged.
+- `-w 80`: Wraps text at 80 characters, which is a common convention for commit message width.
