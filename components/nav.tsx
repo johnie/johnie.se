@@ -7,7 +7,7 @@ import { LayoutGroup, motion } from 'framer-motion';
 import { useMainStore } from '@/lib/mainStore';
 
 import { ReactNode } from 'react';
-import { LucideHome, LucideUser, LucidePen } from 'lucide-react';
+import { LucideHome, LucideUser, LucidePen, LucideBrain } from 'lucide-react';
 
 type NavLink = {
   name: string;
@@ -33,6 +33,12 @@ export const NAV_LINKS: NavLink[] = [
     name: 'Writing',
     href: '/writing',
     icon: <LucidePen className="h-[18px] w-[18px] text-current" />,
+    enabled: true,
+  },
+  {
+    name: 'TIL',
+    href: '/til',
+    icon: <LucideBrain className="h-[18px] w-[18px] text-current" />,
     enabled: true,
   },
   {
@@ -82,7 +88,10 @@ export default function Navigation() {
             );
           })}
         </div>
-        <button className="text-sm text-muted-foreground ml-2 cursor-pointer group hidden md:block" onClick={() => setCmd(true)}>
+        <button
+          className="text-sm text-muted-foreground ml-2 cursor-pointer group hidden md:block"
+          onClick={() => setCmd(true)}
+        >
           <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100 group-hover:bg-neutral-300 group-hover:dark:bg-neutral-700 transition-colors ease">
             <span className="text-xs">⌘</span>K
           </kbd>
