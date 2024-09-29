@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Image, { ImageProps } from 'next/image';
 import { useMDXComponent } from '@content-collections/mdx/react';
 import type { MDXComponents } from 'mdx/types';
+import { Bio } from '@/components/bio';
 
 interface CustomLinkProps {
   href: string;
@@ -146,6 +147,7 @@ const components = {
   h3: H3,
   ProsCard,
   ConsCard,
+  Bio,
 };
 
 interface MdxProps {
