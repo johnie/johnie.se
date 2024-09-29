@@ -2,7 +2,7 @@ import './globals.css';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Inter } from 'next/font/google';
-import { Analytics } from '@vercel/analytics/react';
+import { OpenPanelComponent } from '@openpanel/nextjs';
 import { Toaster } from 'sonner';
 import { cn } from '@/lib/utils';
 import { Logo } from '@/components/logo';
@@ -66,7 +66,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </div>
         <Toaster richColors />
         <CMD />
-        <Analytics />
+        <OpenPanelComponent
+          clientId={process.env.OPENPANEL_CLIENT_ID!}
+          trackScreenViews={true}
+          trackOutgoingLinks={true}
+        />
       </body>
     </html>
   );
