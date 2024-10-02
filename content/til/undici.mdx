@@ -1,0 +1,32 @@
+---
+publishedAt: '2024-10-02'
+type: code
+tags: ['node', 'http', 'mock', 'undici']
+---
+
+### Mock HTTP Requests in Node.js with Undici
+
+```js
+import { MockAgent, setGlobalDispatcher } from 'undici';
+
+const mockAgent = new MockAgent();
+setGlobalDispatcher(mockAgent);
+
+const mockPool = mockAgent.get('http://localhost:3000');
+
+mockPool
+  .intercept({
+    path: '/me',
+    method: 'GET',
+  })
+  .reply(200, {
+    id: '123',
+    name: 'Johnie',
+  });
+
+fetch('http://localhost:3000/me')
+  .then((res) => res.json())
+  .then((user) => {
+    console.dir(user); // { id: '123', name: 'Johnie' }
+  });
+```
