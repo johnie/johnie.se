@@ -70,6 +70,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           clientId={process.env.OPENPANEL_CLIENT_ID!}
           trackScreenViews={true}
           trackOutgoingLinks={true}
+          trackAttributes={true}
         />
       </body>
     </html>
