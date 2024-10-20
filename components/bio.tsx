@@ -1,7 +1,16 @@
 import React from 'react';
 import { AboutActions } from '@/components/aboutActions';
 
-const BIO = `Johnie Hjelm is a seasoned Technical Lead Manager with over 15 years in the tech industry. A self-taught Fullstack Web Developer, he has successfully navigated a rich career journey, marked by his dedication to fostering individual and team success. Known for his pragmatic and transparent leadership style, Johnie is also the force behind Crip in Tech, an initiative aimed at making the tech sector more inclusive for individuals with physical disabilities.`;
+const startYear = (startYear: number) => {
+  const today = new Date();
+  const startDate = new Date(startYear, 0, 1);
+  const yearsToday = today.getFullYear() - startDate.getFullYear();
+  return yearsToday;
+};
+
+const BIO = `Johnie Hjelm is an innovative Technical Lead with over ${startYear(
+  2009
+)} years of expertise in the tech industry. As a self-taught Fullstack Web Developer, he has charted an impressive career path marked by his commitment to empowering individuals and teams. Johnie is renowned for his pragmatic leadership and transparent communication style, consistently driving projects to success. Beyond his professional achievements, he is the visionary founder of Crip in Tech, a groundbreaking initiative dedicated to enhancing inclusivity in the tech sector for individuals with physical disabilities. Johnie's unique blend of technical acumen, leadership skills, and advocacy work positions him as a transformative force in the industry, championing both technological advancement and workplace diversity.`;
 
 export function Bio() {
   return (
