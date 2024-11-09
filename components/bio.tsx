@@ -8,19 +8,24 @@ const startYear = (startYear: number) => {
   return yearsToday;
 };
 
-const BIO = `Johnie Hjelm is an innovative Technical Lead with over ${startYear(
+const BIO = `Johnie Hjelm is a creative Technical Lead with over ${startYear(
   2009
-)} years of expertise in the tech industry. As a self-taught Fullstack Web Developer, he has charted an impressive career path marked by his commitment to empowering individuals and teams. Johnie is renowned for his pragmatic leadership and transparent communication style, consistently driving projects to success. Beyond his professional achievements, he is the visionary founder of Crip in Tech, a groundbreaking initiative dedicated to enhancing inclusivity in the tech sector for individuals with physical disabilities. Johnie's unique blend of technical acumen, leadership skills, and advocacy work positions him as a transformative force in the industry, championing both technological advancement and workplace diversity.`;
+)} of experience in the technology sector. As a self-educated Fullstack Web Developer, he has forged a remarkable career journey characterized by his dedication to uplifting individuals and teams. Johnie is celebrated for his practical leadership and open communication approach, consistently steering projects toward success. Aside from his professional successes, he is the innovative founder of Crip in Tech, a pioneering program aimed at improving inclusivity within the tech industry for those with physical disabilities. Johnie's distinctive mix of technical expertise, leadership abilities, and advocacy efforts makes him a transformative influence in the sector, promoting both technological progress and workplace diversity. `;
 
 export function Bio() {
   return (
     <>
-      <h3 className="mt-10 text-xl text-neutral-800 dark:text-neutral-200 mb-4">Bio</h3>
+      <h3 className="mt-10 text-xl text-neutral-800 dark:text-neutral-200 mb-4">
+        Bio
+      </h3>
       <p className="leading-[25px] text-neutral-500 dark:text-neutral-400">
-        This is made for journalists, podcast hosts, and event organizers to copy-and-paste.
+        This is made for journalists, podcast hosts, and event organizers to
+        copy-and-paste.
       </p>
       <blockquote className="pl-6 my-4 border-l-2 border-neutral-500 dark:border-neutral-200">
-        <p className="leading-[25px] text-neutral-500 dark:text-neutral-400 italic">{BIO}</p>
+        <p className="leading-[25px] text-neutral-500 dark:text-neutral-400 italic">
+          {BIO}
+        </p>
       </blockquote>
       <AboutActions bio={BIO} />
     </>

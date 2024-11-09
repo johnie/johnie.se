@@ -1,0 +1,7 @@
+name: 'ajour'
+description: Turn Omni-articles into a beautiful images
+url: https://ajour.jh.gy
+projectType: web
+image: /ajour.svg
+order: 1
+active: true
