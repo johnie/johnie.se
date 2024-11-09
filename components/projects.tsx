@@ -17,8 +17,8 @@ export const Projects = ({ items }: { items: Project[] }) => {
             className="flex gap-x-4 px-4 -mx-4 pt-4 rounded-[12px] border-none hover:bg-neutral-50 dark:hover:bg-neutral-900 group transition-colors ease"
             href={project.url}
           >
-            <div className="bg-neutral-100 dark:bg-neutral-800 w-[36px] h-[36px] rounded-[10px] mt-[2px] flex-shrink-0 shadow-shorter overflow-hidden">
-              <div className="text-sm text-neutral-400 font-semibold flex justify-center items-center h-full">
+            <div className="bg-neutral-100 dark:bg-neutral-800 w-[36px] h-[36px] rounded-[10px] mt-[2px] flex-shrink-0 shadow-shorter overflow-hidden border border-neutral">
+              <div className="text-sm text-neutral-400 font-semibold flex justify-center items-center h-full ">
                 <Image
                   src={project.image as string}
                   alt={`${project.name} logo`}
@@ -26,7 +26,7 @@ export const Projects = ({ items }: { items: Project[] }) => {
                   width="36"
                   height="36"
                   decoding="async"
-                  className="w-[36px] h-[36px]"
+                  className="w-[36px] h-[36px] "
                 />
               </div>
             </div>
@@ -34,7 +34,8 @@ export const Projects = ({ items }: { items: Project[] }) => {
               className={cn(
                 'flex flex-col text-sm flex-auto pb-4 text-neutral-700 group-hover:border-transparent dark:text-neutral-300',
                 {
-                  'border-b border-neutral-100 dark:border-neutral-900': index + 1 !== length,
+                  'border-b border-neutral-100 dark:border-neutral-900':
+                    index + 1 !== length,
                 }
               )}
             >

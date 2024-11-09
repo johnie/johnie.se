@@ -3,7 +3,7 @@
 import clsx from 'clsx';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { LayoutGroup, motion } from 'framer-motion';
+import { HTMLMotionProps, LayoutGroup, motion } from 'framer-motion';
 import { useMainStore } from '@/lib/mainStore';
 
 import { ReactNode } from 'react';
@@ -41,12 +41,6 @@ export const NAV_LINKS: NavLink[] = [
     icon: <LucideBrain className="h-[18px] w-[18px] text-current" />,
     enabled: true,
   },
-  {
-    name: 'Uses',
-    href: '/uses',
-    icon: <LucidePen className="h-[18px] w-[18px] text-current" />,
-    enabled: false,
-  },
 ];
 
 export default function Navigation() {
@@ -58,7 +52,10 @@ export default function Navigation() {
 
   return (
     <LayoutGroup>
-      <nav className="flex flex-row items-center justify-end relative px-0 pb-0 fade md:relative" role="navigation">
+      <nav
+        className="flex flex-row items-center justify-end relative px-0 pb-0 fade md:relative"
+        role="navigation"
+      >
         <div className="flex flex-row space-x-2 bg-neutral-50 dark:bg-black p-1 rounded-lg text-sm">
           {NAV_LINKS.filter((i) => Boolean(i.enabled)).map(({ href, name }) => {
             const isActive = href === pathname;
@@ -73,7 +70,11 @@ export default function Navigation() {
                 <span className="relative py-1 px-3">
                   {href === pathname ? (
                     <motion.div
-                      className="absolute h-full inset-0 bg-neutral-200 dark:bg-muted rounded-md"
+                      initial={false}
+                      {...({
+                        className:
+                          'absolute h-full inset-0 bg-neutral-200 dark:bg-muted rounded-md',
+                      } as HTMLMotionProps<'div'>)}
                       layoutId="sidebar"
                       transition={{
                         type: 'spring',

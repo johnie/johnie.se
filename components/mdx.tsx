@@ -4,6 +4,7 @@ import Image, { ImageProps } from 'next/image';
 import { useMDXComponent } from '@content-collections/mdx/react';
 import type { MDXComponents } from 'mdx/types';
 import { Bio } from '@/components/bio';
+import { Badge } from './ui/badge';
 
 interface CustomLinkProps {
   href: string;
@@ -66,7 +67,10 @@ const H1: React.FC<HeadingProps> = ({ children, ...props }) => {
 
 const H2: React.FC<HeadingProps> = ({ children, ...props }) => {
   return (
-    <h2 className="text-xl font-semibold mb-6 text-neutral-800 dark:text-neutral-200" {...props}>
+    <h2
+      className="text-xl font-semibold mb-6 text-neutral-800 dark:text-neutral-200"
+      {...props}
+    >
       {children}
     </h2>
   );
@@ -74,7 +78,10 @@ const H2: React.FC<HeadingProps> = ({ children, ...props }) => {
 
 const H3: React.FC<HeadingProps> = ({ children, ...props }) => {
   return (
-    <h3 className="mt-10 text-xl text-neutral-800 dark:text-neutral-200 mb-2" {...props}>
+    <h3
+      className="mt-10 text-xl text-neutral-800 dark:text-neutral-200 mb-2"
+      {...props}
+    >
       {children}
     </h3>
   );
@@ -94,7 +101,13 @@ function ProsCard({ title, pros }: ProsCardProps) {
           <div key={pro} className="flex font-medium items-baseline mb-2">
             <div className="h-4 w-4 mr-2">
               <svg className="h-4 w-4 text-emerald-500" viewBox="0 0 24 24">
-                <g fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <g
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
                   <path d="M22 11.08V12a10 10 0 11-5.93-9.14" />
                   <path d="M22 4L12 14.01l-3-3" />
                 </g>
@@ -148,6 +161,7 @@ const components = {
   ProsCard,
   ConsCard,
   Bio,
+  Badge,
 };
 
 interface MdxProps {

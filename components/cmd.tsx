@@ -1,7 +1,15 @@
 'use client';
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator } from '@/components/ui/command';
+import {
+  CommandDialog,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+  CommandSeparator,
+} from '@/components/ui/command';
 import { LINKS as socialLinks } from '@/components/socialLinks';
 import { NAV_LINKS as navLinks } from '@/components/nav';
 import { useMainStore } from '@/lib/mainStore';
@@ -42,7 +50,11 @@ export const CMD = () => {
         {navLinks
           .filter((i) => Boolean(i.enabled))
           .map(({ href, name, icon }) => (
-            <CommandItem key={href} value={href} onSelect={(value) => goTo(value)}>
+            <CommandItem
+              key={href}
+              value={href}
+              onSelect={(value) => goTo(value)}
+            >
               {icon}
               <span className="ml-2">{name}</span>
             </CommandItem>
@@ -52,7 +64,11 @@ export const CMD = () => {
           {socialLinks
             .filter((i) => Boolean(i.enabled))
             .map(({ href, name, icon }) => (
-              <CommandItem key={href} value={href} onSelect={(value) => goTo(value)}>
+              <CommandItem
+                key={href}
+                value={href}
+                onSelect={(value) => goTo(value)}
+              >
                 {icon}
                 <span className="ml-2">{name}</span>
               </CommandItem>

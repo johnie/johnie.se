@@ -1,0 +1,35 @@
+<svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_77_2)">
+<rect width="100" height="100" fill="#141414"/>
+<g filter="url(#filter0_d_77_2)">
+<path d="M45.045 81.5972C28.3273 81.5972 15 67.4515 15 49.9155C15 32.3795 28.3273 18 45.045 18C55.5665 18 61.0612 22.3255 64.3345 28.8723V24.286C64.3345 21.5245 66.5731 19.286 69.3345 19.286H75C77.7614 19.286 80 21.5245 80 24.286V75.0774C80 77.8389 77.7614 80.0774 75 80.0774H69.6852C66.9238 80.0774 64.6853 77.8389 64.6853 75.0774V70.1404C61.4119 77.0379 55.9173 81.5972 45.045 81.5972ZM30.7824 49.7986C30.7824 59.0342 37.5629 67.3346 47.6169 67.3346C58.0216 67.3346 64.6853 59.385 64.6853 49.9155C64.6853 40.4461 58.0216 32.2626 47.6169 32.2626C37.5629 32.2626 30.7824 40.3292 30.7824 49.7986Z" fill="url(#paint0_linear_77_2)"/>
+</g>
+<g filter="url(#filter1_f_77_2)">
+<ellipse cx="72.8177" cy="20.0122" rx="72.8177" ry="20.0122" transform="matrix(0.824464 -0.565915 -0.565915 -0.824464 22.6504 83.416)" fill="white" fill-opacity="0.1"/>
+</g>
+</g>
+<defs>
+<filter id="filter0_d_77_2" x="11" y="18" width="73" height="71.5972" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="4"/>
+<feGaussianBlur stdDeviation="2"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_77_2"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_77_2" result="shape"/>
+</filter>
+<filter id="filter1_f_77_2" x="-26.9446" y="-55.8928" width="196.611" height="163.202" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="18.6" result="effect1_foregroundBlur_77_2"/>
+</filter>
+<linearGradient id="paint0_linear_77_2" x1="272.597" y1="-4.3292" x2="14.9999" y2="103.465" gradientUnits="userSpaceOnUse">
+<stop stop-color="white"/>
+<stop offset="1" stop-color="#DFDFDF"/>
+</linearGradient>
+<clipPath id="clip0_77_2">
+<rect width="100" height="100" fill="white"/>
+</clipPath>
+</defs>
+</svg>

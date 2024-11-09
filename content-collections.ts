@@ -39,7 +39,10 @@ const mdxOptions: Options = {
     [
       rehypePrettyCode,
       {
-        theme: 'tokyo-night',
+        themes: {
+          dark: 'min-dark',
+          light: 'min-light',
+        },
         keepBackground: false,
         onVisitLine(node: any) {
           if (node.children.length === 0) {
@@ -72,7 +75,9 @@ const setStructuredData = (doc: any) => ({
   datePublished: doc.publishedAt,
   dateModified: doc.publishedAt,
   description: doc.summary,
-  image: doc.image ? `https://johnie.se${doc.image}` : `https://johnie.se/og?title=${doc.title}`,
+  image: doc.image
+    ? `https://johnie.se${doc.image}`
+    : `https://johnie.se/og?title=${doc.title}`,
   url: `https://johnie.se/writings/${doc._meta.path}`,
   author: {
     '@type': 'Person',
@@ -97,16 +102,23 @@ const Post = defineCollection({
   transform: async (document, context) => {
     const mdx = await compileMDX(context, document, mdxOptions);
     const slug = document._meta.path;
-    const readingTime = calcReadingTime(document.content, { wordsPerMinute: 275 }).text;
+    const readingTime = calcReadingTime(document.content, {
+      wordsPerMinute: 275,
+    }).text;
     const structuredData = setStructuredData(document);
-    const lastModified = await context.cache(document._meta.filePath, async (filePath) => {
-      try {
-        const stdout = (await run(`git log -1 --format=%ai -- content/${filePath}`)) as string;
-        return new Date(stdout.toString().trim()).toISOString();
-      } catch (error) {
-        return new Date().toISOString();
+    const lastModified = await context.cache(
+      document._meta.filePath,
+      async (filePath) => {
+        try {
+          const stdout = (await run(
+            `git log -1 --format=%ai -- content/${filePath}`
+          )) as string;
+          return new Date(stdout.toString().trim()).toISOString();
+        } catch (error) {
+          return new Date().toISOString();
+        }
       }
-    });
+    );
 
     return {
       ...document,
@@ -155,7 +167,9 @@ const Work = defineCollection({
     image: z.string().optional(),
   }),
   transform: (document) => {
-    const _id = generateId(document.company + document.role + document.startYear);
+    const _id = generateId(
+      document.company + document.role + document.startYear
+    );
     return {
       ...document,
       _id,
@@ -202,7 +216,8 @@ export const TodayILearned = defineCollection({
   transform: async (document, context) => {
     const mdx = await compileMDX(context, document, mdxOptions);
     const slug = document._meta.path;
-    const publishedAt = document.publishedAt ?? getFileCreationDate(document._meta.filePath);
+    const publishedAt =
+      document.publishedAt ?? getFileCreationDate(document._meta.filePath);
 
     return {
       ...document,
