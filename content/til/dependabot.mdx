@@ -1,0 +1,24 @@
+---
+publishedAt: '2024-11-11'
+type: code
+tags: ['github', 'dependabot', 'pull request']
+---
+
+###  Group Dependabot Updates into One Pull Request
+
+To group Dependabot version updates into a single pull request, you can customize the configuration in the `dependabot.yml` file. Specify the package ecosystem (e.g., npm) and the directory where package manifests are located. Use the `groups` feature to define how updates should be bundled. For instance, in the example configuration, all version updates are grouped under a single PR by specifying a group named `dependencies` with a wildcard pattern that applies to all version updates. See the [documentation](https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file) for more details.
+
+```yml
+version: 2
+updates:
+  - package-ecosystem: 'npm'
+    directory: '/'
+    schedule:
+      interval: 'weekly'
+    commit-message:
+      prefix: 'deps: '
+    groups:
+      dependencies:
+        patterns:
+          - '*'
+```
