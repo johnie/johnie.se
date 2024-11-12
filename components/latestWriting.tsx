@@ -23,7 +23,7 @@ export const LatestWriting = () => {
 
   return (
     <div>
-      {items.map((post) => (
+      {items.map((post: Post) => (
         <Link
           key={post.slug}
           className="flex gap-x-4 px-4 -mx-4 py-4 rounded-[12px] border-none hover:bg-neutral-50 dark:hover:bg-neutral-900 group transition-colors ease"

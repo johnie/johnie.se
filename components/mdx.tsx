@@ -1,16 +1,15 @@
 import * as React from 'react';
-import Link from 'next/link';
+import Link, { LinkProps } from 'next/link';
 import Image, { ImageProps } from 'next/image';
 import { useMDXComponent } from '@content-collections/mdx/react';
 import type { MDXComponents } from 'mdx/types';
 import { Bio } from '@/components/bio';
 import { Badge } from './ui/badge';
 
-interface CustomLinkProps {
+type CustomLinkProps = LinkProps & {
   href: string;
   children?: React.ReactNode;
-  [key: string]: any;
-}
+};
 
 const CustomLink: React.FC<CustomLinkProps> = (props) => {
   const href = props.href;
@@ -28,7 +27,6 @@ const CustomLink: React.FC<CustomLinkProps> = (props) => {
 
 type CustomImageProps = ImageProps & {
   alt: string;
-  [key: string]: any;
 };
 
 const RoundedImage: React.FC<CustomImageProps> = ({ alt, ...props }) => {
@@ -51,7 +49,6 @@ const Callout: React.FC<CalloutProps> = ({ emoji, children }) => {
 
 type HeadingProps = {
   children: React.ReactNode;
-  [key: string]: any;
 };
 
 const H1: React.FC<HeadingProps> = ({ children, ...props }) => {
@@ -164,11 +161,7 @@ const components = {
   Badge,
 };
 
-interface MdxProps {
-  code: string;
-}
-
-export function Mdx({ code }: MdxProps) {
+export function Mdx({ code }: { code: string }) {
   const Component = useMDXComponent(code);
 
   return <Component components={components as MDXComponents} />;
