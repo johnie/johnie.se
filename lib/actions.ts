@@ -22,7 +22,7 @@ export type View = {
 };
 
 export async function getViewsCount(): Promise<View[]> {
-  if (!env.DATABASE_URL) {
+  if (!env.TURSO_DATABASE_URL) {
     return [];
   }
 
