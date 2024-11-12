@@ -1,7 +1,8 @@
 'use server';
 
-import { QueryResultRow, sql } from '@vercel/postgres';
 import { unstable_noStore as noStore } from 'next/cache';
+import { turso } from './turso';
+import { env } from '@/lib/env';
 
 export async function increment(slug: string) {
   if (process.env.VERCEL_ENV === 'development') {
@@ -9,24 +10,26 @@ export async function increment(slug: string) {
   }
 
   noStore();
-  await sql`
-    INSERT INTO views (slug, count)
-    VALUES (${slug}, 1)
-    ON CONFLICT (slug)
-    DO UPDATE SET count = views.count + 1
-  `;
+  await turso.execute(
+    `INSERT INTO views (slug, count) VALUES ('${slug}', 1)  ON CONFLICT(slug) DO UPDATE SET count = views.count + 1, updated_at = CURRENT_TIMESTAMP;`
+  );
 }
 
-export async function getViewsCount(): Promise<QueryResultRow[] | []> {
-  if (!process.env.POSTGRES_URL) {
+export type View = {
+  slug: string;
+  count: number;
+  updated_at: string;
+};
+
+export async function getViewsCount(): Promise<View[]> {
+  if (!env.TURSO_DATABASE_URL) {
     return [];
   }
 
   noStore();
-  const { rows } = await sql`
-    SELECT slug, count
-    FROM views
-  `;
+  const { rows } = await turso.execute(
+    `SELECT slug, count, updated_at FROM views`
+  );
 
-  return rows;
+  return rows as unknown as View[];
 }
