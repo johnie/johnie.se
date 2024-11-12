@@ -5,7 +5,7 @@ import { turso } from './turso';
 import { env } from '@/lib/env';
 
 export async function increment(slug: string) {
-  if (env.VERCEL_ENV === 'development') {
+  if (process.env.VERCEL_ENV === 'development') {
     return;
   }
 
