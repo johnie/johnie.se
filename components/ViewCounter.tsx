@@ -1,11 +1,11 @@
-import { QueryResultRow } from '@vercel/postgres';
+import { type View } from '@/lib/actions';
 
 export default function ViewCounter({
   slug,
   allViews,
 }: {
   slug: string;
-  allViews: QueryResultRow[] | [];
+  allViews: View[];
   trackView?: boolean;
 }) {
   const viewsForSlug = allViews && allViews.find((view) => view.slug === slug);
