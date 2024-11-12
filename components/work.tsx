@@ -7,7 +7,7 @@ export const WorkExperience = () => {
   if (!allWorks || allWorks.length === 0) {
     return null;
   }
-  const items = allWorks.toSorted((a, b) => b.startYear - a.startYear);
+  const items = allWorks.sort((a, b) => b.startYear - a.startYear);
 
   return (
     <div>

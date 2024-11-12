@@ -8,7 +8,7 @@ export const Projects = () => {
   }
 
   const items = allProjects
-    .toSorted((a, b) => (a.order ?? 0) - (b.order ?? 0))
+    .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
     .filter((project) => Boolean(project.active));
 
   return (

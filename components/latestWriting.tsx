@@ -13,7 +13,7 @@ export const LatestWriting = () => {
   }
 
   const items = allPosts
-    .toSorted((a, b) => {
+    .sort((a, b) => {
       if (new Date(a.publishedAt) > new Date(b.publishedAt)) {
         return -1;
       }
