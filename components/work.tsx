@@ -4,11 +4,10 @@ import Image from 'next/image';
 import { Skeleton } from './ui/skeleton';
 
 export const WorkExperience = () => {
-  const items = allWorks.toSorted((a, b) => b.startYear - a.startYear);
-
-  if (!items) {
+  if (!allWorks || allWorks.length === 0) {
     return null;
   }
+  const items = allWorks.toSorted((a, b) => b.startYear - a.startYear);
 
   return (
     <div>

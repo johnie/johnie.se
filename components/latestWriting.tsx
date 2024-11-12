@@ -8,6 +8,10 @@ import ViewCounter from '@/components/ViewCounter';
 const TOTAL_ITEMS = 2;
 
 export const LatestWriting = () => {
+  if (!allPosts || allPosts.length === 0) {
+    return null;
+  }
+
   const items = allPosts
     .toSorted((a, b) => {
       if (new Date(a.publishedAt) > new Date(b.publishedAt)) {
@@ -16,10 +20,6 @@ export const LatestWriting = () => {
       return 1;
     })
     .slice(0, TOTAL_ITEMS);
-
-  if (!items) {
-    return null;
-  }
 
   return (
     <div>

@@ -3,12 +3,14 @@ import { cn } from '@/lib/utils';
 import Image from 'next/image';
 
 export const Projects = () => {
+  if (!allProjects || allProjects.length === 0) {
+    return null;
+  }
+
   const items = allProjects
     .toSorted((a, b) => (a.order ?? 0) - (b.order ?? 0))
     .filter((project) => Boolean(project.active));
-  if (!items) {
-    return null;
-  }
+
   return (
     <div>
       {items.map((project: Project, index, { length }) => (
