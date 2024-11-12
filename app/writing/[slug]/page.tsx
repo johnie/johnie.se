@@ -1,19 +1,36 @@
+import { Suspense, cache } from 'react';
 import type { Metadata } from 'next';
+import { increment, getViewsCount } from '@/lib/actions';
 import Link from 'next/link';
 import { format } from 'date-fns';
 import { notFound } from 'next/navigation';
 import { allPosts } from 'content-collections';
 import { Mdx } from '@/components/mdx';
+import ViewCounter from '@/components/ViewCounter';
 import { cn } from '@/lib/utils';
 
-export async function generateMetadata({ params }: any): Promise<Metadata | undefined> {
-  const post = allPosts.find((post) => post.slug === params.slug);
+type Params = Promise<{ slug: string }>;
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Params;
+}): Promise<Metadata | undefined> {
+  const { slug } = await params;
+  const post = allPosts.find((post) => post.slug === slug);
   if (!post) {
     return;
   }
 
-  const { title, publishedAt: publishedTime, summary: description, image, slug } = post;
-  const ogImage = image ? `https://johnie.se${image}` : `https://johnie.se/og?title=${title}`;
+  const {
+    title,
+    publishedAt: publishedTime,
+    summary: description,
+    image,
+  } = post;
+  const ogImage = image
+    ? `https://johnie.se${image}`
+    : `https://johnie.se/og?title=${title}`;
 
   return {
     title,
@@ -39,8 +56,9 @@ export async function generateMetadata({ params }: any): Promise<Metadata | unde
   };
 }
 
-export default async function Post({ params }: any) {
-  const post = allPosts.find((post) => post.slug === params.slug);
+export default async function Post({ params }: { params: Params }) {
+  const { slug } = await params;
+  const post = allPosts.find((post) => post.slug === slug);
 
   if (!post) {
     notFound();
@@ -59,7 +77,9 @@ export default async function Post({ params }: any) {
             datePublished: post.publishedAt,
             dateModified: post.lastModified,
             description: post.summary,
-            image: post.image ? `https://johnie.se${post.image}` : `https://johnie.se/og?title=${post.title}`,
+            image: post.image
+              ? `https://johnie.se${post.image}`
+              : `https://johnie.se/og?title=${post.title}`,
             url: `https://johnie.se/writing/${post.slug}`,
             author: {
               '@type': 'Person',
@@ -79,17 +99,26 @@ export default async function Post({ params }: any) {
           viewBox="0 0 24 24"
           stroke="currentColor"
         >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M15 19l-7-7 7-7"
+          />
         </svg>
         <span>Go back</span>
       </Link>
       <h1 className="text-3xl bg-clip-text text-transparent bg-gradient-to-r from-neutral-800 to-neutral-500 dark:from-neutral-100 dark:to-neutral-400 font-bold tracking-tighter title">
         {post.title}
       </h1>
-      <div className="flex justify-between items-center mt-2 mb-8 text-sm text-neutral-600 dark:text-neutral-400">
+      <div className="flex justify-between items-center mt-2 mb-8 text-sm text-neutral-600">
         <p>{format(new Date(post.publishedAt), 'dd MMMM, yyyy')}</p>
         <div className="flex gap-2">
           <p>{post.readingTime}</p>
+          <span>•</span>
+          <Suspense fallback={<p className="h-5" />}>
+            <Views slug={post.slug} />
+          </Suspense>
         </div>
       </div>
       <article
@@ -101,4 +130,12 @@ export default async function Post({ params }: any) {
       </article>
     </section>
   );
+}
+
+let incrementViews = cache(increment);
+
+async function Views({ slug }: { slug: string }) {
+  let views = await getViewsCount();
+  incrementViews(slug);
+  return <ViewCounter allViews={views} slug={slug} />;
 }
