@@ -1,3 +1,5 @@
+import Visitor from './visitor';
+
 const GetInTouch = ({ show }: { show: boolean }) => {
   if (!show) return null;
 
@@ -15,8 +17,9 @@ const GetInTouch = ({ show }: { show: boolean }) => {
 
 export const Footer = () => {
   return (
-    <footer role="contentinfo" className="my-10">
+    <footer role="contentinfo" className="my-10 space-y-2">
       <GetInTouch show={false} />
+      <Visitor />
       <h3 className="text-sm text-neutral-400 mb-2">
         © {new Date().getFullYear().toString()} Johnie Hjelm.
       </h3>
