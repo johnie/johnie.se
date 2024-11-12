@@ -1,13 +1,14 @@
-import { type Work } from 'content-collections';
+import { type Work, allWorks } from 'content-collections';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
 import { Skeleton } from './ui/skeleton';
 
-export const WorkExperience = ({ items }: { items: Work[] }) => {
+export const WorkExperience = () => {
+  const items = allWorks.toSorted((a, b) => b.startYear - a.startYear);
+
   if (!items) {
     return null;
   }
-  const workItems = items.toSorted((a, b) => b.startYear - a.startYear);
 
   return (
     <div>
@@ -31,7 +32,7 @@ export const WorkExperience = ({ items }: { items: Work[] }) => {
         </div>
       </div>
 
-      {workItems.map((work: Work, index, { length }) => (
+      {items.map((work: Work, index, { length }) => (
         <a
           key={work._id}
           href={work.url}

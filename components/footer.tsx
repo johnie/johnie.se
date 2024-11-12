@@ -1,13 +1,11 @@
-type FooterProps = {};
-
 const GetInTouch = ({ show }: { show: boolean }) => {
   if (!show) return null;
 
   return (
     <div className="text-sm flex items-center text-neutral-400 mb-8">
       <div className="animate-ping rounded-full bg-green-400 h-[8px] w-[8px] inline-block mr-2 absolute"></div>
-      <div className="rounded-full bg-green-400 h-[8px] w-[8px] inline-block mr-2"></div>Actively looking for new
-      projects.{' '}
+      <div className="rounded-full bg-green-400 h-[8px] w-[8px] inline-block mr-2"></div>
+      Actively looking for new projects.{' '}
       <a href="mailto:johnie@hjelm.im" className="border-b border-neutral-400">
         Get in touch!
       </a>
@@ -15,11 +13,13 @@ const GetInTouch = ({ show }: { show: boolean }) => {
   );
 };
 
-export const Footer = (props: FooterProps) => {
+export const Footer = () => {
   return (
     <footer role="contentinfo" className="my-10">
       <GetInTouch show={false} />
-      <h3 className="text-sm text-neutral-400 mb-2">© {new Date().getFullYear().toString()} Johnie Hjelm.</h3>
+      <h3 className="text-sm text-neutral-400 mb-2">
+        © {new Date().getFullYear().toString()} Johnie Hjelm.
+      </h3>
     </footer>
   );
 };

@@ -1,4 +1,3 @@
-import { allWorks, allProjects, allPosts } from 'content-collections';
 import { WorkExperience } from '@/components/work';
 import { Projects } from '@/components/projects';
 import { SocialLinks } from '@/components/socialLinks';
@@ -28,15 +27,15 @@ export default function Home() {
       <h3 className="mt-10 text-xl text-neutral-700 dark:text-neutral-200 mb-2">
         Latest Writing
       </h3>
-      <LatestWriting items={allPosts} amount={2} />
+      <LatestWriting />
       <h3 className="mt-10 text-xl text-neutral-700 dark:text-neutral-200 mb-2">
         Work
       </h3>
-      <WorkExperience items={allWorks} />
+      <WorkExperience />
       <h3 className="mt-10 text-xl text-neutral-700 dark:text-neutral-200 mb-2">
         Projects
       </h3>
-      <Projects items={allProjects} />
+      <Projects />
     </div>
   );
 }

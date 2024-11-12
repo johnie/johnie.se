@@ -132,10 +132,10 @@ export default async function Post({ params }: { params: Params }) {
   );
 }
 
-let incrementViews = cache(increment);
+const incrementViews = cache(increment);
 
 async function Views({ slug }: { slug: string }) {
-  let views = await getViewsCount();
+  const views = await getViewsCount();
   incrementViews(slug);
   return <ViewCounter allViews={views} slug={slug} />;
 }
