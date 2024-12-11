@@ -1,7 +1,6 @@
 import { type Work, allWorks } from 'content-collections';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
-import { Skeleton } from './ui/skeleton';
 
 export const WorkExperience = () => {
   if (!allWorks || allWorks.length === 0) {
@@ -11,26 +10,6 @@ export const WorkExperience = () => {
 
   return (
     <div>
-      <div className="flex gap-x-4 px-4 -mx-4 pt-4 rounded-[12px] border-none card-shine-effect">
-        <Skeleton className="w-[36px] h-[36px] rounded-full" />
-
-        <div
-          className={cn(
-            'flex flex-col text-sm flex-auto pb-4 text-neutral-700 group-hover:border-transparent dark:text-neutral-300 border-b border-neutral-100 dark:border-neutral-900'
-          )}
-        >
-          <div className="space-y-1">
-            <Skeleton className="w-12 h-4" />
-            <div className="text-neutral-500 dark:text-neutral-500 flex justify-between gap-x-2 items-center">
-              <Skeleton className="w-28 h-4" />
-              <div className="text-neutral-400 dark:text-neutral-500 tabular-nums">
-                2025 -
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
       {items.map((work: Work, index, { length }) => (
         <a
           key={work._id}
