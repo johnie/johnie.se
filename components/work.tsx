@@ -1,7 +1,6 @@
 import { type Work, allWorks } from 'content-collections';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
-import { Skeleton } from './ui/skeleton';
 
 export const WorkExperience = () => {
   if (!allWorks || allWorks.length === 0) {
