@@ -18,7 +18,7 @@ export const WorkExperience = () => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <div className="bg-neutral-100 dark:bg-neutral-800 w-[36px] h-[36px] rounded-full mt-[2px] flex-shrink-0 shadow-shorter overflow-hidden">
+          <div className="bg-neutral-100 dark:bg-neutral-800 w-[36px] h-[36px] rounded-full mt-[2px] shrink-0 shadow-shorter overflow-hidden">
             <div className="text-sm text-neutral-400 font-semibold flex justify-center items-center h-full">
               <Image
                 src={work.image as string}

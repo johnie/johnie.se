@@ -13,7 +13,7 @@ const About = () => {
 
   return (
     <div>
-      <h1 className="text-3xl bg-clip-text text-transparent bg-gradient-to-r from-neutral-800 to-neutral-500 dark:from-neutral-100 dark:to-neutral-400 font-semibold mb-8">
+      <h1 className="text-3xl bg-clip-text text-transparent bg-linear-to-r from-neutral-800 to-neutral-500 dark:from-neutral-100 dark:to-neutral-400 font-semibold mb-8">
         {content?.title}
       </h1>
       <article className="prose prose-quoteless prose-neutral dark:prose-invert">
