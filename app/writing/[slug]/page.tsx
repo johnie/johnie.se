@@ -108,7 +108,7 @@ export default async function Post({ params }: { params: Params }) {
         </svg>
         <span>Go back</span>
       </Link>
-      <h1 className="text-3xl bg-clip-text text-transparent bg-gradient-to-r from-neutral-800 to-neutral-500 dark:from-neutral-100 dark:to-neutral-400 font-bold tracking-tighter title">
+      <h1 className="text-3xl bg-clip-text text-transparent bg-linear-to-r from-neutral-800 to-neutral-500 dark:from-neutral-100 dark:to-neutral-400 font-bold tracking-tighter title">
         {post.title}
       </h1>
       <div className="flex justify-between items-center mt-2 mb-8 text-sm text-neutral-600">

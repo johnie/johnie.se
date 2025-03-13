@@ -19,7 +19,7 @@ export const Projects = () => {
           className="flex gap-x-4 px-4 -mx-4 pt-4 rounded-[12px] border-none hover:bg-neutral-50 dark:hover:bg-neutral-900 group transition-colors ease"
           href={project.url}
         >
-          <div className="bg-neutral-100 dark:bg-neutral-800 w-[36px] h-[36px] rounded-[10px] mt-[2px] flex-shrink-0 shadow-shorter overflow-hidden border border-neutral">
+          <div className="bg-neutral-100 dark:bg-neutral-800 w-[36px] h-[36px] rounded-[10px] mt-[2px] shrink-0 shadow-shorter overflow-hidden border border-neutral">
             <div className="text-sm text-neutral-400 font-semibold flex justify-center items-center h-full ">
               <Image
                 src={project.image as string}
