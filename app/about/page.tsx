@@ -17,12 +17,12 @@ const About = () => {
         {content?.title}
       </h1>
       <article className="prose prose-quoteless prose-neutral dark:prose-invert">
-        <div className="float-left w-full md:w-1/3 mr-0 md:mr-4 mb-4 md:mb-0">
+        <div className="w-full mb-4">
           <Image
             alt="Johnie"
-            src="/images/johnie.jpg"
-            width={400}
-            height={400}
+            src="/images/johnie-omni.jpg"
+            width={648}
+            height={432}
             placeholder="blur"
             blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAAmkwkpAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAP0lEQVQImQE0AMv/AFBQUJKSkqmpqaOjowCurq7v7+/Jycm5ubkA////jIyMn5+fg4ODADAwMD09PWlpaQAAAApRGnEHblMWAAAAAElFTkSuQmCC"
             className="rounded w-full h-auto"
