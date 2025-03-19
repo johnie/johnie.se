@@ -25,7 +25,7 @@ export const AboutActions = ({ bio }: { bio: string }) => {
       <a
         className="flex items-center px-4 py-2 rounded-[12px] border-none hover:bg-neutral-50 dark:hover:bg-neutral-900 transition-colors ease text-sm md:text-base text-neutral-500 dark:text-neutral-400 no-underline"
         download
-        href="/images/johnie.jpg"
+        href="/images/johnie-omni.jpg"
         onClick={downloadHeadshot}
       >
         <LucideFileImage className="h-[18px] w-[18px] text-current mr-2" />
