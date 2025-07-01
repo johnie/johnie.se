@@ -24,8 +24,8 @@
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
     "date-fns": "^4.1.0",
-    "framer-motion": "^12.19.1",
-    "lucide-react": "^0.522.0",
+    "framer-motion": "^12.20.1",
+    "lucide-react": "^0.525.0",
     "next": "15.3.4",
     "react": "19.1.0",
     "react-dom": "19.1.0",
@@ -40,22 +40,22 @@
     "tailwindcss-animate": "^1.0.7",
     "use-sync-external-store": "^1.5.0",
     "zod": "^3.25.67",
-    "zustand": "^5.0.5"
+    "zustand": "^5.0.6"
   },
   "devDependencies": {
     "@content-collections/core": "^0.9.1",
     "@content-collections/mdx": "^0.2.2",
     "@content-collections/next": "^0.2.6",
     "@shikijs/rehype": "^3.7.0",
-    "@tailwindcss/postcss": "^4.1.10",
+    "@tailwindcss/postcss": "^4.1.11",
     "@tailwindcss/typography": "^0.5.16",
     "@types/node": "latest",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
-    "eslint": "^9.29.0",
+    "eslint": "^9.30.0",
     "eslint-config-next": "15.3.4",
     "postcss": "^8.5.6",
-    "tailwindcss": "^4.1.10",
+    "tailwindcss": "^4.1.11",
     "typescript": "latest"
   }
 }
