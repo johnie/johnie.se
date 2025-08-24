@@ -2,7 +2,7 @@
 
 import clsx from 'clsx';
 import { usePathname } from 'next/navigation';
-import Link from 'next/link';
+import Link, { type LinkProps } from 'next/link';
 import { HTMLMotionProps, LayoutGroup, motion } from 'framer-motion';
 import { useMainStore } from '@/lib/mainStore';
 
@@ -11,7 +11,7 @@ import { LucideHome, LucideUser, LucidePen, LucideBrain } from 'lucide-react';
 
 type NavLink = {
   name: string;
-  href: string;
+  slug: string;
   icon?: ReactNode;
   enabled?: boolean;
 };
@@ -19,25 +19,25 @@ type NavLink = {
 export const NAV_LINKS: NavLink[] = [
   {
     name: 'Home',
-    href: '/',
+    slug: '/',
     icon: <LucideHome className="h-[18px] w-[18px] text-current" />,
     enabled: true,
   },
   {
     name: 'About',
-    href: '/about',
+    slug: '/about',
     icon: <LucideUser className="h-[18px] w-[18px] text-current" />,
     enabled: true,
   },
   {
     name: 'Writing',
-    href: '/writing',
+    slug: '/writing',
     icon: <LucidePen className="h-[18px] w-[18px] text-current" />,
     enabled: true,
   },
   {
     name: 'TIL',
-    href: '/til',
+    slug: '/til',
     icon: <LucideBrain className="h-[18px] w-[18px] text-current" />,
     enabled: true,
   },
@@ -57,18 +57,18 @@ export default function Navigation() {
         role="navigation"
       >
         <div className="flex flex-row space-x-2 bg-neutral-50 dark:bg-black p-1 rounded-lg text-sm">
-          {NAV_LINKS.filter((i) => Boolean(i.enabled)).map(({ href, name }) => {
-            const isActive = href === pathname;
+          {NAV_LINKS.filter((i) => Boolean(i.enabled)).map(({ slug, name }) => {
+            const isActive = slug === pathname;
             return (
               <Link
-                key={href}
-                href={href}
+                key={slug}
+                href={`${slug}` as LinkProps<'/'>['href']}
                 className={clsx('transition-all flex align-middle ease', {
                   'text-muted-foreground dark:text-muted-foreground': !isActive,
                 })}
               >
                 <span className="relative py-1 px-3">
-                  {href === pathname ? (
+                  {slug === pathname ? (
                     <motion.div
                       initial={false}
                       {...({
