@@ -1,5 +1,6 @@
 'use client';
 import { useEffect } from 'react';
+import { type Route } from 'next';
 import { useRouter } from 'next/navigation';
 import {
   CommandDialog,
@@ -29,14 +30,17 @@ export const CMD = () => {
     return () => document.removeEventListener('keydown', down);
   }, [toggleCmd]);
 
-  const goTo = (href: string) => {
-    if (href.startsWith('/')) {
-      push(href);
+  const goTo = (slug: string) => {
+    if (typeof slug === 'string' && slug.startsWith('/')) {
+      push(slug as Route);
       setCmd(false);
     }
 
-    if (href.startsWith('http') || href.startsWith('//')) {
-      window.open(href, '_blank');
+    if (
+      typeof slug === 'string' &&
+      (slug.startsWith('http') || slug.startsWith('//'))
+    ) {
+      window.open(slug, '_blank');
       setCmd(false);
     }
   };
@@ -49,10 +53,10 @@ export const CMD = () => {
         <CommandGroup heading="Suggestions"></CommandGroup>
         {navLinks
           .filter((i) => Boolean(i.enabled))
-          .map(({ href, name, icon }) => (
+          .map(({ slug, name, icon }) => (
             <CommandItem
-              key={href}
-              value={href}
+              key={slug}
+              value={slug}
               onSelect={(value) => goTo(value)}
             >
               {icon}
