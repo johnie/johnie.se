@@ -1,24 +1,23 @@
 import * as React from 'react';
-import Link, { LinkProps } from 'next/link';
+import Link from 'next/link';
 import Image, { ImageProps } from 'next/image';
 import { useMDXComponent } from '@content-collections/mdx/react';
 import type { MDXComponents } from 'mdx/types';
 import { Bio } from '@/components/bio';
 import { Badge } from './ui/badge';
 
-type CustomLinkProps = LinkProps & {
-  href: string;
+type CustomLinkProps = React.ComponentProps<typeof Link> & {
   children?: React.ReactNode;
-};
+} & React.ComponentProps<'a'>;
 
 const CustomLink: React.FC<CustomLinkProps> = (props) => {
   const href = props.href;
 
-  if (href.startsWith('/')) {
+  if (typeof href === 'string' && href.startsWith('/')) {
     return <Link {...props}>{props.children}</Link>;
   }
 
-  if (href.startsWith('#')) {
+  if (typeof href === 'string' && href.startsWith('#')) {
     return <a {...props} />;
   }
 
