@@ -1,5 +1,5 @@
 import { createHash } from 'crypto';
-import { readFileSync, statSync } from 'fs';
+import { statSync } from 'fs';
 import { exec } from 'child_process';
 import { defineCollection, defineConfig } from '@content-collections/core';
 import { compileMDX, Options } from '@content-collections/mdx';
@@ -8,6 +8,7 @@ import rehypeShiki from '@shikijs/rehype';
 import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import calcReadingTime from 'reading-time';
+import z from 'zod';
 
 function run(cmd: string) {
   return new Promise((resolve, reject) => {
@@ -74,7 +75,7 @@ const Post = defineCollection({
   name: 'Post',
   directory: 'content/',
   include: '*.mdx',
-  schema: (z) => ({
+  schema: z.object({
     title: z.string(),
     publishedAt: z
       .string()
@@ -120,7 +121,7 @@ const Page = defineCollection({
   name: 'Page',
   directory: 'content/page/',
   include: '*.mdx',
-  schema: (z) => ({
+  schema: z.object({
     title: z.string(),
     summary: z.string().optional(),
     image: z.string().optional(),
@@ -142,7 +143,7 @@ const Work = defineCollection({
   directory: 'content/work/',
   include: '*.yml',
   parser: 'yaml',
-  schema: (z) => ({
+  schema: z.object({
     company: z.string(),
     role: z.string(),
     url: z.string().optional(),
@@ -167,7 +168,7 @@ const Project = defineCollection({
   directory: 'content/projects/',
   include: '*.yml',
   parser: 'yaml',
-  schema: (z) => ({
+  schema: z.object({
     name: z.string(),
     description: z.string(),
     url: z.string().optional(),
@@ -189,7 +190,7 @@ export const TodayILearned = defineCollection({
   name: 'TodayILearned',
   directory: 'content/til',
   include: '*.mdx',
-  schema: (z) => ({
+  schema: z.object({
     publishedAt: z
       .string()
       .refine((value) => !isNaN(Date.parse(value)), 'Invalid date string')
