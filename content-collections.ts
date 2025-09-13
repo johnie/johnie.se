@@ -54,7 +54,7 @@ const mdxOptions: Options = {
   ],
 };
 
-const setStructuredData = (doc: any) => ({
+const setStructuredData = (doc: Post) => ({
   '@context': 'https://schema.org',
   '@type': 'BlogPosting',
   headline: doc.title,
@@ -71,20 +71,29 @@ const setStructuredData = (doc: any) => ({
   },
 });
 
+const PostSchema = z.object({
+  title: z.string(),
+  publishedAt: z
+    .string()
+    .refine((value) => !isNaN(Date.parse(value)), 'Invalid date string')
+    .transform<string>((value) => new Date(value).toISOString()),
+  summary: z.string().optional(),
+  image: z.string().optional(),
+  leading: z.boolean().optional().default(false),
+});
+
+type Post = z.infer<typeof PostSchema> & {
+  _meta: {
+    path: string;
+    filePath: string;
+  };
+};
+
 const Post = defineCollection({
   name: 'Post',
   directory: 'content/',
   include: '*.mdx',
-  schema: z.object({
-    title: z.string(),
-    publishedAt: z
-      .string()
-      .refine((value) => !isNaN(Date.parse(value)), 'Invalid date string')
-      .transform<string>((value) => new Date(value).toISOString()),
-    summary: z.string().optional(),
-    image: z.string().optional(),
-    leading: z.boolean().optional().default(false),
-  }),
+  schema: PostSchema,
   transform: async (document, context) => {
     const mdx = await compileMDX(context, document, mdxOptions);
     const slug = document._meta.path;
@@ -100,7 +109,7 @@ const Post = defineCollection({
             `git log -1 --format=%ai -- content/${filePath}`
           )) as string;
           return new Date(stdout.toString().trim()).toISOString();
-        } catch (error) {
+        } catch {
           return new Date().toISOString();
         }
       }
