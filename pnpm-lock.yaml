@@ -111,6 +111,9 @@ importers:
       '@content-collections/next':
         specifier: ^0.2.7
         version: 0.2.7(@content-collections/core@0.11.1(typescript@5.9.2))(next@15.5.3(@opentelemetry/api@1.7.0)(react-dom@19.1.1(react@19.1.1))(react@19.1.1))
+      '@eslint/eslintrc':
+        specifier: ^3.3.1
+        version: 3.3.1
       '@shikijs/rehype':
         specifier: ^3.12.2
         version: 3.12.2
