@@ -80,6 +80,7 @@ const PostSchema = z.object({
   summary: z.string().optional(),
   image: z.string().optional(),
   leading: z.boolean().optional().default(false),
+  content: z.string(),
 });
 
 type Post = z.infer<typeof PostSchema> & {
@@ -134,6 +135,7 @@ const Page = defineCollection({
     title: z.string(),
     summary: z.string().optional(),
     image: z.string().optional(),
+    content: z.string(),
   }),
   transform: async (document, context) => {
     const mdx = await compileMDX(context, document, mdxOptions);
@@ -207,6 +209,7 @@ export const TodayILearned = defineCollection({
       .optional(),
     type: z.enum(['article', 'code', 'podcast', 'general']).optional(),
     url: z.string().optional(),
+    content: z.string(),
   }),
   transform: async (document, context) => {
     const mdx = await compileMDX(context, document, mdxOptions);
