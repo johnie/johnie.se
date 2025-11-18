@@ -1,6 +1,6 @@
-import { type Work, allWorks } from 'content-collections';
-import { cn } from '@/lib/utils';
-import Image from 'next/image';
+import { allWorks, type Work } from "content-collections";
+import Image from "next/image";
+import { cn } from "@/lib/utils";
 
 export const WorkExperience = () => {
   if (!allWorks || allWorks.length === 0) {
@@ -12,40 +12,40 @@ export const WorkExperience = () => {
     <div>
       {items.map((work: Work, index, { length }) => (
         <a
-          key={work._id}
+          className="-mx-4 group ease flex gap-x-4 rounded-[12px] border-none px-4 pt-4 transition-colors hover:bg-neutral-50 dark:hover:bg-neutral-900"
           href={work.url}
-          className="flex gap-x-4 px-4 -mx-4 pt-4 rounded-[12px] border-none hover:bg-neutral-50 dark:hover:bg-neutral-900 group transition-colors ease"
-          target="_blank"
+          key={work._id}
           rel="noopener noreferrer"
+          target="_blank"
         >
-          <div className="bg-neutral-100 dark:bg-neutral-800 w-[36px] h-[36px] rounded-full mt-[2px] shrink-0 shadow-shorter overflow-hidden">
-            <div className="text-sm text-neutral-400 font-semibold flex justify-center items-center h-full">
+          <div className="mt-[2px] h-[36px] w-[36px] shrink-0 overflow-hidden rounded-full bg-neutral-100 shadow-shorter dark:bg-neutral-800">
+            <div className="flex h-full items-center justify-center font-semibold text-neutral-400 text-sm">
               <Image
-                src={work.image as string}
                 alt={`${work.company} logo`}
-                loading="lazy"
-                width="36"
-                height="36"
-                decoding="async"
+                className="h-[36px] w-[36px]"
                 data-nimg="1"
-                className="w-[36px] h-[36px]"
+                decoding="async"
+                height="36"
+                loading="lazy"
+                src={work.image as string}
+                width="36"
               />
             </div>
           </div>
           <div
             className={cn(
-              'flex flex-col text-sm flex-auto pb-4 text-neutral-700 group-hover:border-transparent dark:text-neutral-300',
+              "flex flex-auto flex-col pb-4 text-neutral-700 text-sm group-hover:border-transparent dark:text-neutral-300",
               {
-                'border-b border-neutral-100 dark:border-neutral-900':
+                "border-neutral-100 border-b dark:border-neutral-900":
                   index + 1 !== length,
               }
             )}
           >
             <div>{work.company}</div>
-            <div className="text-neutral-500 dark:text-neutral-500 flex justify-between gap-x-2 items-center">
+            <div className="flex items-center justify-between gap-x-2 text-neutral-500 dark:text-neutral-500">
               <div>{work.role}</div>
-              <div className="text-neutral-400 dark:text-neutral-500 tabular-nums">
-                {work.startYear} – {work?.present ? 'Now' : work.endYear}
+              <div className="text-neutral-400 tabular-nums dark:text-neutral-500">
+                {work.startYear} – {work?.present ? "Now" : work.endYear}
               </div>
             </div>
           </div>

@@ -1,6 +1,6 @@
-import { allPages } from 'content-collections';
-import { Mdx } from '@/components/mdx';
-import { notFound } from 'next/navigation';
+import { allPages } from "content-collections";
+import { notFound } from "next/navigation";
+import { Mdx } from "@/components/mdx";
 
 export default async function Page({
   params,
@@ -8,7 +8,7 @@ export default async function Page({
   params: Promise<{ slug: string }>;
 }) {
   const slug = (await params).slug;
-  const page = allPages.find((page) => page._meta.path === slug);
+  const page = allPages.find((p) => p._meta.path === slug);
 
   if (!page) {
     notFound();
@@ -16,7 +16,7 @@ export default async function Page({
 
   return (
     <article>
-      <h1 className="text-3xl bg-clip-text text-transparent bg-linear-to-r from-neutral-800 to-neutral-500 dark:from-neutral-100 dark:to-neutral-400 font-semibold mb-8">
+      <h1 className="mb-8 bg-linear-to-r from-neutral-800 to-neutral-500 bg-clip-text font-semibold text-3xl text-transparent dark:from-neutral-100 dark:to-neutral-400">
         {page?.title}
       </h1>
 

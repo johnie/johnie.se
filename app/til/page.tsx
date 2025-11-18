@@ -1,6 +1,6 @@
-import { allTodayILearneds } from '@/.content-collections/generated';
-import { Mdx } from '@/components/mdx';
-import { format } from 'date-fns';
+import { format } from "date-fns";
+import { allTodayILearneds } from "@/.content-collections/generated";
+import { Mdx } from "@/components/mdx";
 
 export default function TodayILearned() {
   const tilsDescending = allTodayILearneds.sort(
@@ -9,17 +9,17 @@ export default function TodayILearned() {
   );
   return (
     <section>
-      <h1 className="text-3xl bg-clip-text text-transparent bg-linear-to-r from-neutral-800 to-neutral-500 dark:from-neutral-100 dark:to-neutral-400 font-semibold mb-8">
+      <h1 className="mb-8 bg-linear-to-r from-neutral-800 to-neutral-500 bg-clip-text font-semibold text-3xl text-transparent dark:from-neutral-100 dark:to-neutral-400">
         Today I Learned
       </h1>
 
       {tilsDescending.map((til) => (
-        <div key={til.slug} className="mb-8">
-          <time className="text-neutral-600 dark:text-neutral-400 -ml-[42px] relative z-10 flex items-center font-mono text-sm font-bold">
-            <span className="size-8 flex justify-center items-center mr-2">
-              <span className="size-3 border-2 dark:border-neutral-200 border-neutral-800 rounded-full" />
+        <div className="mb-8" key={til.slug}>
+          <time className="-ml-[42px] relative z-10 flex items-center font-bold font-mono text-neutral-600 text-sm dark:text-neutral-400">
+            <span className="mr-2 flex size-8 items-center justify-center">
+              <span className="size-3 rounded-full border-2 border-neutral-800 dark:border-neutral-200" />
             </span>
-            {format(new Date(til.publishedAt), 'dd MMMM, yyyy')}
+            {format(new Date(til.publishedAt), "dd MMMM, yyyy")}
           </time>
           <div className="prose prose-quoteless prose-neutral dark:prose-invert prose-h3:mt-4">
             <Mdx code={til.mdx} />

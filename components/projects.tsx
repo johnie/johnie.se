@@ -1,6 +1,6 @@
-import { type Project, allProjects } from 'content-collections';
-import { cn } from '@/lib/utils';
-import Image from 'next/image';
+import { allProjects, type Project } from "content-collections";
+import Image from "next/image";
+import { cn } from "@/lib/utils";
 
 export const Projects = () => {
   if (!allProjects || allProjects.length === 0) {
@@ -15,36 +15,36 @@ export const Projects = () => {
     <div>
       {items.map((project: Project, index, { length }) => (
         <a
-          key={project._id}
-          className="flex gap-x-4 px-4 -mx-4 pt-4 rounded-[12px] border-none hover:bg-neutral-50 dark:hover:bg-neutral-900 group transition-colors ease"
+          className="-mx-4 group ease flex gap-x-4 rounded-[12px] border-none px-4 pt-4 transition-colors hover:bg-neutral-50 dark:hover:bg-neutral-900"
           href={project.url}
+          key={project._id}
         >
-          <div className="bg-neutral-100 dark:bg-neutral-800 w-[36px] h-[36px] rounded-[10px] mt-[2px] shrink-0 shadow-shorter overflow-hidden border border-neutral">
-            <div className="text-sm text-neutral-400 font-semibold flex justify-center items-center h-full ">
+          <div className="mt-[2px] h-[36px] w-[36px] shrink-0 overflow-hidden rounded-[10px] border border-neutral bg-neutral-100 shadow-shorter dark:bg-neutral-800">
+            <div className="flex h-full items-center justify-center font-semibold text-neutral-400 text-sm">
               <Image
-                src={project.image as string}
                 alt={`${project.name} logo`}
-                loading="lazy"
-                width="36"
-                height="36"
+                className="h-[36px] w-[36px]"
                 decoding="async"
-                className="w-[36px] h-[36px] "
+                height="36"
+                loading="lazy"
+                src={project.image as string}
+                width="36"
               />
             </div>
           </div>
           <div
             className={cn(
-              'flex flex-col text-sm flex-auto pb-4 text-neutral-700 group-hover:border-transparent dark:text-neutral-300',
+              "flex flex-auto flex-col pb-4 text-neutral-700 text-sm group-hover:border-transparent dark:text-neutral-300",
               {
-                'border-b border-neutral-100 dark:border-neutral-900':
+                "border-neutral-100 border-b dark:border-neutral-900":
                   index + 1 !== length,
               }
             )}
           >
             <div>{project.name}</div>
-            <div className="text-neutral-500 dark:text-neutral-500 flex justify-between gap-x-2 items-center">
+            <div className="flex items-center justify-between gap-x-2 text-neutral-500 dark:text-neutral-500">
               <div>{project.description}</div>
-              <div className="bg-neutral-100 border border-black border-opacity-5 px-2 text-xs rounded-full dark:bg-neutral-800 dark:text-neutral-500">
+              <div className="rounded-full border border-black border-opacity-5 bg-neutral-100 px-2 text-xs dark:bg-neutral-800 dark:text-neutral-500">
                 {project.projectType}
               </div>
             </div>

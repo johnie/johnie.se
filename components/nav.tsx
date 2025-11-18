@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import clsx from 'clsx';
-import { usePathname } from 'next/navigation';
-import Link, { type LinkProps } from 'next/link';
-import { HTMLMotionProps, LayoutGroup, motion } from 'framer-motion';
-import { useMainStore } from '@/lib/mainStore';
+import clsx from "clsx";
+import { type HTMLMotionProps, LayoutGroup, motion } from "framer-motion";
+import { LucideBrain, LucideHome, LucidePen, LucideUser } from "lucide-react";
+import Link, { type LinkProps } from "next/link";
+import { usePathname } from "next/navigation";
 
-import { ReactNode } from 'react';
-import { LucideHome, LucideUser, LucidePen, LucideBrain } from 'lucide-react';
+import type { ReactNode } from "react";
+import { useMainStore } from "@/lib/main-store";
 
 type NavLink = {
   name: string;
@@ -18,26 +18,26 @@ type NavLink = {
 
 export const NAV_LINKS: NavLink[] = [
   {
-    name: 'Home',
-    slug: '/',
+    name: "Home",
+    slug: "/",
     icon: <LucideHome className="h-[18px] w-[18px] text-current" />,
     enabled: true,
   },
   {
-    name: 'About',
-    slug: '/about',
+    name: "About",
+    slug: "/about",
     icon: <LucideUser className="h-[18px] w-[18px] text-current" />,
     enabled: true,
   },
   {
-    name: 'Writing',
-    slug: '/writing',
+    name: "Writing",
+    slug: "/writing",
     icon: <LucidePen className="h-[18px] w-[18px] text-current" />,
     enabled: true,
   },
   {
-    name: 'TIL',
-    slug: '/til',
+    name: "TIL",
+    slug: "/til",
     icon: <LucideBrain className="h-[18px] w-[18px] text-current" />,
     enabled: true,
   },
@@ -45,55 +45,53 @@ export const NAV_LINKS: NavLink[] = [
 
 export default function Navigation() {
   const { setCmd } = useMainStore();
-  let pathname = usePathname() || '/';
-  if (pathname.includes('/writing/')) {
-    pathname = '/writing';
+  let pathname = usePathname() || "/";
+  if (pathname.includes("/writing/")) {
+    pathname = "/writing";
   }
 
   return (
     <LayoutGroup>
-      <nav
-        className="flex flex-row items-center justify-end relative px-0 pb-0 fade md:relative"
-        role="navigation"
-      >
-        <div className="flex flex-row space-x-2 bg-neutral-50 dark:bg-black p-1 rounded-lg text-sm">
+      <nav className="fade relative flex flex-row items-center justify-end px-0 pb-0 md:relative">
+        <div className="flex flex-row space-x-2 rounded-lg bg-neutral-50 p-1 text-sm dark:bg-black">
           {NAV_LINKS.filter((i) => Boolean(i.enabled)).map(({ slug, name }) => {
             const isActive = slug === pathname;
             return (
               <Link
-                key={slug}
-                href={`${slug}` as LinkProps<'/'>['href']}
-                className={clsx('transition-all flex align-middle ease', {
-                  'text-muted-foreground dark:text-muted-foreground': !isActive,
+                className={clsx("ease flex align-middle transition-all", {
+                  "text-muted-foreground dark:text-muted-foreground": !isActive,
                 })}
+                href={`${slug}` as LinkProps<"/">["href"]}
+                key={slug}
               >
-                <span className="relative py-1 px-3">
+                <span className="relative px-3 py-1">
                   {slug === pathname ? (
                     <motion.div
                       initial={false}
                       {...({
                         className:
-                          'absolute h-full inset-0 bg-neutral-200 dark:bg-muted rounded-md',
-                      } as HTMLMotionProps<'div'>)}
+                          "absolute h-full inset-0 bg-neutral-200 dark:bg-muted rounded-md",
+                      } as HTMLMotionProps<"div">)}
                       layoutId="sidebar"
                       transition={{
-                        type: 'spring',
+                        type: "spring",
                         stiffness: 350,
                         damping: 30,
                       }}
                     />
                   ) : null}
-                  <span className="z-1 relative">{name}</span>
+                  <span className="relative z-1">{name}</span>
                 </span>
               </Link>
             );
           })}
         </div>
         <button
-          className="text-sm text-muted-foreground ml-2 cursor-pointer group hidden md:block"
+          className="group ml-2 hidden cursor-pointer text-muted-foreground text-sm md:block"
           onClick={() => setCmd(true)}
+          type="button"
         >
-          <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100 group-hover:bg-neutral-300 dark:group-hover:bg-neutral-700 transition-colors ease">
+          <kbd className="ease pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-medium font-mono text-[10px] text-muted-foreground opacity-100 transition-colors group-hover:bg-neutral-300 dark:group-hover:bg-neutral-700">
             <span className="text-xs">⌘</span>K
           </kbd>
         </button>

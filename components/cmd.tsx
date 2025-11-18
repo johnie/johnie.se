@@ -1,7 +1,9 @@
-'use client';
-import { useEffect } from 'react';
-import { type Route } from 'next';
-import { useRouter } from 'next/navigation';
+"use client";
+import type { Route } from "next";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { NAV_LINKS as navLinks } from "@/components/nav";
+import { LINKS as socialLinks } from "@/components/social-links";
 import {
   CommandDialog,
   CommandEmpty,
@@ -10,10 +12,8 @@ import {
   CommandItem,
   CommandList,
   CommandSeparator,
-} from '@/components/ui/command';
-import { LINKS as socialLinks } from '@/components/socialLinks';
-import { NAV_LINKS as navLinks } from '@/components/nav';
-import { useMainStore } from '@/lib/mainStore';
+} from "@/components/ui/command";
+import { useMainStore } from "@/lib/main-store";
 
 export const CMD = () => {
   const { toggleCmd, isCmdOpen, setCmd } = useMainStore();
@@ -21,43 +21,43 @@ export const CMD = () => {
 
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
-      if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
+      if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
         e.preventDefault();
         toggleCmd();
       }
     };
-    document.addEventListener('keydown', down);
-    return () => document.removeEventListener('keydown', down);
+    document.addEventListener("keydown", down);
+    return () => document.removeEventListener("keydown", down);
   }, [toggleCmd]);
 
   const goTo = (slug: string) => {
-    if (typeof slug === 'string' && slug.startsWith('/')) {
+    if (typeof slug === "string" && slug.startsWith("/")) {
       push(slug as Route);
       setCmd(false);
     }
 
     if (
-      typeof slug === 'string' &&
-      (slug.startsWith('http') || slug.startsWith('//'))
+      typeof slug === "string" &&
+      (slug.startsWith("http") || slug.startsWith("//"))
     ) {
-      window.open(slug, '_blank');
+      window.open(slug, "_blank");
       setCmd(false);
     }
   };
 
   return (
-    <CommandDialog open={isCmdOpen} onOpenChange={setCmd}>
+    <CommandDialog onOpenChange={setCmd} open={isCmdOpen}>
       <CommandInput placeholder="Type a command or search..." />
       <CommandList>
         <CommandEmpty>No results found.</CommandEmpty>
-        <CommandGroup heading="Suggestions"></CommandGroup>
+        <CommandGroup heading="Suggestions" />
         {navLinks
           .filter((i) => Boolean(i.enabled))
           .map(({ slug, name, icon }) => (
             <CommandItem
               key={slug}
-              value={slug}
               onSelect={(value) => goTo(value)}
+              value={slug}
             >
               {icon}
               <span className="ml-2">{name}</span>
@@ -70,8 +70,8 @@ export const CMD = () => {
             .map(({ href, name, icon }) => (
               <CommandItem
                 key={href}
-                value={href}
                 onSelect={(value) => goTo(value)}
+                value={href}
               >
                 {icon}
                 <span className="ml-2">{name}</span>

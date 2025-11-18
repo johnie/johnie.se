@@ -2,10 +2,10 @@ export default function robots() {
   return {
     rules: [
       {
-        userAgent: '*',
+        userAgent: "*",
       },
     ],
-    sitemap: 'https://johnie.se/sitemap.xml',
-    host: 'https://johnie.se',
+    sitemap: "https://johnie.se/sitemap.xml",
+    host: "https://johnie.se",
   };
 }
