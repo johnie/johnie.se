@@ -1,9 +1,8 @@
-import React from 'react';
-import { AboutActions } from '@/components/aboutActions';
+import { AboutActions } from "@/components/about-actions";
 
-const startYear = (startYear: number) => {
+const startYear = (year: number) => {
   const today = new Date();
-  const startDate = new Date(startYear, 0, 1);
+  const startDate = new Date(year, 0, 1);
   const yearsToday = today.getFullYear() - startDate.getFullYear();
   return yearsToday;
 };
@@ -15,15 +14,15 @@ const BIO = `Johnie Hjelm is a creative Technical Lead with over ${startYear(
 export function Bio() {
   return (
     <>
-      <h3 className="mt-10 text-xl text-neutral-800 dark:text-neutral-200 mb-4">
+      <h3 className="mt-10 mb-4 text-neutral-800 text-xl dark:text-neutral-200">
         Bio
       </h3>
-      <p className="leading-[25px] text-neutral-500 dark:text-neutral-400">
+      <p className="text-neutral-500 leading-[25px] dark:text-neutral-400">
         This is made for journalists, podcast hosts, and event organizers to
         copy-and-paste.
       </p>
-      <blockquote className="pl-6 my-4 border-l-2 border-neutral-500 dark:border-neutral-200">
-        <p className="leading-[25px] text-neutral-500 dark:text-neutral-400 italic">
+      <blockquote className="my-4 border-neutral-500 border-l-2 pl-6 dark:border-neutral-200">
+        <p className="text-neutral-500 italic leading-[25px] dark:text-neutral-400">
           {BIO}
         </p>
       </blockquote>

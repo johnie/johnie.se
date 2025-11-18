@@ -1,11 +1,11 @@
-'use server';
+"use server";
 
-import { unstable_noStore as noStore } from 'next/cache';
-import { turso } from './turso';
-import { env } from '@/lib/env';
+import { unstable_noStore as noStore } from "next/cache";
+import { env } from "@/lib/env";
+import { turso } from "./turso";
 
 export async function increment(slug: string) {
-  if (process.env.VERCEL_ENV === 'development') {
+  if (process.env.VERCEL_ENV === "development") {
     return;
   }
 
@@ -28,7 +28,7 @@ export async function getViewsCount(): Promise<View[]> {
 
   noStore();
   const { rows } = await turso.execute(
-    `SELECT slug, count, updated_at FROM views`
+    "SELECT slug, count, updated_at FROM views"
   );
 
   return rows as unknown as View[];

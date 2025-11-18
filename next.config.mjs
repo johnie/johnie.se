@@ -1,15 +1,15 @@
-import { get } from '@vercel/edge-config';
-import { withContentCollections } from '@content-collections/next';
+import { withContentCollections } from "@content-collections/next";
+import { get } from "@vercel/edge-config";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   typedRoutes: true,
   images: {
-    formats: ['image/avif', 'image/webp'],
+    formats: ["image/avif", "image/webp"],
   },
   redirects() {
     try {
-      return get('redirects');
+      return get("redirects");
     } catch {
       return [];
     }
@@ -17,7 +17,7 @@ const nextConfig = {
   headers() {
     return [
       {
-        source: '/(.*)',
+        source: "/(.*)",
         headers: securityHeaders,
       },
     ];
@@ -36,32 +36,32 @@ const ContentSecurityPolicy = `
 
 const securityHeaders = [
   {
-    key: 'Content-Security-Policy',
-    value: ContentSecurityPolicy.replace(/\n/g, ''),
+    key: "Content-Security-Policy",
+    value: ContentSecurityPolicy.replace(/\n/g, ""),
   },
   {
-    key: 'Referrer-Policy',
-    value: 'origin-when-cross-origin',
+    key: "Referrer-Policy",
+    value: "origin-when-cross-origin",
   },
   {
-    key: 'X-Frame-Options',
-    value: 'DENY',
+    key: "X-Frame-Options",
+    value: "DENY",
   },
   {
-    key: 'X-Content-Type-Options',
-    value: 'nosniff',
+    key: "X-Content-Type-Options",
+    value: "nosniff",
   },
   {
-    key: 'X-DNS-Prefetch-Control',
-    value: 'on',
+    key: "X-DNS-Prefetch-Control",
+    value: "on",
   },
   {
-    key: 'Strict-Transport-Security',
-    value: 'max-age=31536000; includeSubDomains; preload',
+    key: "Strict-Transport-Security",
+    value: "max-age=31536000; includeSubDomains; preload",
   },
   {
-    key: 'Permissions-Policy',
-    value: 'camera=(), microphone=(), geolocation=()',
+    key: "Permissions-Policy",
+    value: "camera=(), microphone=(), geolocation=()",
   },
 ];
 

@@ -1,33 +1,34 @@
-import './globals.css';
-import type { Metadata } from 'next';
-import Link from 'next/link';
-import { Inter } from 'next/font/google';
-import { OpenPanelComponent } from '@openpanel/nextjs';
-import { Toaster } from 'sonner';
-import { cn } from '@/lib/utils';
-import { Logo } from '@/components/logo';
-import Navigation from '@/components/nav';
-import { Footer } from '@/components/footer';
-import { CMD } from '@/components/cmd';
+import "./globals.css";
+import { OpenPanelComponent } from "@openpanel/nextjs";
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import Link from "next/link";
+import { Toaster } from "sonner";
+import { CMD } from "@/components/cmd";
+import { Footer } from "@/components/footer";
+import { Logo } from "@/components/logo";
+import Navigation from "@/components/nav";
+import { env } from "@/lib/env";
+import { cn } from "@/lib/utils";
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://johnie.se'),
+  metadataBase: new URL("https://johnie.se"),
   title: {
-    default: 'Johnie Hjelm',
-    template: '%s | Johnie Hjelm',
+    default: "Johnie Hjelm",
+    template: "%s | Johnie Hjelm",
   },
-  description: 'Committed to developing individuals and teams for success.',
-  authors: [{ name: 'Johnie Hjelm', url: 'https://johnie.se' }],
-  keywords: 'Johnie, Hjelm, Designer, Developer, Entrepreneur, Crip',
+  description: "Committed to developing individuals and teams for success.",
+  authors: [{ name: "Johnie Hjelm", url: "https://johnie.se" }],
+  keywords: "Johnie, Hjelm, Designer, Developer, Entrepreneur, Crip",
   openGraph: {
-    title: 'Johnie Hjelm',
-    description: 'Committed to developing individuals and teams for success.',
-    url: 'https://johnie.se',
-    siteName: 'Johnie Hjelm',
-    locale: 'en-US',
-    type: 'website',
+    title: "Johnie Hjelm",
+    description: "Committed to developing individuals and teams for success.",
+    url: "https://johnie.se",
+    siteName: "Johnie Hjelm",
+    locale: "en-US",
+    type: "website",
   },
   robots: {
     index: true,
@@ -35,14 +36,14 @@ export const metadata: Metadata = {
     googleBot: {
       index: true,
       follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
     },
   },
   twitter: {
-    title: 'Johnie Hjelm',
-    card: 'summary_large_image',
+    title: "Johnie Hjelm",
+    card: "summary_large_image",
   },
 };
 
@@ -53,17 +54,17 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={cn('antialiased', inter.className)}>
-        <div className="mx-auto w-full md:max-w-[680px] text-neutral-700 dark:text-neutral-300 px-4">
+      <body className={cn("antialiased", inter.className)}>
+        <div className="mx-auto w-full px-4 text-neutral-700 md:max-w-[680px] dark:text-neutral-300">
           <div>
-            <div className="flex flex-col w-full min-h-dvh justify-between">
-              <div className="py-8 md:py-16 grid grid-cols-2 items-center text-neutral-700 dark:text-neutral-300">
+            <div className="flex min-h-dvh w-full flex-col justify-between">
+              <div className="grid grid-cols-2 items-center py-8 text-neutral-700 md:py-16 dark:text-neutral-300">
                 <Link href="/" rel="home">
                   <Logo />
                 </Link>
                 <Navigation />
               </div>
-              <main role="main">{children}</main>
+              <main>{children}</main>
               <Footer />
             </div>
           </div>
@@ -71,10 +72,10 @@ export default function RootLayout({
         <Toaster richColors />
         <CMD />
         <OpenPanelComponent
-          clientId={process.env.OPENPANEL_CLIENT_ID!}
-          trackScreenViews={true}
-          trackOutgoingLinks={true}
+          clientId={env.OPENPANEL_CLIENT_ID}
           trackAttributes={true}
+          trackOutgoingLinks={true}
+          trackScreenViews={true}
         />
       </body>
     </html>

@@ -1,4 +1,4 @@
-import { type View } from '@/lib/actions';
+import type { View } from "@/lib/actions";
 
 export default function ViewCounter({
   slug,
@@ -8,8 +8,8 @@ export default function ViewCounter({
   allViews: View[];
   trackView?: boolean;
 }) {
-  const viewsForSlug = allViews && allViews.find((view) => view.slug === slug);
-  const number = new Number(viewsForSlug?.count || 0);
+  const viewsForSlug = allViews?.find((view) => view.slug === slug);
+  const number = Number(viewsForSlug?.count || 0);
 
   return <p>{`${number.toLocaleString()} views`}</p>;
 }

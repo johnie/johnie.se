@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
 @theme {
@@ -258,11 +258,20 @@
 
 .prose .anchor:after {
   @apply text-neutral-300 dark:text-neutral-700;
-  content: '#';
+  content: "#";
 }
 
 .prose *:hover > .anchor {
   @apply visible;
+}
+
+pre::-webkit-scrollbar {
+  display: none;
+}
+
+pre {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 
 .prose pre {
@@ -283,23 +292,14 @@
   @apply m-0;
 }
 
-code[class*='language-'],
-pre[class*='language-'] {
+code[class*="language-"],
+pre[class*="language-"] {
   @apply text-neutral-50;
 }
 
-pre::-webkit-scrollbar {
-  display: none;
-}
-
-pre {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
-}
-
 /* Remove Safari input shadow on mobile */
-input[type='text'],
-input[type='email'] {
+input[type="text"],
+input[type="email"] {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -352,7 +352,9 @@ table {
   overflow: hidden;
 
   background-repeat: no-repeat;
-  background-position: -100% 0, 0 0;
+  background-position:
+    -100% 0,
+    0 0;
 
   background-image: linear-gradient(
     var(--shine-deg),
@@ -364,7 +366,9 @@ table {
     transparent 100%
   );
 
-  background-size: 250% 250%, 100% 100%;
+  background-size:
+    250% 250%,
+    100% 100%;
 
   animation: shine 4s infinite;
 }
