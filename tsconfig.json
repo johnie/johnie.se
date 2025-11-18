@@ -1,10 +1,6 @@
 {
   "compilerOptions": {
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -22,14 +18,11 @@
       }
     ],
     "paths": {
-      "@/*": [
-        "./*"
-      ],
-      "content-collections": [
-        "./.content-collections/generated"
-      ]
+      "@/*": ["./*"],
+      "content-collections": ["./.content-collections/generated"]
     },
-    "target": "ES2017"
+    "target": "ES2017",
+    "strictNullChecks": true
   },
   "include": [
     "next-env.d.ts",
@@ -39,7 +32,5 @@
     ".content-collections/generated",
     ".next/dev/types/**/*.ts"
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }
