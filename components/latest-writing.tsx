@@ -1,31 +1,24 @@
 import { allPosts, type Post } from "content-collections";
 import { format } from "date-fns";
 import Link from "next/link";
-import { Suspense } from "react";
-import ViewCounter from "@/components/view-counter";
-import { getViewsCount } from "@/lib/actions";
+import { type JSX, Suspense } from "react";
+import { Views } from "@/components/views";
+import { sortPostsByDate } from "@/lib/content-utils";
 
 const TOTAL_ITEMS = 2;
 
-export const LatestWriting = () => {
+export const LatestWriting = (): JSX.Element | null => {
   if (!allPosts || allPosts.length === 0) {
     return null;
   }
 
-  const items = allPosts
-    .sort((a, b) => {
-      if (new Date(a.publishedAt) > new Date(b.publishedAt)) {
-        return -1;
-      }
-      return 1;
-    })
-    .slice(0, TOTAL_ITEMS);
+  const items = sortPostsByDate(allPosts).slice(0, TOTAL_ITEMS);
 
   return (
     <div>
       {items.map((post: Post) => (
         <Link
-          className="-mx-4 group ease flex gap-x-4 rounded-[12px] border-none px-4 py-4 transition-colors hover:bg-neutral-50 dark:hover:bg-neutral-900"
+          className="-mx-4 group ease flex gap-x-4 rounded-xl border-none px-4 py-4 transition-colors hover:bg-neutral-50 dark:hover:bg-neutral-900"
           href={`/writing/${post.slug}`}
           key={post.slug}
         >
@@ -48,8 +41,3 @@ export const LatestWriting = () => {
     </div>
   );
 };
-
-async function Views({ slug }: { slug: string }) {
-  const views = await getViewsCount();
-  return <ViewCounter allViews={views} slug={slug} />;
-}
