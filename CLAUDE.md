@@ -164,5 +164,5 @@ Available MDX components in posts:
 ## Security Notes
 
 - Strong CSP headers configured
-- SQL injection risk in `lib/actions.ts:14` - uses string interpolation instead of parameterized queries
+- Database queries use Drizzle ORM with proper parameterization
 - No API routes - all data fetching via server components/actions
