@@ -1,8 +1,10 @@
 "use server";
 
+import { sql } from "drizzle-orm";
 import { unstable_noStore as noStore } from "next/cache";
 import { env } from "@/lib/env";
-import { turso } from "./turso";
+import { views } from "./db/schema";
+import { db } from "./turso";
 
 export async function increment(slug: string) {
   if (process.env.VERCEL_ENV === "development") {
@@ -10,15 +12,22 @@ export async function increment(slug: string) {
   }
 
   noStore();
-  await turso.execute(
-    `INSERT INTO views (slug, count) VALUES ('${slug}', 1)  ON CONFLICT(slug) DO UPDATE SET count = views.count + 1, updated_at = CURRENT_TIMESTAMP;`
-  );
+  await db
+    .insert(views)
+    .values({ slug, count: 1 })
+    .onConflictDoUpdate({
+      target: views.slug,
+      set: {
+        count: sql`${views.count} + 1`,
+        updatedAt: sql`CURRENT_TIMESTAMP`,
+      },
+    });
 }
 
 export type View = {
   slug: string;
   count: number;
-  updated_at: string;
+  updatedAt: string;
 };
 
 export async function getViewsCount(): Promise<View[]> {
@@ -27,9 +36,11 @@ export async function getViewsCount(): Promise<View[]> {
   }
 
   noStore();
-  const { rows } = await turso.execute(
-    "SELECT slug, count, updated_at FROM views"
-  );
+  const result = await db.select().from(views);
 
-  return rows as unknown as View[];
+  return result.map((row) => ({
+    slug: row.slug,
+    count: row.count,
+    updatedAt: row.updatedAt,
+  }));
 }
