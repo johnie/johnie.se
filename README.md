@@ -19,7 +19,7 @@ Built with modern web technologies:
 - **[Zustand](https://zustand-demo.pmnd.rs)** — State management
 - **[OpenPanel](https://openpanel.dev)** — Privacy-first analytics
 - **[Vercel](https://vercel.com)** — Hosting and deployment
-
----
+- **[Drizzle ORM](https://orm.drizzle.team)** — Database operations
+- **[Ultracite](https://github.com/biomejs/biome)** — Code quality with Biome
 
 Built by [Johnie Hjelm](https://johnie.se)
