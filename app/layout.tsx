@@ -8,24 +8,25 @@ import { CMD } from "@/components/cmd";
 import { Footer } from "@/components/footer";
 import { Logo } from "@/components/logo";
 import Navigation from "@/components/nav";
+import { SITE_URL } from "@/lib/constants";
 import { env } from "@/lib/env";
 import { cn } from "@/lib/utils";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://johnie.se"),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "Johnie Hjelm",
     template: "%s | Johnie Hjelm",
   },
   description: "Committed to developing individuals and teams for success.",
-  authors: [{ name: "Johnie Hjelm", url: "https://johnie.se" }],
+  authors: [{ name: "Johnie Hjelm", url: SITE_URL }],
   keywords: "Johnie, Hjelm, Designer, Developer, Entrepreneur, Crip",
   openGraph: {
     title: "Johnie Hjelm",
     description: "Committed to developing individuals and teams for success.",
-    url: "https://johnie.se",
+    url: SITE_URL,
     siteName: "Johnie Hjelm",
     locale: "en-US",
     type: "website",

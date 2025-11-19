@@ -1,8 +1,9 @@
 import { allWorks, type Work } from "content-collections";
 import Image from "next/image";
+import type { JSX } from "react";
 import { cn } from "@/lib/utils";
 
-export const WorkExperience = () => {
+export const WorkExperience = (): JSX.Element | null => {
   if (!allWorks || allWorks.length === 0) {
     return null;
   }
@@ -12,21 +13,21 @@ export const WorkExperience = () => {
     <div>
       {items.map((work: Work, index, { length }) => (
         <a
-          className="-mx-4 group ease flex gap-x-4 rounded-[12px] border-none px-4 pt-4 transition-colors hover:bg-neutral-50 dark:hover:bg-neutral-900"
+          className="-mx-4 group ease flex gap-x-4 rounded-xl border-none px-4 pt-4 transition-colors hover:bg-neutral-50 dark:hover:bg-neutral-900"
           href={work.url}
           key={work._id}
           rel="noopener noreferrer"
           target="_blank"
         >
-          <div className="mt-[2px] h-[36px] w-[36px] shrink-0 overflow-hidden rounded-full bg-neutral-100 shadow-shorter dark:bg-neutral-800">
+          <div className="mt-0.5 h-9 w-9 shrink-0 overflow-hidden rounded-full bg-neutral-100 shadow-shorter dark:bg-neutral-800">
             <div className="flex h-full items-center justify-center font-semibold text-neutral-400 text-sm">
               <Image
                 alt={`${work.company} logo`}
-                className="h-[36px] w-[36px]"
-                data-nimg="1"
+                className="h-9 w-9"
                 decoding="async"
                 height="36"
-                loading="lazy"
+                loading={index < 2 ? undefined : "lazy"}
+                priority={index < 2}
                 src={work.image as string}
                 width="36"
               />

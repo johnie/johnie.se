@@ -146,7 +146,7 @@ function ConsCard({ title, cons }: ConsCardProps) {
   );
 }
 
-const components = {
+const components: MDXComponents = {
   Image: RoundedImage,
   a: CustomLink,
   Callout,
@@ -162,5 +162,5 @@ const components = {
 export function Mdx({ code }: { code: string }) {
   const Component = useMDXComponent(code);
 
-  return <Component components={components as MDXComponents} />;
+  return <Component components={components} />;
 }

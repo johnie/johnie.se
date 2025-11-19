@@ -1,8 +1,9 @@
 import { allProjects, type Project } from "content-collections";
 import Image from "next/image";
+import type { JSX } from "react";
 import { cn } from "@/lib/utils";
 
-export const Projects = () => {
+export const Projects = (): JSX.Element | null => {
   if (!allProjects || allProjects.length === 0) {
     return null;
   }
@@ -15,18 +16,19 @@ export const Projects = () => {
     <div>
       {items.map((project: Project, index, { length }) => (
         <a
-          className="-mx-4 group ease flex gap-x-4 rounded-[12px] border-none px-4 pt-4 transition-colors hover:bg-neutral-50 dark:hover:bg-neutral-900"
+          className="-mx-4 group ease flex gap-x-4 rounded-xl border-none px-4 pt-4 transition-colors hover:bg-neutral-50 dark:hover:bg-neutral-900"
           href={project.url}
           key={project._id}
         >
-          <div className="mt-[2px] h-[36px] w-[36px] shrink-0 overflow-hidden rounded-[10px] border border-neutral bg-neutral-100 shadow-shorter dark:bg-neutral-800">
+          <div className="mt-0.5 h-9 w-9 shrink-0 overflow-hidden rounded-[10px] border border-neutral bg-neutral-100 shadow-shorter dark:bg-neutral-800">
             <div className="flex h-full items-center justify-center font-semibold text-neutral-400 text-sm">
               <Image
                 alt={`${project.name} logo`}
-                className="h-[36px] w-[36px]"
+                className="h-9 w-9"
                 decoding="async"
                 height="36"
-                loading="lazy"
+                loading={index < 2 ? undefined : "lazy"}
+                priority={index < 2}
                 src={project.image as string}
                 width="36"
               />

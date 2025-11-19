@@ -6,7 +6,6 @@ export default function ViewCounter({
 }: {
   slug: string;
   allViews: View[];
-  trackView?: boolean;
 }) {
   const viewsForSlug = allViews?.find((view) => view.slug === slug);
   const number = Number(viewsForSlug?.count || 0);

@@ -5,16 +5,21 @@ import { Mdx } from "@/components/mdx";
 
 export const metadata: Metadata = {
   title: "About",
-  description: "Committed to developing individuals and teams for success.",
+  description:
+    "Learn about Johnie Hjelm, a designer, developer, and entrepreneur focused on building products and leading teams to success.",
 };
 
 const About = () => {
   const content = allPages.find((page) => page._meta.path === "about");
 
+  if (!content) {
+    return null;
+  }
+
   return (
     <div>
       <h1 className="mb-8 bg-linear-to-r from-neutral-800 to-neutral-500 bg-clip-text font-semibold text-3xl text-transparent dark:from-neutral-100 dark:to-neutral-400">
-        {content?.title}
+        {content.title}
       </h1>
       <article className="prose prose-quoteless prose-neutral dark:prose-invert">
         <div className="mb-4 w-full">
@@ -28,7 +33,7 @@ const About = () => {
             width={648}
           />
         </div>
-        <Mdx code={content?.mdx as string} />
+        <Mdx code={content.mdx} />
       </article>
     </div>
   );

@@ -40,7 +40,7 @@ export const CMD = () => {
       typeof slug === "string" &&
       (slug.startsWith("http") || slug.startsWith("//"))
     ) {
-      window.open(slug, "_blank");
+      window.open(slug, "_blank", "noopener,noreferrer");
       setCmd(false);
     }
   };
@@ -54,11 +54,7 @@ export const CMD = () => {
         {navLinks
           .filter((i) => Boolean(i.enabled))
           .map(({ slug, name, icon }) => (
-            <CommandItem
-              key={slug}
-              onSelect={(value) => goTo(value)}
-              value={slug}
-            >
+            <CommandItem key={slug} onSelect={() => goTo(slug)} value={slug}>
               {icon}
               <span className="ml-2">{name}</span>
             </CommandItem>
@@ -68,11 +64,7 @@ export const CMD = () => {
           {socialLinks
             .filter((i) => Boolean(i.enabled))
             .map(({ href, name, icon }) => (
-              <CommandItem
-                key={href}
-                onSelect={(value) => goTo(value)}
-                value={href}
-              >
+              <CommandItem key={href} onSelect={() => goTo(href)} value={href}>
                 {icon}
                 <span className="ml-2">{name}</span>
               </CommandItem>
