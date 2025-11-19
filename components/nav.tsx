@@ -87,6 +87,7 @@ export default function Navigation() {
           })}
         </div>
         <button
+          aria-label="Open command palette (⌘K)"
           className="group ml-2 hidden cursor-pointer text-muted-foreground text-sm md:block"
           onClick={() => setCmd(true)}
           type="button"
