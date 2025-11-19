@@ -37,7 +37,7 @@ export default async function BlogPage() {
           })
           .map((post) => (
             <Link
-              className="-mx-4 group ease flex gap-x-4 rounded-[12px] border-none px-4 py-4 transition-colors hover:bg-neutral-50 dark:hover:bg-neutral-900"
+              className="-mx-4 group ease flex gap-x-4 rounded-xl border-none px-4 py-4 transition-colors hover:bg-neutral-50 dark:hover:bg-neutral-900"
               href={`/writing/${post.slug}`}
               key={post.slug}
             >
