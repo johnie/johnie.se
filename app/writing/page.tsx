@@ -3,8 +3,8 @@ import { format } from "date-fns";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
-import ViewCounter from "@/components/view-counter";
-import { getViewsCount } from "@/lib/actions";
+import { Views } from "@/components/views";
+import { sortPostsByDate } from "@/lib/content-utils";
 
 export const metadata: Metadata = {
   title: "Writing",
@@ -28,41 +28,29 @@ export default async function BlogPage() {
         things I&lsquo;m working on.
       </p>
       <div>
-        {allPosts
-          .sort((a, b) => {
-            if (new Date(a.publishedAt) > new Date(b.publishedAt)) {
-              return -1;
-            }
-            return 1;
-          })
-          .map((post) => (
-            <Link
-              className="-mx-4 group ease flex gap-x-4 rounded-xl border-none px-4 py-4 transition-colors hover:bg-neutral-50 dark:hover:bg-neutral-900"
-              href={`/writing/${post.slug}`}
-              key={post.slug}
-            >
-              <div className="flex w-full flex-col space-y-1">
-                <p className="text-neutral-700 leading-snug tracking-tight dark:text-neutral-300">
-                  {post.title}
-                </p>
-                <div className="flex items-center gap-3 text-neutral-500 text-sm">
-                  <p>{format(new Date(post.publishedAt), "dd MMMM, yyyy")}</p>
-                  <span>•</span>
-                  <p>{post.readingTime}</p>
-                  <span>•</span>
-                  <Suspense fallback={<p className="h-4" />}>
-                    <Views slug={post.slug} />
-                  </Suspense>
-                </div>
+        {sortPostsByDate(allPosts).map((post) => (
+          <Link
+            className="-mx-4 group ease flex gap-x-4 rounded-xl border-none px-4 py-4 transition-colors hover:bg-neutral-50 dark:hover:bg-neutral-900"
+            href={`/writing/${post.slug}`}
+            key={post.slug}
+          >
+            <div className="flex w-full flex-col space-y-1">
+              <p className="text-neutral-700 leading-snug tracking-tight dark:text-neutral-300">
+                {post.title}
+              </p>
+              <div className="flex items-center gap-3 text-neutral-500 text-sm">
+                <p>{format(new Date(post.publishedAt), "dd MMMM, yyyy")}</p>
+                <span>•</span>
+                <p>{post.readingTime}</p>
+                <span>•</span>
+                <Suspense fallback={<p className="h-4" />}>
+                  <Views slug={post.slug} />
+                </Suspense>
               </div>
-            </Link>
-          ))}
+            </div>
+          </Link>
+        ))}
       </div>
     </section>
   );
-}
-
-async function Views({ slug }: { slug: string }) {
-  const views = await getViewsCount();
-  return <ViewCounter allViews={views} slug={slug} />;
 }
