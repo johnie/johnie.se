@@ -3,10 +3,10 @@ import { format } from "date-fns";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { cache, Suspense } from "react";
+import { Suspense } from "react";
 import { Mdx } from "@/components/mdx";
-import ViewCounter from "@/components/view-counter";
-import { getViewsCount, increment } from "@/lib/actions";
+import { Views } from "@/components/views";
+import { SITE_URL } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
 type Params = Promise<{ slug: string }>;
@@ -29,8 +29,8 @@ export async function generateMetadata({
     image,
   } = post;
   const ogImage = image
-    ? `https://johnie.se${image}`
-    : `https://johnie.se/og?title=${title}`;
+    ? `${SITE_URL}${image}`
+    : `${SITE_URL}/og?title=${title}`;
 
   return {
     title,
@@ -40,7 +40,7 @@ export async function generateMetadata({
       description,
       type: "article",
       publishedTime,
-      url: `https://johnie.se/writing/${slug}`,
+      url: `${SITE_URL}/writing/${slug}`,
       images: [
         {
           url: ogImage,
@@ -54,6 +54,12 @@ export async function generateMetadata({
       images: [ogImage],
     },
   };
+}
+
+export async function generateStaticParams() {
+  return allPosts.map((post) => ({
+    slug: post.slug,
+  }));
 }
 
 export default async function Post({ params }: { params: Params }) {
@@ -72,9 +78,9 @@ export default async function Post({ params }: { params: Params }) {
     dateModified: post.lastModified,
     description: post.summary,
     image: post.image
-      ? `https://johnie.se${post.image}`
-      : `https://johnie.se/og?title=${post.title}`,
-    url: `https://johnie.se/writing/${post.slug}`,
+      ? `${SITE_URL}${post.image}`
+      : `${SITE_URL}/og?title=${post.title}`,
+    url: `${SITE_URL}/writing/${post.slug}`,
     author: {
       "@type": "Person",
       name: "Johnie Hjelm",
@@ -122,7 +128,7 @@ export default async function Post({ params }: { params: Params }) {
           <p>{post.readingTime}</p>
           <span>•</span>
           <Suspense fallback={<p className="h-5" />}>
-            <Views slug={post.slug} />
+            <Views slug={post.slug} trackView />
           </Suspense>
         </div>
       </div>
@@ -135,12 +141,4 @@ export default async function Post({ params }: { params: Params }) {
       </article>
     </section>
   );
-}
-
-const incrementViews = cache(increment);
-
-async function Views({ slug }: { slug: string }) {
-  const views = await getViewsCount();
-  incrementViews(slug);
-  return <ViewCounter allViews={views} slug={slug} />;
 }
