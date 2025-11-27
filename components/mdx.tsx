@@ -68,7 +68,7 @@ const H2: React.FC<HeadingProps> = ({ children, ...props }) => (
 
 const H3: React.FC<HeadingProps> = ({ children, ...props }) => (
   <h3
-    className="mt-10 mb-2 text-neutral-800 text-xl dark:text-neutral-200"
+    className="mt-10 mb-2 text-lg text-neutral-800 dark:text-neutral-200"
     {...props}
   >
     {children}
