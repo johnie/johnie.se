@@ -68,11 +68,15 @@ const H2: React.FC<HeadingProps> = ({ children, ...props }) => (
 
 const H3: React.FC<HeadingProps> = ({ children, ...props }) => (
   <h3
-    className="mt-10 mb-2 text-lg text-neutral-800 dark:text-neutral-200"
+    className="scroll-m-20 font-semibold text-lg text-neutral-800 tracking-tight dark:text-neutral-200"
     {...props}
   >
     {children}
   </h3>
+);
+
+const UL = (props: React.ComponentProps<"ul">) => (
+  <ul className="my-6 list-disc [&>li]:mt-2" {...props} />
 );
 
 type ProsCardProps = {
@@ -153,6 +157,7 @@ const components: MDXComponents = {
   h1: H1,
   h2: H2,
   h3: H3,
+  ul: UL,
   ProsCard,
   ConsCard,
   Bio,
