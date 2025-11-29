@@ -6,6 +6,9 @@ const nextConfig = {
   typedRoutes: true,
   images: {
     formats: ["image/avif", "image/webp"],
+    remotePatterns: [
+      new URL("https://media0.giphy.com/**"),
+    ]
   },
   redirects() {
     try {
