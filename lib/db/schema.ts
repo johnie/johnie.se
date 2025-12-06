@@ -20,6 +20,9 @@ export const spotify = sqliteTable("SPOTIFY", {
   title: text("title").notNull(),
   artist: text("artist").notNull(),
   album: text("album").notNull(),
-  songUrl: text("song_url").notNull(),
-  updatedAt: text("updated_at").notNull().default(sql`(CURRENT_TIMESTAMP)`),
+  songUrl: text("song_url").notNull().unique(),
+  playCount: integer("play_count").notNull().default(1),
+  lastPlayedAt: text("last_played_at")
+    .notNull()
+    .default(sql`(CURRENT_TIMESTAMP)`),
 });

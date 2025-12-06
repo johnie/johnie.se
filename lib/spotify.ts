@@ -1,4 +1,4 @@
-import { desc } from "drizzle-orm";
+import { desc, sql } from "drizzle-orm";
 import { spotify } from "@/lib/db/schema";
 import { db } from "@/lib/turso";
 import { env } from "./env";
@@ -97,7 +97,7 @@ async function getLatestSongFromDb() {
   const [latestSong] = await db
     .select()
     .from(spotify)
-    .orderBy(desc(spotify.updatedAt))
+    .orderBy(desc(spotify.lastPlayedAt))
     .limit(1);
 
   return latestSong;
@@ -127,8 +127,17 @@ export async function getCurrentOrLastSong(): Promise<SongData | null> {
         songUrl: item.external_urls.spotify,
       };
 
-      // Update database with current song
-      await db.insert(spotify).values(songData);
+      // Update database with current song (upsert: increment play count if exists)
+      await db
+        .insert(spotify)
+        .values(songData)
+        .onConflictDoUpdate({
+          target: spotify.songUrl,
+          set: {
+            playCount: sql`${spotify.playCount} + 1`,
+            lastPlayedAt: sql`(CURRENT_TIMESTAMP)`,
+          },
+        });
 
       return {
         ...songData,
