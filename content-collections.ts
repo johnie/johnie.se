@@ -67,11 +67,20 @@ const setStructuredData = (doc: Post) => ({
   description: doc.summary,
   image: doc.image
     ? `https://johnie.se${doc.image}`
-    : `https://johnie.se/og?title=${doc.title}`,
-  url: `https://johnie.se/writings/${doc._meta.path}`,
+    : `https://johnie.se/og?title=${encodeURIComponent(doc.title)}`,
+  url: `https://johnie.se/writing/${doc._meta.path}`,
   author: {
     "@type": "Person",
     name: "Johnie Hjelm",
+    url: "https://johnie.se",
+  },
+  publisher: {
+    "@type": "Person",
+    name: "Johnie Hjelm",
+  },
+  mainEntityOfPage: {
+    "@type": "WebPage",
+    "@id": `https://johnie.se/writing/${doc._meta.path}`,
   },
 });
 
