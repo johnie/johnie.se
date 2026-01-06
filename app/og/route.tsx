@@ -3,15 +3,16 @@ import type { NextRequest } from "next/server";
 
 export const runtime = "edge";
 
+// Cache font at module level - only fetched once per cold start
+const fontData = fetch(
+  new URL("../../public/fonts/Inter-Bold.ttf", import.meta.url)
+).then((res) => res.arrayBuffer());
+
 export async function GET(req: NextRequest) {
   try {
     const { searchParams } = req.nextUrl;
     const postTitle = searchParams.get("title");
-
-    const font = fetch(
-      new URL("../../public/fonts/Inter-Bold.ttf", import.meta.url)
-    ).then((res) => res.arrayBuffer());
-    const fontData = await font;
+    const font = await fontData;
 
     return new ImageResponse(
       <div
@@ -52,7 +53,7 @@ export async function GET(req: NextRequest) {
         fonts: [
           {
             name: "Inter",
-            data: fontData,
+            data: font,
             style: "normal",
           },
         ],
