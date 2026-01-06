@@ -50,15 +50,16 @@ export const CMD = () => {
       <CommandInput placeholder="Type a command or search..." />
       <CommandList>
         <CommandEmpty>No results found.</CommandEmpty>
-        <CommandGroup heading="Suggestions" />
-        {navLinks
-          .filter((i) => Boolean(i.enabled))
-          .map(({ slug, name, icon }) => (
-            <CommandItem key={slug} onSelect={() => goTo(slug)} value={slug}>
-              {icon}
-              <span className="ml-2">{name}</span>
-            </CommandItem>
-          ))}
+        <CommandGroup heading="Navigation">
+          {navLinks
+            .filter((i) => Boolean(i.enabled))
+            .map(({ slug, name, icon }) => (
+              <CommandItem key={slug} onSelect={() => goTo(slug)} value={slug}>
+                {icon}
+                <span className="ml-2">{name}</span>
+              </CommandItem>
+            ))}
+        </CommandGroup>
         <CommandSeparator />
         <CommandGroup heading="External links">
           {socialLinks

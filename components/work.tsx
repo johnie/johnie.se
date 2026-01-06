@@ -13,7 +13,7 @@ export const WorkExperience = (): JSX.Element | null => {
     <div>
       {items.map((work: Work, index, { length }) => (
         <a
-          className="-mx-4 group ease flex gap-x-4 rounded-xl border-none px-4 pt-4 transition-colors hover:bg-neutral-50 dark:hover:bg-neutral-900"
+          className="group ease -mx-4 flex gap-x-4 rounded-xl border-none px-4 pt-4 transition-colors hover:bg-neutral-50 dark:hover:bg-neutral-900"
           href={work.url}
           key={work._id}
           rel="noopener noreferrer"

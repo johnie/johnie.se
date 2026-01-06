@@ -1,10 +1,10 @@
 import { create } from "zustand";
 
-export type MainStore = {
+export interface MainStore {
   isCmdOpen: boolean;
   toggleCmd: () => void;
   setCmd: (isCmdOpen: boolean) => void;
-};
+}
 
 export const useMainStore = create<MainStore>((set) => ({
   isCmdOpen: false,

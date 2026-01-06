@@ -5,12 +5,12 @@ import {
   LucideMail,
 } from "lucide-react";
 
-type SocialLink = {
+interface SocialLink {
   href: string;
   icon: React.ReactNode;
   name: string;
   enabled: boolean;
-};
+}
 
 const Bsky = () => (
   <svg
@@ -63,7 +63,7 @@ export const LINKS: SocialLink[] = [
 ];
 
 export const SocialLinks = () => (
-  <div className="-ml-2 mt-6 flex items-center">
+  <div className="mt-6 -ml-2 flex items-center">
     {LINKS.map((link: SocialLink) => (
       <a
         aria-label={link.name}
