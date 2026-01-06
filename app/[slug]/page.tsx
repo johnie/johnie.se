@@ -1,4 +1,5 @@
 import { allPages } from "content-collections";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Mdx } from "@/components/mdx";
 
@@ -6,6 +7,28 @@ export async function generateStaticParams() {
   return allPages.map((page) => ({
     slug: page._meta.path,
   }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const slug = (await params).slug;
+  const page = allPages.find((p) => p._meta.path === slug);
+
+  if (!page) {
+    return {};
+  }
+
+  return {
+    title: page.title,
+    description: page.summary,
+    openGraph: {
+      title: page.title,
+      description: page.summary,
+    },
+  };
 }
 
 export default async function Page({
