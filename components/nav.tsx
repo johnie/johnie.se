@@ -9,36 +9,36 @@ import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 import { useMainStore } from "@/lib/main-store";
 
-type NavLink = {
+interface NavLink {
   name: string;
   slug: string;
   icon?: ReactNode;
   enabled?: boolean;
-};
+}
 
 export const NAV_LINKS: NavLink[] = [
   {
     name: "Home",
     slug: "/",
-    icon: <LucideHome className="h-[18px] w-[18px] text-current" />,
+    icon: <LucideHome className="h-4.5 w-4.5 text-current" />,
     enabled: true,
   },
   {
     name: "About",
     slug: "/about",
-    icon: <LucideUser className="h-[18px] w-[18px] text-current" />,
+    icon: <LucideUser className="h-4.5 w-4.5 text-current" />,
     enabled: true,
   },
   {
     name: "Writing",
     slug: "/writing",
-    icon: <LucidePen className="h-[18px] w-[18px] text-current" />,
+    icon: <LucidePen className="h-4.5 w-4.5 text-current" />,
     enabled: true,
   },
   {
     name: "TIL",
     slug: "/til",
-    icon: <LucideBrain className="h-[18px] w-[18px] text-current" />,
+    icon: <LucideBrain className="h-4.5 w-4.5 text-current" />,
     enabled: true,
   },
 ];
