@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Link from "next/link";
 import { Toaster } from "sonner";
-import { CMD } from "@/components/cmd";
+import { CMD } from "@/components/cmd-loader";
 import { Footer } from "@/components/footer";
 import { Logo } from "@/components/logo";
 import Navigation from "@/components/nav";
@@ -12,7 +12,11 @@ import { SITE_URL } from "@/lib/constants";
 import { env } from "@/lib/env";
 import { cn } from "@/lib/utils";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -23,6 +27,11 @@ export const metadata: Metadata = {
   description: "Committed to developing individuals and teams for success.",
   authors: [{ name: "Johnie Hjelm", url: SITE_URL }],
   keywords: "Johnie, Hjelm, Designer, Developer, Entrepreneur, Crip",
+  alternates: {
+    types: {
+      "application/rss+xml": `${SITE_URL}/feed.xml`,
+    },
+  },
   openGraph: {
     title: "Johnie Hjelm",
     description: "Committed to developing individuals and teams for success.",
@@ -56,7 +65,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={cn("antialiased", inter.className)}>
-        <div className="mx-auto w-full px-4 text-neutral-700 md:max-w-[680px] dark:text-neutral-300">
+        <a
+          className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:bg-white focus:p-4 focus:text-black dark:focus:bg-black dark:focus:text-white"
+          href="#main-content"
+        >
+          Skip to content
+        </a>
+        <div className="mx-auto w-full px-4 text-neutral-700 md:max-w-170 dark:text-neutral-300">
           <div>
             <div className="flex min-h-dvh w-full flex-col justify-between">
               <div className="grid grid-cols-2 items-center py-8 text-neutral-700 md:py-16 dark:text-neutral-300">
@@ -65,7 +80,7 @@ export default function RootLayout({
                 </Link>
                 <Navigation />
               </div>
-              <main>{children}</main>
+              <main id="main-content">{children}</main>
               <Footer />
             </div>
           </div>
