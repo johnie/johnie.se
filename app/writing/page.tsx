@@ -18,7 +18,7 @@ export default async function BlogPage() {
       <h1 className="mb-8 bg-linear-to-r from-neutral-800 to-neutral-500 bg-clip-text font-semibold text-3xl text-transparent dark:from-neutral-100 dark:to-neutral-400">
         Stories. Updates. Guides.
       </h1>
-      <p className="mb-8 text-neutral-500 leading-[25px] dark:text-neutral-400">
+      <p className="mb-8 text-neutral-500 leading-6.25 dark:text-neutral-400">
         Here you&lsquo;ll find all the{" "}
         <span className="text-neutral-900 dark:text-neutral-200">
           {allPosts.length}
@@ -30,7 +30,7 @@ export default async function BlogPage() {
       <div>
         {sortPostsByDate(allPosts).map((post) => (
           <Link
-            className="-mx-4 group ease flex gap-x-4 rounded-xl border-none px-4 py-4 transition-colors hover:bg-neutral-50 dark:hover:bg-neutral-900"
+            className="group ease -mx-4 flex gap-x-4 rounded-xl border-none px-4 py-4 transition-colors hover:bg-neutral-50 dark:hover:bg-neutral-900"
             href={`/writing/${post.slug}`}
             key={post.slug}
           >
