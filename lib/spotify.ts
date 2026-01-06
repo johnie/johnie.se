@@ -1,42 +1,43 @@
 import { desc, sql } from "drizzle-orm";
+import { unstable_cache } from "next/cache";
 import { spotify } from "@/lib/db/schema";
 import { db } from "@/lib/turso";
 import { env } from "./env";
 
-type SpotifyTokenResponse = {
+interface SpotifyTokenResponse {
   access_token: string;
-};
+}
 
-type SpotifyArtist = {
+interface SpotifyArtist {
   name: string;
-};
+}
 
-type SpotifyAlbum = {
+interface SpotifyAlbum {
   name: string;
   artists: SpotifyArtist[];
-};
+}
 
-type SpotifyTrack = {
+interface SpotifyTrack {
   name: string;
   album: SpotifyAlbum;
   external_urls: {
     spotify: string;
   };
-};
+}
 
-type SpotifyCurrentlyPlayingResponse = {
+interface SpotifyCurrentlyPlayingResponse {
   currently_playing_type?: string;
   is_playing?: boolean;
   item?: SpotifyTrack;
-};
+}
 
-type SongData = {
+interface SongData {
   title: string;
   artist: string;
   album: string;
   songUrl: string;
   isPlaying: boolean;
-};
+}
 
 const basic = Buffer.from(
   `${env.SPOTIFY_API_CLIENT_ID}:${env.SPOTIFY_API_CLIENT_SECRET}`
@@ -103,7 +104,7 @@ async function getLatestSongFromDb() {
   return latestSong;
 }
 
-export async function getCurrentOrLastSong(): Promise<SongData | null> {
+async function getCurrentOrLastSongUncached(): Promise<SongData | null> {
   try {
     // Check if currently playing
     const nowPlaying = await getNowPlaying();
@@ -176,3 +177,10 @@ export async function getCurrentOrLastSong(): Promise<SongData | null> {
     };
   }
 }
+
+// Cache Spotify data for 60 seconds to reduce API calls
+export const getCurrentOrLastSong = unstable_cache(
+  getCurrentOrLastSongUncached,
+  ["spotify-current-song"],
+  { revalidate: 60, tags: ["spotify"] }
+);
