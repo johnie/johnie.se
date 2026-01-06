@@ -32,10 +32,10 @@ const RoundedImage: React.FC<CustomImageProps> = ({ alt, ...props }) => (
   <Image alt={alt} className="rounded-lg" {...props} />
 );
 
-type CalloutProps = {
+interface CalloutProps {
   emoji: string;
   children: React.ReactNode;
-};
+}
 
 const Callout: React.FC<CalloutProps> = ({ emoji, children }) => (
   <div className="mb-8 flex items-center rounded border border-neutral-200 bg-neutral-50 p-1 px-4 py-3 text-neutral-900 text-sm dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-100">
@@ -44,9 +44,9 @@ const Callout: React.FC<CalloutProps> = ({ emoji, children }) => (
   </div>
 );
 
-type HeadingProps = {
+interface HeadingProps {
   children: React.ReactNode;
-};
+}
 
 const H1: React.FC<HeadingProps> = ({ children, ...props }) => (
   <h1
@@ -79,10 +79,10 @@ const UL = (props: React.ComponentProps<"ul">) => (
   <ul className="my-6 list-disc [&>li]:mt-2" {...props} />
 );
 
-type ProsCardProps = {
+interface ProsCardProps {
   title: string;
   pros: string[];
-};
+}
 
 function ProsCard({ title, pros }: ProsCardProps) {
   return (
@@ -118,10 +118,10 @@ function ProsCard({ title, pros }: ProsCardProps) {
   );
 }
 
-type ConsCardProps = {
+interface ConsCardProps {
   title: string;
   cons: string[];
-};
+}
 
 function ConsCard({ title, cons }: ConsCardProps) {
   return (
