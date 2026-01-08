@@ -1,0 +1,5 @@
+trustedDependencies:
+  - '@parcel/watcher'
+  - 'esbuild'
+  - 'sharp'
+  - 'workerd'

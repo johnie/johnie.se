@@ -1,4 +1,12 @@
 {
   "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
-  "extends": ["ultracite/core", "ultracite/next"]
+  "extends": [
+    "ultracite/core",
+    "ultracite/biome/core",
+    "ultracite/biome/react",
+    "ultracite/biome/remix"
+  ],
+  "files": {
+    "includes": ["!wrangler.jsonc"]
+  }
 }
