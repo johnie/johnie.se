@@ -1,0 +1,22 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "johnie-se",
+  "main": "@tanstack/react-start/server-entry",
+  "compatibility_date": "2024-11-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "directory": ".output/public",
+    "binding": "ASSETS"
+  },
+  // R2 bucket for OG image caching (optional)
+  "r2_buckets": [
+    {
+      "binding": "OG_IMAGES",
+      "bucket_name": "johnie-se-og-images"
+    }
+  ],
+  // Environment variables
+  "vars": {
+    "SITE_URL": "https://johnie.se"
+  }
+}

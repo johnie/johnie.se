@@ -8,12 +8,10 @@
 # testing
 /coverage
 
-# next.js
-/.next/
-/out/
-
-# production
-/build
+# build output
+/.output/
+/dist/
+/build/
 
 # misc
 .DS_Store
@@ -25,14 +23,24 @@ yarn-debug.log*
 yarn-error.log*
 
 # local env files
+.env
 .env*.local
+.dev.vars
 
-# vercel
+# vercel (legacy)
 .vercel
+
+# cloudflare
+.wrangler
 
 # typescript
 *.tsbuildinfo
-next-env.d.ts
-.contentlayer
+
+# content-collections
 .content-collections
+
+# drizzle
 migrations
+
+# vite
+vite.config.ts.timestamp-*
