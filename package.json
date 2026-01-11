@@ -17,7 +17,6 @@
     "@libsql/client": "^0.15.15",
     "@mdx-js/loader": "^3.1.1",
     "@next/mdx": "16.1.1",
-    "@openpanel/nextjs": "^1.1.2",
     "@radix-ui/react-dialog": "^1.1.15",
     "@radix-ui/react-slot": "^1.2.4",
     "@t3-oss/env-nextjs": "^0.13.10",
