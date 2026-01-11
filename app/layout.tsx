@@ -1,15 +1,14 @@
 import "./globals.css";
-import { OpenPanelComponent } from "@openpanel/nextjs";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Link from "next/link";
+import Script from "next/script";
 import { Toaster } from "sonner";
 import { CMD } from "@/components/cmd-loader";
 import { Footer } from "@/components/footer";
 import { Logo } from "@/components/logo";
 import Navigation from "@/components/nav";
 import { SITE_URL } from "@/lib/constants";
-import { env } from "@/lib/env";
 import { cn } from "@/lib/utils";
 
 const inter = Inter({
@@ -87,11 +86,10 @@ export default function RootLayout({
         </div>
         <Toaster richColors />
         <CMD />
-        <OpenPanelComponent
-          clientId={env.OPENPANEL_CLIENT_ID}
-          trackAttributes={true}
-          trackOutgoingLinks={true}
-          trackScreenViews={true}
+        <Script
+          data-website-id="12583e8d-e6ac-4653-83f9-a8fd899f03fb"
+          defer
+          src="https://pulse.hjelm.cloud/script.js"
         />
       </body>
     </html>
