@@ -8,11 +8,20 @@ const nextConfig = {
     formats: ["image/avif", "image/webp"],
     remotePatterns: [new URL("https://media0.giphy.com/**")],
   },
-  redirects() {
+  async redirects() {
+    const manualRedirects = [
+      {
+        source: "/ai",
+        destination: "/writing/ai-manifesto",
+        permanent: true,
+      },
+    ];
+
     try {
-      return get("redirects");
+      const edgeConfigRedirects = await get("redirects");
+      return [...manualRedirects, ...(edgeConfigRedirects || [])];
     } catch {
-      return [];
+      return manualRedirects;
     }
   },
   headers() {
