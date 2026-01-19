@@ -1,0 +1,20 @@
+---
+publishedAt: '2026-01-19'
+type: code
+tags: ['claude-code', 'git']
+---
+
+### Disable Claude Code Attribution in Git Commits and PRs
+
+Claude Code adds "Co-authored-by" attribution to commits and PR descriptions by default. To disable this, configure empty strings in your settings:
+
+```json
+{
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  }
+}
+```
+
+Add this to `~/.claude/settings.json` for global configuration, or `.claude/settings.json` in your project root for per-project settings. Restart Claude Code for changes to take effect.
