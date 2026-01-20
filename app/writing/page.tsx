@@ -9,7 +9,7 @@ import { groupPostsByYear } from "@/lib/content-utils";
 export const metadata: Metadata = {
   title: "Writing",
   description:
-    "Read my thoughts on software development, leadership, tech career, and more.",
+    "Thoughts on AI-augmented engineering, leadership, and productivity systems.",
 };
 
 export default async function BlogPage() {
@@ -18,16 +18,13 @@ export default async function BlogPage() {
   return (
     <section>
       <h1 className="mb-8 bg-linear-to-r from-neutral-800 to-neutral-500 bg-clip-text font-semibold text-3xl text-transparent dark:from-neutral-100 dark:to-neutral-400">
-        Stories. Updates. Guides.
+        Thoughts. Tools. Leadership.
       </h1>
       <p className="mb-8 text-neutral-500 leading-6.25 dark:text-neutral-400">
-        Here you&lsquo;ll find all the{" "}
-        <span className="text-neutral-900 dark:text-neutral-200">
-          {allPosts.length}
-        </span>{" "}
-        articles on my thoughts on software development, leadership, tech
-        career, and more. I&lsquo;ll also share updates on my projects and other
-        things I&lsquo;m working on.
+        Here you&lsquo;ll find my thoughts on AI-augmented engineering,
+        leadership for makers, productivity systems, and the occasional personal
+        reflection. With 15+ years in tech, I write about what actually works,
+        and what I&lsquo;m still figuring out.
       </p>
       <div>
         {postsByYear.map(([year, posts]) => (
