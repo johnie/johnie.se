@@ -5,7 +5,7 @@ import { type JSX, Suspense } from "react";
 import { Views } from "@/components/views";
 import { sortPostsByDate } from "@/lib/content-utils";
 
-const TOTAL_ITEMS = 2;
+const TOTAL_ITEMS = 3;
 
 export const LatestWriting = (): JSX.Element | null => {
   if (!allPosts || allPosts.length === 0) {

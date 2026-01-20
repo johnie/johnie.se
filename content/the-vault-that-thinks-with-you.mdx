@@ -1,0 +1,256 @@
+---
+title: "The Vault That Thinks With You"
+summary: "A practical guide to building an AI-powered note-taking system that surfaces connections, maintains context, and evolves alongside your understanding."
+publishedAt: "2026-01-20"
+image: "/images/writing/vault.png"
+leading: false
+---
+
+<Image alt={'Obsidian Vault'} src={'/images/writing/vault.png'} width={1280} height={720} priority />
+
+Your notes are lonely.
+
+That brilliant insight from last Tuesday? Buried in a file you'll never open again. The connection between your API architecture decision and that article about performance tradeoffs? Lost forever because the two notes never met.
+
+Most note-taking is archaeology. You dig through folders hoping to find something useful. But what if your vault could think *with* you, surfacing connections, maintaining context, and evolving alongside your understanding?
+
+This is a practical guide to making that happen using [Obsidian](https://obsidian.md) and [Claude Code](https://claude.ai/code), combining the best local-first knowledge base with an AI that can read, understand, and help you navigate your thinking.
+
+## The Shift: Writer to Curator
+
+Traditional note-taking puts you in the writer's seat. You capture, you organize, you maintain. It's exhausting, which is why most systems collapse under their own weight.
+
+AI-powered note-taking inverts this. You become the curator, deciding what matters, what connects, what stays. The AI handles the grunt work: finding related notes, suggesting links, maintaining consistency.
+
+Your job shifts from "write everything down" to "judge what's valuable." The same way a senior engineer reviews code instead of writing every line, you review and refine what the AI produces.
+
+## Teaching Your AI: The CLAUDE.md Deep Dive
+
+[Claude](https://claude.ai/code) doesn't know your system. You have to teach it.
+
+The `CLAUDE.md` file is your teaching document, placed at your vault's root, it explains how your system works. Here's a practical structure:
+
+```markdown
+# Vault Philosophy
+
+This vault tracks projects, thinking, and reference material.
+Core principle: capture quickly, structure deliberately.
+
+## Structure (PARA-inspired)
+
+- `01_Inbox/` - Capture zone. Everything lands here first.
+- `02_Projects/` - Active work with clear outcomes
+- `03_Areas/` - Ongoing responsibilities (health, finances, home)
+- `04_Resources/` - Reference material organized by topic
+- `05_Archive/` - Completed or inactive items
+
+## Language Rules
+
+- Default to English for technical content
+- Swedish acceptable for personal notes
+- Keep titles in English for consistent linking
+
+## Frontmatter Standards
+
+Every note needs:
+---
+created: YYYY-MM-DD
+tags: [relevant, tags]
+status: active | completed | archived
+---
+
+## Linking Expectations
+
+- Link inline, not at the bottom. Write "because [[async beats sync]]"
+  not "Related: async-beats-sync"
+- Every note should have at least one incoming link
+- Hub pages link to all related notes in a topic
+
+## Naming Conventions
+
+Notes are claims, not topics:
+- *Don't*: "API design thoughts"
+- *Good*: "GraphQL works best for client-driven queries"
+
+The title should complete the sentence "I believe that..."
+
+## Overrides
+
+- Never create folders without asking
+- Always preserve existing frontmatter when editing
+- Suggest links but don't add them automatically
+
+## Vocabulary
+
+- WIP = Work in Progress (notes still being developed)
+- PR = Pull Request (not Public Relations)
+- MVP = Minimum Viable Product (not Most Valuable Player)
+- POC = Proof of Concept (not Point of Contact)
+```
+
+## The Daily Dance: Workflows
+
+### Morning Capture
+
+Dump everything into `01_Inbox/`. No structure, no formatting, just capture.
+
+### Inbox Processing (10 minutes)
+
+Ask Claude to process your inbox:
+
+> "Review 01_Inbox/. For each note: suggest a destination folder, recommend links to existing notes, and flag if it should be split into multiple notes."
+
+Review the suggestions. Move what makes sense. Delete what doesn't matter.
+
+### The Automation Layer
+
+For repetitive patterns, create slash commands. Example for processing meeting notes:
+
+```markdown
+# /process-meeting
+
+1. Read raw meeting notes in 01_Inbox/
+2. Extract: key decisions, action items (with owners), open questions
+3. Create structured note in 02_Projects/[relevant-project]/Meetings/
+4. Link action items to responsible person's [[People/Name]] notes
+5. Update project hub with decisions and next steps
+6. Flag any items needing calendar follow-up
+```
+
+This turns scattered notes into actionable structure in seconds.
+
+## Note Architecture
+
+### Before: The Isolated Note
+
+```markdown
+# Team Sync Jan 20
+
+Discussed the API refactor. Sarah thinks we should use GraphQL.
+Mike mentioned performance concerns. Need to follow up.
+Also talked about the release timeline.
+```
+
+This note will die alone. No links, vague title, no structure.
+
+### After: The Connected Hub
+
+```markdown
+---
+created: 2026-01-20
+tags: [meeting, api-refactor, team-sync]
+status: active
+---
+
+# API Refactor Discussion - Team Sync
+
+Weekly sync covering GraphQL migration decision and Q1 timeline.
+
+## Key Decisions
+
+- Moving forward with [[GraphQL migration]] for new endpoints
+- Keeping REST for legacy clients (see [[API versioning strategy]])
+- Timeline: complete by end Q1 2026
+
+## Action Items
+
+- **[[People/Sarah]]**: Draft GraphQL schema by Jan 27
+- **[[People/Mike]]**: Performance benchmarks for GraphQL vs REST by Feb 3
+- **[[People/Me]]**: Update [[02_Projects/API Refactor/Timeline]] with new dates
+
+## Open Questions
+
+- Caching strategy for GraphQL queries → discuss in [[Architecture Review Feb 1]]
+- Client migration plan for mobile apps → needs [[People/Emma]]'s input
+
+**Status:** In progress
+**Next sync:** Jan 27, 2026
+```
+
+### The Backlink Footer
+
+Always close with navigation:
+
+```markdown
+---
+
+**Back to:** [[02_Projects/API Refactor]] | [[Team Meetings Hub]]
+```
+
+This helps both you and Claude understand the note's place in the hierarchy.
+
+### Frontmatter for Tracking
+
+Use frontmatter for state that changes:
+
+```yaml
+---
+created: 2026-01-20
+status: action-items-pending
+meeting_type: team-sync
+action_owner: Sarah
+due_date: 2026-01-27
+---
+```
+
+Claude can query this: "Show me all meeting notes where `status: action-items-pending` and `due_date` is within the next 3 days."
+
+## Common Mistakes
+
+### Over-structuring too early
+
+You don't need 15 folders on day one. Start with inbox, active work, and archive. Add structure when you feel friction, not before.
+
+### Using AI as search instead of thinking partner
+
+- **Bad**: "Find my note about the API refactor"
+- **Good**: "We're deciding between GraphQL and REST for the new API. What concerns and insights from past architecture decisions should inform this choice?"
+
+Search finds files. Thinking partners synthesize.
+
+### Not reviewing Claude's work
+
+AI makes mistakes. It will:
+- Create duplicate notes
+- Misunderstand your conventions
+- Add links that don't make sense
+
+Always review. Your judgment is the quality filter.
+
+### Orphan notes
+
+A note without incoming links is invisible to the network. Every note should answer: "What other note would link here?" If nothing would link to it, it either needs to be split into linkable claims or it's not worth keeping.
+
+## Maintenance as Meditation
+
+This isn't busywork. Regular maintenance is how you stay connected to your thinking.
+
+### Weekly (15 minutes)
+
+- [ ] Inbox at zero
+- [ ] Check orphan notes ([Obsidian](https://obsidian.md) graph view helps)
+- [ ] Update one hub with recent connections
+
+### Monthly (30 minutes)
+
+- [ ] Archive completed projects
+- [ ] Review and update CLAUDE.md
+- [ ] Look for notes that should be merged
+
+### Quarterly (1 hour)
+
+- [ ] Philosophy review: Is the vault serving its purpose?
+- [ ] Structure audit: Do folders still make sense?
+- [ ] Link quality: Are connections meaningful or cluttered?
+
+## The Vault Remembers
+
+Here's the magic: Claude has no memory between sessions. But your vault does.
+
+When you teach Claude something, a convention, a connection, an insight, encode it in the vault. Write a note. Update CLAUDE.md. Add a link.
+
+Next session, Claude reads those notes and picks up where you left off. The vault becomes shared memory between you and every future AI session.
+
+Your notes stop being static files. They become a living system that thinks with you, remembers for you, and grows alongside your understanding.
+
+The question isn't whether to build this system. It's what you'll do with all that recovered mental space.
