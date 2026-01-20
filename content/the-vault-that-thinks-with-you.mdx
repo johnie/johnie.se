@@ -22,9 +22,7 @@ Traditional note-taking puts you in the writer's seat. You capture, you organize
 
 AI-powered note-taking inverts this. You become the curator, deciding what matters, what connects, what stays. The AI handles the grunt work: finding related notes, suggesting links, maintaining consistency.
 
-Your job shifts from "write everything down" to "judge what's valuable."
-
-This isn't laziness. It's leverage. The same way a senior engineer reviews code instead of writing every line, you review and refine what the AI produces.
+Your job shifts from "write everything down" to "judge what's valuable." The same way a senior engineer reviews code instead of writing every line, you review and refine what the AI produces.
 
 ## Teaching Your AI: The CLAUDE.md Deep Dive
 
@@ -55,13 +53,11 @@ Core principle: capture quickly, structure deliberately.
 ## Frontmatter Standards
 
 Every note needs:
-```yaml
 ---
 created: YYYY-MM-DD
 tags: [relevant, tags]
 status: active | completed | archived
 ---
-```
 
 ## Linking Expectations
 
@@ -73,29 +69,17 @@ status: active | completed | archived
 ## Naming Conventions
 
 Notes are claims, not topics:
-- ❌ "Hiring thoughts"
-- ✅ "Good hires communicate proactively"
+- *Don't*: "Hiring thoughts"
+- *Good*: "Good hires communicate proactively"
 
 The title should complete the sentence "I believe that..."
-```
 
-### What Heinrich Missed
-
-His article covers the philosophy beautifully but skips the mechanics. Here's what you actually need:
-
-**Override defaults explicitly.** Claude has opinions. If you want something specific, say it:
-
-```markdown
 ## Overrides
 
 - Never create folders without asking
 - Always preserve existing frontmatter when editing
 - Suggest links but don't add them automatically
-```
 
-**Teach your terminology.** If "PA" means "personal assistant" in your vault, say so:
-
-```markdown
 ## Vocabulary
 
 - PA = Personal Assistant (not Pennsylvania, not Public Address)
@@ -106,16 +90,7 @@ His article covers the philosophy beautifully but skips the mechanics. Here's wh
 
 ### Morning Capture
 
-Dump everything into inbox. Zero friction:
-
-```
-vault/01_Inbox/
-├── quick-thought-about-api.md
-├── meeting-notes-2026-01-20.md
-└── article-to-read-later.md
-```
-
-No structure, no formatting, just capture.
+Dump everything into `01_Inbox/`. No structure, no formatting, just capture.
 
 ### Inbox Processing (10 minutes)
 
@@ -140,19 +115,6 @@ For repetitive patterns, create slash commands. Example for processing job appli
 ```
 
 This turns a 15-minute task into a 2-minute review.
-
-### Weekly Review
-
-- Inbox zero: everything processed or deleted
-- Move completed projects to Archive
-- Check for orphan notes (no incoming links)
-- Update hub pages with new connections
-
-### Monthly Sweep
-
-- Archive stale projects (no updates in 30+ days)
-- Review CLAUDE.md, does it still reflect how you work?
-- Regenerate index if you use one
 
 ## Note Architecture
 
@@ -204,8 +166,6 @@ Following [[Structured hiring reduces bias]].
 **Next action:** Review new applications Friday
 ```
 
-The difference: this note *participates* in your vault. It links, it's linked to, it has clear structure for AI navigation.
-
 ### The Backlink Footer
 
 Always close with navigation:
@@ -237,17 +197,7 @@ Claude can query this: "Show me all notes where `responded: true` but `status: a
 
 ### Over-structuring too early
 
-You don't need 15 folders on day one. Start with:
-
-```
-vault/
-├── 01_Inbox/
-├── 02_Active/
-├── 03_Archive/
-└── CLAUDE.md
-```
-
-Add structure when you feel friction, not before.
+You don't need 15 folders on day one. Start with inbox, active work, and archive. Add structure when you feel friction, not before.
 
 ### Using AI as search instead of thinking partner
 
@@ -267,12 +217,7 @@ Always review. Your judgment is the quality filter.
 
 ### Orphan notes
 
-A note without incoming links is invisible to the network. Every note should answer: "What other note would link here?"
-
-If nothing would link to it, either:
-1. It belongs in a different vault
-2. It needs to be split into linkable claims
-3. It's not worth keeping
+A note without incoming links is invisible to the network. Every note should answer: "What other note would link here?" If nothing would link to it, it either needs to be split into linkable claims or it's not worth keeping.
 
 ## Maintenance as Meditation
 
