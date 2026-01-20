@@ -1,5 +1,5 @@
 "use client";
-import { LucideClipboardCopy, LucideFileImage } from "lucide-react";
+import { CopyIcon, FileImageIcon } from "@phosphor-icons/react";
 import { toast } from "sonner";
 
 const copyBio = (text: string) => {
@@ -18,7 +18,7 @@ export const AboutActions = ({ bio }: { bio: string }) => (
       onClick={() => copyBio(bio)}
       type="button"
     >
-      <LucideClipboardCopy className="mr-2 h-4.5 w-4.5 text-current" />
+      <CopyIcon className="mr-2 text-current" size={18} />
       Copy bio
     </button>
     <span className="mx-0 md:mx-4">•</span>
@@ -28,7 +28,7 @@ export const AboutActions = ({ bio }: { bio: string }) => (
       href="/images/johnie-omni.jpg"
       onClick={downloadHeadshot}
     >
-      <LucideFileImage className="mr-2 h-4.5 w-4.5 text-current" />
+      <FileImageIcon className="mr-2 text-current" size={18} />
       Download headshot
     </a>
   </div>

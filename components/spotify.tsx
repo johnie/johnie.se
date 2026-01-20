@@ -1,4 +1,4 @@
-import { Music2 } from "lucide-react";
+import { MusicNoteIcon } from "@phosphor-icons/react/dist/ssr";
 import { getCurrentOrLastSong } from "@/lib/spotify";
 import { cn } from "@/lib/utils";
 
@@ -17,11 +17,9 @@ export async function Spotify() {
       target="_blank"
     >
       <div className="flex items-center gap-2">
-        <Music2
-          className={cn(
-            "h-4 w-4",
-            song.isPlaying ? "text-[#1DB954]" : "text-neutral-500"
-          )}
+        <MusicNoteIcon
+          className={cn(song.isPlaying ? "text-[#1DB954]" : "text-neutral-500")}
+          size={16}
         />
       </div>
       <div className="flex items-center gap-1">

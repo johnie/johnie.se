@@ -1,8 +1,13 @@
 "use client";
 
+import {
+  BrainIcon,
+  HouseIcon,
+  PencilSimpleIcon,
+  UserIcon,
+} from "@phosphor-icons/react";
 import clsx from "clsx";
 import { type HTMLMotionProps, LayoutGroup, motion } from "framer-motion";
-import { LucideBrain, LucideHome, LucidePen, LucideUser } from "lucide-react";
 import Link, { type LinkProps } from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -20,25 +25,25 @@ export const NAV_LINKS: NavLink[] = [
   {
     name: "Home",
     slug: "/",
-    icon: <LucideHome className="h-4.5 w-4.5 text-current" />,
+    icon: <HouseIcon size={18} />,
     enabled: true,
   },
   {
     name: "About",
     slug: "/about",
-    icon: <LucideUser className="h-4.5 w-4.5 text-current" />,
+    icon: <UserIcon size={18} />,
     enabled: true,
   },
   {
     name: "Writing",
     slug: "/writing",
-    icon: <LucidePen className="h-4.5 w-4.5 text-current" />,
+    icon: <PencilSimpleIcon size={18} />,
     enabled: true,
   },
   {
     name: "TIL",
     slug: "/til",
-    icon: <LucideBrain className="h-4.5 w-4.5 text-current" />,
+    icon: <BrainIcon size={18} />,
     enabled: true,
   },
 ];
