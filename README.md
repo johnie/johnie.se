@@ -1,6 +1,7 @@
 # johnie.se
 
 Personal website and digital garden for Johnie Hjelm.
+Features blog posts, TIL entries, work history, and projects.
 
 **[johnie.se](https://johnie.se)**
 
@@ -20,6 +21,6 @@ Built with modern web technologies:
 - **[OpenPanel](https://openpanel.dev)** — Privacy-first analytics
 - **[Vercel](https://vercel.com)** — Hosting and deployment
 - **[Drizzle ORM](https://orm.drizzle.team)** — Database operations
-- **[Ultracite](https://github.com/biomejs/biome)** — Code quality with Biome
+- **[Ultracite](https://www.ultracite.ai/)** — Code quality (Biome preset)
 
 Built by [Johnie Hjelm](https://johnie.se)
