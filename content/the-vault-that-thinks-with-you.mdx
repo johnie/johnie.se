@@ -1,0 +1,309 @@
+---
+title: "The Vault That Thinks With You"
+summary: "A practical guide to building an AI-powered note-taking system that surfaces connections, maintains context, and evolves alongside your understanding."
+publishedAt: "2026-01-20"
+image: "/images/writing/vault.png"
+leading: false
+---
+
+<Image alt={'Obsidian Vault'} src={'/images/writing/vault.png'} width={1280} height={720} priority />
+
+Your notes are lonely.
+
+That brilliant insight from last Tuesday? Buried in a file you'll never open again. The connection between your hiring process and that article about async communication? Lost forever because the two notes never met.
+
+Most note-taking is archaeology. You dig through folders hoping to find something useful. But what if your vault could think *with* you, surfacing connections, maintaining context, and evolving alongside your understanding?
+
+This is a practical guide to making that happen using [Obsidian](https://obsidian.md) and [Claude Code](https://claude.ai/code), combining the best local-first knowledge base with an AI that can read, understand, and help you navigate your thinking.
+
+## The Shift: Writer to Curator
+
+Traditional note-taking puts you in the writer's seat. You capture, you organize, you maintain. It's exhausting, which is why most systems collapse under their own weight.
+
+AI-powered note-taking inverts this. You become the curator, deciding what matters, what connects, what stays. The AI handles the grunt work: finding related notes, suggesting links, maintaining consistency.
+
+Your job shifts from "write everything down" to "judge what's valuable."
+
+This isn't laziness. It's leverage. The same way a senior engineer reviews code instead of writing every line, you review and refine what the AI produces.
+
+## Teaching Your AI: The CLAUDE.md Deep Dive
+
+[Claude](https://claude.ai/code) doesn't know your system. You have to teach it.
+
+The `CLAUDE.md` file is your teaching document, placed at your vault's root, it explains how your system works. Here's a practical structure:
+
+```markdown
+# Vault Philosophy
+
+This vault tracks projects, thinking, and reference material.
+Core principle: capture quickly, structure deliberately.
+
+## Structure (PARA-inspired)
+
+- `01_Inbox/` - Capture zone. Everything lands here first.
+- `02_Projects/` - Active work with clear outcomes
+- `03_Areas/` - Ongoing responsibilities (health, finances, home)
+- `04_Resources/` - Reference material organized by topic
+- `05_Archive/` - Completed or inactive items
+
+## Language Rules
+
+- Default to English for technical content
+- Swedish acceptable for personal notes
+- Keep titles in English for consistent linking
+
+## Frontmatter Standards
+
+Every note needs:
+```yaml
+---
+created: YYYY-MM-DD
+tags: [relevant, tags]
+status: active | completed | archived
+---
+```
+
+## Linking Expectations
+
+- Link inline, not at the bottom. Write "because [[async beats sync]]"
+  not "Related: async-beats-sync"
+- Every note should have at least one incoming link
+- Hub pages link to all related notes in a topic
+
+## Naming Conventions
+
+Notes are claims, not topics:
+- ❌ "Hiring thoughts"
+- ✅ "Good hires communicate proactively"
+
+The title should complete the sentence "I believe that..."
+```
+
+### What Heinrich Missed
+
+His article covers the philosophy beautifully but skips the mechanics. Here's what you actually need:
+
+**Override defaults explicitly.** Claude has opinions. If you want something specific, say it:
+
+```markdown
+## Overrides
+
+- Never create folders without asking
+- Always preserve existing frontmatter when editing
+- Suggest links but don't add them automatically
+```
+
+**Teach your terminology.** If "PA" means "personal assistant" in your vault, say so:
+
+```markdown
+## Vocabulary
+
+- PA = Personal Assistant (not Pennsylvania, not Public Address)
+- WIP = Work in Progress (notes still being developed)
+```
+
+## The Daily Dance: Workflows
+
+### Morning Capture
+
+Dump everything into inbox. Zero friction:
+
+```
+vault/01_Inbox/
+├── quick-thought-about-api.md
+├── meeting-notes-2026-01-20.md
+└── article-to-read-later.md
+```
+
+No structure, no formatting, just capture.
+
+### Inbox Processing (10 minutes)
+
+Ask Claude to process your inbox:
+
+> "Review 01_Inbox/. For each note: suggest a destination folder, recommend links to existing notes, and flag if it should be split into multiple notes."
+
+Review the suggestions. Move what makes sense. Delete what doesn't matter.
+
+### The Automation Layer
+
+For repetitive patterns, create slash commands. Example for processing job applications:
+
+```markdown
+# /process-application
+
+1. Read the new application in 01_Inbox/
+2. Extract: name, key skills, communication style, red flags
+3. Create note in 02_Projects/Hiring/Applications/
+4. Link to [[Hiring Project Hub]]
+5. Add to comparison table if multiple candidates exist
+```
+
+This turns a 15-minute task into a 2-minute review.
+
+### Weekly Review
+
+- Inbox zero: everything processed or deleted
+- Move completed projects to Archive
+- Check for orphan notes (no incoming links)
+- Update hub pages with new connections
+
+### Monthly Sweep
+
+- Archive stale projects (no updates in 30+ days)
+- Review CLAUDE.md, does it still reflect how you work?
+- Regenerate index if you use one
+
+## Note Architecture
+
+### Before: The Isolated Note
+
+```markdown
+# Hiring Thoughts
+
+Need to find a PA. Should be good at communication.
+Maybe look at care.com or similar.
+```
+
+This note will die alone. No links, vague title, no structure.
+
+### After: The Connected Hub
+
+```markdown
+---
+created: 2026-01-15
+tags: [project, hiring, active]
+status: active
+---
+
+# PA Hiring Project
+
+Finding a personal assistant for daily support tasks.
+
+## Key Insight
+
+[[Good PAs communicate proactively]], this matters more than
+specific skills because tasks change but communication style doesn't.
+
+## Candidates
+
+- [[Application - Maria S]] - Strong async communication
+- [[Application - Erik L]] - Local, flexible schedule
+
+## Process
+
+Following [[Structured hiring reduces bias]].
+
+## Timeline
+
+- Week 1: Post and collect applications
+- Week 2: Initial screening via [[Async interview questions]]
+- Week 3: Trial tasks with top 2 candidates
+
+**Status:** Screening phase
+**Next action:** Review new applications Friday
+```
+
+The difference: this note *participates* in your vault. It links, it's linked to, it has clear structure for AI navigation.
+
+### The Backlink Footer
+
+Always close with navigation:
+
+```markdown
+---
+
+**Back to:** [[Areas/Home Management]] | [[Projects Overview]]
+```
+
+This helps both you and Claude understand the note's place in the hierarchy.
+
+### Frontmatter for Tracking
+
+Use frontmatter for state that changes:
+
+```yaml
+---
+created: 2026-01-18
+status: awaiting-response
+responded: true
+next_action: follow-up if no reply by 2026-01-22
+---
+```
+
+Claude can query this: "Show me all notes where `responded: true` but `status: awaiting-response` for more than 3 days."
+
+## Common Mistakes
+
+### Over-structuring too early
+
+You don't need 15 folders on day one. Start with:
+
+```
+vault/
+├── 01_Inbox/
+├── 02_Active/
+├── 03_Archive/
+└── CLAUDE.md
+```
+
+Add structure when you feel friction, not before.
+
+### Using AI as search instead of thinking partner
+
+Bad: "Find my note about hiring"
+Good: "I'm preparing for a candidate interview. What patterns have I noticed in successful vs unsuccessful hires based on my notes?"
+
+Search finds files. Thinking partners synthesize.
+
+### Not reviewing Claude's work
+
+AI makes mistakes. It will:
+- Create duplicate notes
+- Misunderstand your conventions
+- Add links that don't make sense
+
+Always review. Your judgment is the quality filter.
+
+### Orphan notes
+
+A note without incoming links is invisible to the network. Every note should answer: "What other note would link here?"
+
+If nothing would link to it, either:
+1. It belongs in a different vault
+2. It needs to be split into linkable claims
+3. It's not worth keeping
+
+## Maintenance as Meditation
+
+This isn't busywork. Regular maintenance is how you stay connected to your thinking.
+
+### Weekly (15 minutes)
+
+- [ ] Inbox at zero
+- [ ] Check orphan notes ([Obsidian](https://obsidian.md) graph view helps)
+- [ ] Update one hub with recent connections
+
+### Monthly (30 minutes)
+
+- [ ] Archive completed projects
+- [ ] Review and update CLAUDE.md
+- [ ] Look for notes that should be merged
+
+### Quarterly (1 hour)
+
+- [ ] Philosophy review: Is the vault serving its purpose?
+- [ ] Structure audit: Do folders still make sense?
+- [ ] Link quality: Are connections meaningful or cluttered?
+
+## The Vault Remembers
+
+Here's the magic: Claude has no memory between sessions. But your vault does.
+
+When you teach Claude something, a convention, a connection, an insight, encode it in the vault. Write a note. Update CLAUDE.md. Add a link.
+
+Next session, Claude reads those notes and picks up where you left off. The vault becomes shared memory between you and every future AI session.
+
+Your notes stop being static files. They become a living system that thinks with you, remembers for you, and grows alongside your understanding.
+
+The question isn't whether to build this system. It's what you'll do with all that recovered mental space.
