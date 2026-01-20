@@ -10,7 +10,7 @@ leading: false
 
 Your notes are lonely.
 
-That brilliant insight from last Tuesday? Buried in a file you'll never open again. The connection between your hiring process and that article about async communication? Lost forever because the two notes never met.
+That brilliant insight from last Tuesday? Buried in a file you'll never open again. The connection between your API architecture decision and that article about performance tradeoffs? Lost forever because the two notes never met.
 
 Most note-taking is archaeology. You dig through folders hoping to find something useful. But what if your vault could think *with* you, surfacing connections, maintaining context, and evolving alongside your understanding?
 
@@ -69,8 +69,8 @@ status: active | completed | archived
 ## Naming Conventions
 
 Notes are claims, not topics:
-- *Don't*: "Hiring thoughts"
-- *Good*: "Good hires communicate proactively"
+- *Don't*: "API design thoughts"
+- *Good*: "GraphQL works best for client-driven queries"
 
 The title should complete the sentence "I believe that..."
 
@@ -82,8 +82,10 @@ The title should complete the sentence "I believe that..."
 
 ## Vocabulary
 
-- PA = Personal Assistant (not Pennsylvania, not Public Address)
 - WIP = Work in Progress (notes still being developed)
+- PR = Pull Request (not Public Relations)
+- MVP = Minimum Viable Product (not Most Valuable Player)
+- POC = Proof of Concept (not Point of Contact)
 ```
 
 ## The Daily Dance: Workflows
@@ -102,29 +104,31 @@ Review the suggestions. Move what makes sense. Delete what doesn't matter.
 
 ### The Automation Layer
 
-For repetitive patterns, create slash commands. Example for processing job applications:
+For repetitive patterns, create slash commands. Example for processing meeting notes:
 
 ```markdown
-# /process-application
+# /process-meeting
 
-1. Read the new application in 01_Inbox/
-2. Extract: name, key skills, communication style, red flags
-3. Create note in 02_Projects/Hiring/Applications/
-4. Link to [[Hiring Project Hub]]
-5. Add to comparison table if multiple candidates exist
+1. Read raw meeting notes in 01_Inbox/
+2. Extract: key decisions, action items (with owners), open questions
+3. Create structured note in 02_Projects/[relevant-project]/Meetings/
+4. Link action items to responsible person's [[People/Name]] notes
+5. Update project hub with decisions and next steps
+6. Flag any items needing calendar follow-up
 ```
 
-This turns a 15-minute task into a 2-minute review.
+This turns scattered notes into actionable structure in seconds.
 
 ## Note Architecture
 
 ### Before: The Isolated Note
 
 ```markdown
-# Hiring Thoughts
+# Team Sync Jan 20
 
-Need to find a PA. Should be good at communication.
-Maybe look at care.com or similar.
+Discussed the API refactor. Sarah thinks we should use GraphQL.
+Mike mentioned performance concerns. Need to follow up.
+Also talked about the release timeline.
 ```
 
 This note will die alone. No links, vague title, no structure.
@@ -133,37 +137,34 @@ This note will die alone. No links, vague title, no structure.
 
 ```markdown
 ---
-created: 2026-01-15
-tags: [project, hiring, active]
+created: 2026-01-20
+tags: [meeting, api-refactor, team-sync]
 status: active
 ---
 
-# PA Hiring Project
+# API Refactor Discussion - Team Sync
 
-Finding a personal assistant for daily support tasks.
+Weekly sync covering GraphQL migration decision and Q1 timeline.
 
-## Key Insight
+## Key Decisions
 
-[[Good PAs communicate proactively]], this matters more than
-specific skills because tasks change but communication style doesn't.
+- Moving forward with [[GraphQL migration]] for new endpoints
+- Keeping REST for legacy clients (see [[API versioning strategy]])
+- Timeline: complete by end Q1 2026
 
-## Candidates
+## Action Items
 
-- [[Application - Maria S]] - Strong async communication
-- [[Application - Erik L]] - Local, flexible schedule
+- **[[People/Sarah]]**: Draft GraphQL schema by Jan 27
+- **[[People/Mike]]**: Performance benchmarks for GraphQL vs REST by Feb 3
+- **[[People/Me]]**: Update [[02_Projects/API Refactor/Timeline]] with new dates
 
-## Process
+## Open Questions
 
-Following [[Structured hiring reduces bias]].
+- Caching strategy for GraphQL queries → discuss in [[Architecture Review Feb 1]]
+- Client migration plan for mobile apps → needs [[People/Emma]]'s input
 
-## Timeline
-
-- Week 1: Post and collect applications
-- Week 2: Initial screening via [[Async interview questions]]
-- Week 3: Trial tasks with top 2 candidates
-
-**Status:** Screening phase
-**Next action:** Review new applications Friday
+**Status:** In progress
+**Next sync:** Jan 27, 2026
 ```
 
 ### The Backlink Footer
@@ -173,7 +174,7 @@ Always close with navigation:
 ```markdown
 ---
 
-**Back to:** [[Areas/Home Management]] | [[Projects Overview]]
+**Back to:** [[02_Projects/API Refactor]] | [[Team Meetings Hub]]
 ```
 
 This helps both you and Claude understand the note's place in the hierarchy.
@@ -184,14 +185,15 @@ Use frontmatter for state that changes:
 
 ```yaml
 ---
-created: 2026-01-18
-status: awaiting-response
-responded: true
-next_action: follow-up if no reply by 2026-01-22
+created: 2026-01-20
+status: action-items-pending
+meeting_type: team-sync
+action_owner: Sarah
+due_date: 2026-01-27
 ---
 ```
 
-Claude can query this: "Show me all notes where `responded: true` but `status: awaiting-response` for more than 3 days."
+Claude can query this: "Show me all meeting notes where `status: action-items-pending` and `due_date` is within the next 3 days."
 
 ## Common Mistakes
 
@@ -201,8 +203,8 @@ You don't need 15 folders on day one. Start with inbox, active work, and archive
 
 ### Using AI as search instead of thinking partner
 
-Bad: "Find my note about hiring"
-Good: "I'm preparing for a candidate interview. What patterns have I noticed in successful vs unsuccessful hires based on my notes?"
+- **Bad**: "Find my note about the API refactor"
+- **Good**: "We're deciding between GraphQL and REST for the new API. What concerns and insights from past architecture decisions should inform this choice?"
 
 Search finds files. Thinking partners synthesize.
 
