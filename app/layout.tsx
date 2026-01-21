@@ -27,6 +27,7 @@ export const metadata: Metadata = {
   authors: [{ name: "Johnie Hjelm", url: SITE_URL }],
   keywords: "Johnie, Hjelm, Designer, Developer, Entrepreneur, Crip",
   alternates: {
+    canonical: SITE_URL,
     types: {
       "application/rss+xml": `${SITE_URL}/feed.xml`,
     },

@@ -35,6 +35,9 @@ export async function generateMetadata({
   return {
     title,
     description,
+    alternates: {
+      canonical: `${SITE_URL}/writing/${slug}`,
+    },
     openGraph: {
       title,
       description,
@@ -70,7 +73,7 @@ export default async function Post({ params }: { params: Params }) {
     notFound();
   }
 
-  const jsonLd = {
+  const blogPostingSchema = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     headline: post.title,
@@ -87,12 +90,45 @@ export default async function Post({ params }: { params: Params }) {
     },
   };
 
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: SITE_URL,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Writing",
+        item: `${SITE_URL}/writing`,
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: post.title,
+        item: `${SITE_URL}/writing/${post.slug}`,
+      },
+    ],
+  };
+
   return (
     <section>
       <script
         // biome-ignore lint/security/noDangerouslySetInnerHtml: Safe - JSON-LD structured data with static content
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(jsonLd),
+          __html: JSON.stringify(blogPostingSchema),
+        }}
+        suppressHydrationWarning
+        type="application/ld+json"
+      />
+      <script
+        // biome-ignore lint/security/noDangerouslySetInnerHtml: Safe - JSON-LD structured data with static content
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbSchema),
         }}
         suppressHydrationWarning
         type="application/ld+json"

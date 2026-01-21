@@ -2,6 +2,7 @@ import { allPages } from "content-collections";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Mdx } from "@/components/mdx";
+import { SITE_URL } from "@/lib/constants";
 
 export async function generateStaticParams() {
   return allPages.map((page) => ({
@@ -24,6 +25,9 @@ export async function generateMetadata({
   return {
     title: page.title,
     description: page.summary,
+    alternates: {
+      canonical: `${SITE_URL}/${slug}`,
+    },
     openGraph: {
       title: page.title,
       description: page.summary,

@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { allPages } from "@/.content-collections/generated";
 import { Mdx } from "@/components/mdx";
+import { SITE_URL } from "@/lib/constants";
 
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Learn about Johnie Hjelm, a designer, developer, and entrepreneur focused on building products and leading teams to success.",
+    "Learn about Johnie Hjelm, a developer, engineering leader, and inclusive tech advocate focused on building products and leading teams to success.",
 };
 
 const About = () => {
@@ -16,8 +17,31 @@ const About = () => {
     return null;
   }
 
+  const personSchema = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: "Johnie Hjelm",
+    url: SITE_URL,
+    jobTitle: "Developer, Engineering Leader, and Inclusive Tech Advocate",
+    description:
+      "Committed to developing individuals and teams for success. Developer, engineering leader, and inclusive tech advocate focused on building products and leading teams.",
+    sameAs: [
+      "https://github.com/johnie",
+      "https://twitter.com/johniehjelm",
+      "https://www.linkedin.com/in/johniehjelm",
+    ],
+  };
+
   return (
     <div>
+      <script
+        // biome-ignore lint/security/noDangerouslySetInnerHtml: Safe - JSON-LD structured data with static content
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(personSchema),
+        }}
+        suppressHydrationWarning
+        type="application/ld+json"
+      />
       <h1 className="mb-8 bg-linear-to-r from-neutral-800 to-neutral-500 bg-clip-text font-semibold text-3xl text-transparent dark:from-neutral-100 dark:to-neutral-400">
         {content.title}
       </h1>
