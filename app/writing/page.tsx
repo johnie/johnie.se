@@ -26,10 +26,10 @@ export default async function BlogPage() {
         reflection. With 15+ years in tech, I write about what actually works,
         and what I&lsquo;m still figuring out.
       </p>
-      <div>
+      <div className="space-y-8">
         {postsByYear.map(([year, posts]) => (
           <div key={year}>
-            <div className="pt-8 pb-2 first:pt-0">
+            <div className="first:pt-0">
               <span className="font-medium text-neutral-400 text-sm dark:text-neutral-500">
                 {year}
               </span>
