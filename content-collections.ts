@@ -90,7 +90,7 @@ const PostSchema = z.object({
     .string()
     .refine((value) => !Number.isNaN(Date.parse(value)), "Invalid date string")
     .transform<string>((value) => new Date(value).toISOString()),
-  summary: z.string().optional(),
+  summary: z.string(),
   image: z.string().optional(),
   leading: z.boolean().optional().default(false),
   content: z.string(),
@@ -146,7 +146,7 @@ const Page = defineCollection({
   include: "*.mdx",
   schema: z.object({
     title: z.string(),
-    summary: z.string().optional(),
+    summary: z.string(),
     image: z.string().optional(),
     content: z.string(),
   }),
