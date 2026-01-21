@@ -7,9 +7,9 @@ const startYear = (year: number) => {
   return yearsToday;
 };
 
-const BIO = `Johnie Hjelm is a creative Technical Lead with over ${startYear(
+const BIO = `Johnie Hjelm is a Head of Engineering with over ${startYear(
   2009
-)} of experience in the technology sector. As a self-educated Fullstack Web Developer, he has forged a remarkable career journey characterized by his dedication to uplifting individuals and teams. Johnie is celebrated for his practical leadership and open communication approach, consistently steering projects toward success. Aside from his professional successes, he is the innovative founder of Crip in Tech, a pioneering program aimed at improving inclusivity within the tech industry for those with physical disabilities. Johnie's distinctive mix of technical expertise, leadership abilities, and advocacy efforts makes him a transformative influence in the sector, promoting both technological progress and workplace diversity. `;
+)} years of experience building high-performing teams and products. As a self-taught fullstack developer, he has grown from intern to engineering leader, focusing on people development and inclusive engineering cultures. Johnie is an advocate for AI-assisted development, helping teams leverage modern AI tools to boost productivity and effectiveness. He is also the founder of Crip in Tech, an initiative dedicated to making the tech industry more inclusive for disabled people. His unique combination of technical expertise, engineering leadership, and advocacy for both AI adoption and workplace inclusivity makes him a distinctive voice in the technology sector.`;
 
 export function Bio() {
   return (
