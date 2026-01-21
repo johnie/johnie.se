@@ -1,8 +1,14 @@
+import type { Metadata } from "next";
 import { LatestWriting } from "@/components/latest-writing";
 import { Projects } from "@/components/projects";
 import { SocialLinks } from "@/components/social-links";
 import { WorkExperience } from "@/components/work";
 import { SITE_URL } from "@/lib/constants";
+
+export const metadata: Metadata = {
+  description:
+    "Developer, engineering leader, and inclusive tech advocate focused on building products and leading teams to success. Explore my writing, work experience, and projects.",
+};
 
 export default function Home() {
   const jsonLd = {
