@@ -15,6 +15,11 @@ const nextConfig = {
         destination: "/writing/ai-manifesto",
         permanent: true,
       },
+      {
+        source: "/skills",
+        destination: "https://github.com/johnie/skills",
+        permanent: true,
+      },
     ];
 
     try {
