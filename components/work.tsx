@@ -1,17 +1,20 @@
-import { allWorks, type Work } from "content-collections";
+import { allWorks } from "content-collections";
 import Image from "next/image";
 import type { JSX } from "react";
+import { hasImage } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
 export const WorkExperience = (): JSX.Element | null => {
   if (!allWorks || allWorks.length === 0) {
     return null;
   }
-  const items = allWorks.sort((a, b) => b.startYear - a.startYear);
+  const items = allWorks
+    .filter(hasImage)
+    .sort((a, b) => b.startYear - a.startYear);
 
   return (
     <div>
-      {items.map((work: Work, index, { length }) => (
+      {items.map((work, index, { length }) => (
         <a
           className="group ease -mx-4 flex gap-x-4 rounded-xl border-none px-4 pt-4 transition-colors hover:bg-neutral-50 dark:hover:bg-neutral-900"
           href={work.url}
@@ -28,7 +31,7 @@ export const WorkExperience = (): JSX.Element | null => {
                 height="36"
                 loading={index < 2 ? undefined : "lazy"}
                 priority={index < 2}
-                src={work.image as string}
+                src={work.image}
                 width="36"
               />
             </div>

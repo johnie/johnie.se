@@ -1,6 +1,7 @@
-import { allProjects, type Project } from "content-collections";
+import { allProjects } from "content-collections";
 import Image from "next/image";
 import type { JSX } from "react";
+import { hasImage } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
 export const Projects = (): JSX.Element | null => {
@@ -9,12 +10,13 @@ export const Projects = (): JSX.Element | null => {
   }
 
   const items = allProjects
-    .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
-    .filter((project) => Boolean(project.active));
+    .filter((project) => Boolean(project.active))
+    .filter(hasImage)
+    .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
 
   return (
     <div>
-      {items.map((project: Project, index, { length }) => (
+      {items.map((project, index, { length }) => (
         <a
           className="group ease -mx-4 flex gap-x-4 rounded-xl border-none px-4 pt-4 transition-colors hover:bg-neutral-50 dark:hover:bg-neutral-900"
           href={project.url}
@@ -29,7 +31,7 @@ export const Projects = (): JSX.Element | null => {
                 height="36"
                 loading={index < 2 ? undefined : "lazy"}
                 priority={index < 2}
-                src={project.image as string}
+                src={project.image}
                 width="36"
               />
             </div>
