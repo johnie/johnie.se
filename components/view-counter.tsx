@@ -1,4 +1,4 @@
-import type { View } from "@/lib/actions";
+import type { View } from "@/lib/types";
 
 export default function ViewCounter({
   slug,

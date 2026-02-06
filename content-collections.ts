@@ -58,7 +58,13 @@ const mdxOptions: Options = {
   ],
 };
 
-const setStructuredData = (doc: Post) => ({
+const setStructuredData = (doc: {
+  title: string;
+  publishedAt: string;
+  summary: string;
+  image?: string;
+  _meta: { path: string };
+}) => ({
   "@context": "https://schema.org",
   "@type": "BlogPosting",
   headline: doc.title,
@@ -95,13 +101,6 @@ const PostSchema = z.object({
   leading: z.boolean().optional().default(false),
   content: z.string(),
 });
-
-type Post = z.infer<typeof PostSchema> & {
-  _meta: {
-    path: string;
-    filePath: string;
-  };
-};
 
 const Post = defineCollection({
   name: "Post",

@@ -3,6 +3,7 @@
 import { sql } from "drizzle-orm";
 import { unstable_cache } from "next/cache";
 import { env } from "@/lib/env";
+import type { View } from "@/lib/types";
 import { views } from "./db/schema";
 import { db } from "./turso";
 
@@ -22,16 +23,10 @@ export async function increment(slug: string) {
           updatedAt: sql`CURRENT_TIMESTAMP`,
         },
       });
-  } catch (error) {
+  } catch (error: unknown) {
     // Log error but don't throw - view counting shouldn't break the page
     console.error("Failed to increment view count:", error);
   }
-}
-
-export interface View {
-  slug: string;
-  count: number;
-  updatedAt: string;
 }
 
 async function getViewsCountUncached(): Promise<View[]> {

@@ -5,13 +5,7 @@ import {
   LinkedinLogoIcon,
   ThreadsLogoIcon,
 } from "@phosphor-icons/react/dist/ssr";
-
-interface SocialLink {
-  href: string;
-  icon: React.ReactNode;
-  name: string;
-  enabled: boolean;
-}
+import type { SocialLink } from "@/lib/types";
 
 export const LINKS: SocialLink[] = [
   {

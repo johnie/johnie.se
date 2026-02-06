@@ -15,6 +15,10 @@ import {
 } from "@/components/ui/command";
 import { useMainStore } from "@/lib/main-store";
 
+function isInternalRoute(slug: string): slug is Route {
+  return slug.startsWith("/");
+}
+
 export const CMD = () => {
   const { toggleCmd, isCmdOpen, setCmd } = useMainStore();
   const { push } = useRouter();
@@ -31,15 +35,13 @@ export const CMD = () => {
   }, [toggleCmd]);
 
   const goTo = (slug: string) => {
-    if (typeof slug === "string" && slug.startsWith("/")) {
-      push(slug as Route);
+    if (isInternalRoute(slug)) {
+      push(slug);
       setCmd(false);
+      return;
     }
 
-    if (
-      typeof slug === "string" &&
-      (slug.startsWith("http") || slug.startsWith("//"))
-    ) {
+    if (slug.startsWith("http") || slug.startsWith("//")) {
       window.open(slug, "_blank", "noopener,noreferrer");
       setCmd(false);
     }

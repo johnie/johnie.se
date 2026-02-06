@@ -10,16 +10,8 @@ import clsx from "clsx";
 import { type HTMLMotionProps, LayoutGroup, motion } from "framer-motion";
 import Link, { type LinkProps } from "next/link";
 import { usePathname } from "next/navigation";
-
-import type { ReactNode } from "react";
 import { useMainStore } from "@/lib/main-store";
-
-interface NavLink {
-  name: string;
-  slug: string;
-  icon?: ReactNode;
-  enabled?: boolean;
-}
+import type { NavLink } from "@/lib/types";
 
 export const NAV_LINKS: NavLink[] = [
   {
