@@ -1,6 +1,6 @@
+import { allPages } from "content-collections";
 import type { Metadata } from "next";
 import Image from "next/image";
-import { allPages } from "@/.content-collections/generated";
 import { Mdx } from "@/components/mdx";
 import { SITE_URL } from "@/lib/constants";
 

@@ -1,6 +1,6 @@
+import { allTodayILearneds } from "content-collections";
 import { format } from "date-fns";
 import type { Metadata } from "next";
-import { allTodayILearneds } from "@/.content-collections/generated";
 import { Mdx } from "@/components/mdx";
 
 export const metadata: Metadata = {
