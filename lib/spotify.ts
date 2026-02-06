@@ -2,42 +2,12 @@ import { desc, sql } from "drizzle-orm";
 import { unstable_cache } from "next/cache";
 import { spotify } from "@/lib/db/schema";
 import { db } from "@/lib/turso";
+import type {
+  SongData,
+  SpotifyCurrentlyPlayingResponse,
+  SpotifyTokenResponse,
+} from "@/lib/types";
 import { env } from "./env";
-
-interface SpotifyTokenResponse {
-  access_token: string;
-}
-
-interface SpotifyArtist {
-  name: string;
-}
-
-interface SpotifyAlbum {
-  name: string;
-  artists: SpotifyArtist[];
-}
-
-interface SpotifyTrack {
-  name: string;
-  album: SpotifyAlbum;
-  external_urls: {
-    spotify: string;
-  };
-}
-
-interface SpotifyCurrentlyPlayingResponse {
-  currently_playing_type?: string;
-  is_playing?: boolean;
-  item?: SpotifyTrack;
-}
-
-interface SongData {
-  title: string;
-  artist: string;
-  album: string;
-  songUrl: string;
-  isPlaying: boolean;
-}
 
 const basic = Buffer.from(
   `${env.SPOTIFY_API_CLIENT_ID}:${env.SPOTIFY_API_CLIENT_SECRET}`
