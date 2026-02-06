@@ -4,6 +4,7 @@ import Image, { type ImageProps } from "next/image";
 import Link from "next/link";
 import type * as React from "react";
 import { Bio } from "@/components/bio";
+import type { CalloutProps } from "@/lib/types";
 import { Badge } from "./ui/badge";
 
 type CustomLinkProps = React.ComponentProps<typeof Link> & {
@@ -31,11 +32,6 @@ type CustomImageProps = ImageProps & {
 const RoundedImage: React.FC<CustomImageProps> = ({ alt, ...props }) => (
   <Image alt={alt} className="rounded-lg" {...props} />
 );
-
-interface CalloutProps {
-  emoji: string;
-  children: React.ReactNode;
-}
 
 const Callout: React.FC<CalloutProps> = ({ emoji, children }) => (
   <div className="mb-8 flex items-center rounded border border-neutral-200 bg-neutral-50 p-1 px-4 py-3 text-neutral-900 text-sm dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-100">
