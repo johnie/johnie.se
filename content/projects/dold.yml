@@ -1,0 +1,7 @@
+name: 'dold'
+description: One-time secret sharing service.
+url: https://dold.app
+projectType: web
+image: /dold.svg
+order: 1
+active: true
