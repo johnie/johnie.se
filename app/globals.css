@@ -61,8 +61,8 @@
 }
 
 @utility container {
-  margin-inline: auto;
   padding-inline: 2rem;
+  margin-inline: auto;
   @media (width >= --theme(--breakpoint-sm)) {
     max-width: none;
   }
@@ -91,8 +91,8 @@
 
 @layer utilities {
   ::selection {
-    background-color: #4c527c;
     color: #fefefe;
+    background-color: #4c527c;
   }
 
   ::-webkit-scrollbar {
@@ -105,9 +105,9 @@
 
   ::-webkit-scrollbar-thumb {
     background-color: rgba(255, 255, 255, 0.2);
-    border-radius: 1rem;
-    border: 4px solid transparent;
     background-clip: padding-box;
+    border: 4px solid transparent;
+    border-radius: 1rem;
   }
 
   ::-webkit-scrollbar-thumb:hover {
@@ -159,13 +159,13 @@
 }
 
 .prose .anchor {
-  @apply absolute invisible no-underline;
-
-  margin-left: -1em;
-  padding-right: 0.5em;
   width: 80%;
   max-width: 700px;
+  padding-right: 0.5em;
+
+  margin-left: -1em;
   cursor: pointer;
+  @apply absolute invisible no-underline;
 }
 
 .anchor:hover {
@@ -177,8 +177,8 @@
 }
 
 .prose .anchor:after {
-  @apply text-neutral-300 dark:text-neutral-700;
   content: "#";
+  @apply text-neutral-300 dark:text-neutral-700;
 }
 
 .prose *:hover > .anchor {
@@ -203,8 +203,8 @@ pre {
 }
 
 .prose pre code {
-  @apply text-neutral-800 dark:text-neutral-200 p-0;
   border: initial;
+  @apply text-neutral-800 dark:text-neutral-200 p-0;
 }
 
 .prose img {
@@ -220,8 +220,8 @@ pre[class*="language-"] {
 /* Remove Safari input shadow on mobile */
 input[type="text"],
 input[type="email"] {
-  -webkit-appearance: none;
   -moz-appearance: none;
+  -webkit-appearance: none;
   appearance: none;
 }
 
@@ -251,13 +251,13 @@ table {
   @apply py-1;
 }
 [data-rehype-pretty-code-fragment] [data-line-numbers] > .line::before {
-  counter-increment: line;
-  content: counter(line);
   display: inline-block;
   width: 1rem;
   margin-right: 1rem;
-  text-align: right;
   color: gray;
+  text-align: right;
+  content: counter(line);
+  counter-increment: line;
 }
 [data-rehype-pretty-code-title] {
   @apply px-4 py-3 font-mono text-xs font-medium border rounded-t-lg text-neutral-200 border-[#1d232d];
@@ -271,11 +271,6 @@ table {
   position: relative;
   overflow: hidden;
 
-  background-repeat: no-repeat;
-  background-position:
-    -100% 0,
-    0 0;
-
   background-image: linear-gradient(
     var(--shine-deg),
     transparent 20%,
@@ -285,6 +280,11 @@ table {
     transparent 70%,
     transparent 100%
   );
+
+  background-repeat: no-repeat;
+  background-position:
+    -100% 0,
+    0 0;
 
   background-size:
     250% 250%,

@@ -27,7 +27,7 @@ function run(cmd: string) {
 function generateId(inputString: string): string {
   const hash = createHash("sha256").update(inputString).digest("hex");
 
-  const shortId = Buffer.from(hash).toString("base64").substring(0, 8);
+  const shortId = Buffer.from(hash).toString("base64").slice(0, 8);
 
   return shortId;
 }
@@ -242,5 +242,5 @@ export const TodayILearned = defineCollection({
 });
 
 export default defineConfig({
-  collections: [Post, Page, Work, Project, TodayILearned],
+  content: [Post, Page, Work, Project, TodayILearned],
 });

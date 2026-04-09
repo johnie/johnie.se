@@ -1,8 +1,8 @@
 import type * as React from "react";
 
 interface BaseProps {
-  width?: number;
   height?: number;
+  width?: number;
 }
 
 type LogoProps = BaseProps & React.HTMLAttributes<SVGElement>;
