@@ -28,20 +28,6 @@ export interface CalloutProps {
   emoji: string;
 }
 
-export interface HeadingProps {
-  children: ReactNode;
-}
-
-export interface ProsCardProps {
-  pros: string[];
-  title: string;
-}
-
-export interface ConsCardProps {
-  cons: string[];
-  title: string;
-}
-
 export interface View {
   count: number;
   slug: string;
