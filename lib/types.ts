@@ -10,22 +10,22 @@ export function hasImage<T extends { image?: string }>(
 }
 
 export interface NavLink {
+  enabled?: boolean;
+  icon?: ReactNode;
   name: string;
   slug: string;
-  icon?: ReactNode;
-  enabled?: boolean;
 }
 
 export interface SocialLink {
+  enabled: boolean;
   href: string;
   icon: ReactNode;
   name: string;
-  enabled: boolean;
 }
 
 export interface CalloutProps {
-  emoji: string;
   children: ReactNode;
+  emoji: string;
 }
 
 export interface HeadingProps {
@@ -33,18 +33,18 @@ export interface HeadingProps {
 }
 
 export interface ProsCardProps {
-  title: string;
   pros: string[];
+  title: string;
 }
 
 export interface ConsCardProps {
-  title: string;
   cons: string[];
+  title: string;
 }
 
 export interface View {
-  slug: string;
   count: number;
+  slug: string;
   updatedAt: string;
 }
 
@@ -57,14 +57,14 @@ export interface SpotifyArtist {
 }
 
 export interface SpotifyAlbum {
-  name: string;
   artists: SpotifyArtist[];
+  name: string;
 }
 
 export interface SpotifyTrack {
-  name: string;
   album: SpotifyAlbum;
   external_urls: { spotify: string };
+  name: string;
 }
 
 export interface SpotifyCurrentlyPlayingResponse {
@@ -74,11 +74,11 @@ export interface SpotifyCurrentlyPlayingResponse {
 }
 
 export interface SongData {
-  title: string;
-  artist: string;
   album: string;
-  songUrl: string;
+  artist: string;
   isPlaying: boolean;
+  songUrl: string;
+  title: string;
 }
 
 export type {

@@ -76,8 +76,8 @@ const UL = (props: React.ComponentProps<"ul">) => (
 );
 
 interface ProsCardProps {
-  title: string;
   pros: string[];
+  title: string;
 }
 
 function ProsCard({ title, pros }: ProsCardProps) {
@@ -115,8 +115,8 @@ function ProsCard({ title, pros }: ProsCardProps) {
 }
 
 interface ConsCardProps {
-  title: string;
   cons: string[];
+  title: string;
 }
 
 function ConsCard({ title, cons }: ConsCardProps) {
