@@ -28,11 +28,12 @@ export const Projects = (): JSX.Element | null => {
                 alt={`${project.name} logo`}
                 className="h-9 w-9"
                 decoding="async"
-                height="36"
+                height={36}
                 loading={index < 2 ? undefined : "lazy"}
                 priority={index < 2}
                 src={project.image}
-                width="36"
+                style={{ width: "auto", height: "auto" }}
+                width={36}
               />
             </div>
           </div>
