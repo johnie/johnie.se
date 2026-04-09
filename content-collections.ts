@@ -242,5 +242,5 @@ export const TodayILearned = defineCollection({
 });
 
 export default defineConfig({
-  collections: [Post, Page, Work, Project, TodayILearned],
+  content: [Post, Page, Work, Project, TodayILearned],
 });
