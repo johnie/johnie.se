@@ -41,7 +41,7 @@
     "zustand": "^5.0.12"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.4.10",
+    "@biomejs/biome": "2.4.11",
     "@content-collections/core": "^0.14.3",
     "@content-collections/mdx": "^0.2.2",
     "@content-collections/next": "^0.2.11",
@@ -56,6 +56,6 @@
     "postcss": "^8.5.9",
     "tailwindcss": "^4.2.2",
     "typescript": "latest",
-    "ultracite": "7.4.4"
+    "ultracite": "7.5.6"
   }
 }
