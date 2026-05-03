@@ -2,6 +2,7 @@
 
 import {
   BrainIcon,
+  BriefcaseIcon,
   HouseIcon,
   PencilSimpleIcon,
   UserIcon,
@@ -24,6 +25,12 @@ export const NAV_LINKS: NavLink[] = [
     name: "About",
     slug: "/about",
     icon: <UserIcon size={18} />,
+    enabled: true,
+  },
+  {
+    name: "Services",
+    slug: "/services",
+    icon: <BriefcaseIcon size={18} />,
     enabled: true,
   },
   {
