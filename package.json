@@ -37,11 +37,11 @@
     "shiki": "^4.0.2",
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.5.0",
-    "zod": "^4.3.6",
-    "zustand": "^5.0.12"
+    "zod": "^4.4.3",
+    "zustand": "^5.0.13"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.4.13",
+    "@biomejs/biome": "2.4.14",
     "@content-collections/core": "^0.15.0",
     "@content-collections/mdx": "^0.2.2",
     "@content-collections/next": "^0.2.11",
@@ -53,9 +53,9 @@
     "@types/react-dom": "^19.2.3",
     "drizzle-kit": "^0.31.10",
     "lefthook": "^2.1.6",
-    "postcss": "^8.5.12",
+    "postcss": "^8.5.14",
     "tailwindcss": "^4.2.4",
     "typescript": "latest",
-    "ultracite": "7.6.2"
+    "ultracite": "7.6.3"
   }
 }
