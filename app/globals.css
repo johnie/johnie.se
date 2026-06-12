@@ -1,6 +1,10 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
+/* Force dark mode: apply dark: styles based on the .dark class (always set
+   on <html>) instead of the user's prefers-color-scheme setting. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --background-image-gradient-radial: radial-gradient(var(--tw-gradient-stops));
   --background-image-gradient-conic: conic-gradient(
