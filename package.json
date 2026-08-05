@@ -40,7 +40,7 @@
     "@types/react-dom": "^19.2.3",
     "drizzle-kit": "^0.31.10",
     "lefthook": "^2.1.9",
-    "postcss": "^8.5.15",
+    "postcss": "^8.5.23",
     "tailwindcss": "^4.3.0",
     "typescript": "latest",
     "ultracite": "7.8.3"
