@@ -35,6 +35,12 @@ export const CMD = () => {
   }, [toggleCmd]);
 
   const goTo = (slug: string) => {
+    if (slug.startsWith("mailto:")) {
+      window.location.href = slug;
+      setCmd(false);
+      return;
+    }
+
     if (isInternalRoute(slug)) {
       push(slug);
       setCmd(false);

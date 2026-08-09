@@ -28,7 +28,13 @@ const CustomLink: React.FC<CustomLinkProps> = ({
     return <a href={href} {...props} />;
   }
 
-  return <a href={href} rel="noopener noreferrer" target="_blank" {...props} />;
+  if (typeof href === "string" && href.startsWith("http")) {
+    return (
+      <a href={href} rel="noopener noreferrer" target="_blank" {...props} />
+    );
+  }
+
+  return <a href={href} {...props} />;
 };
 
 type CustomImageProps = ImageProps & {
