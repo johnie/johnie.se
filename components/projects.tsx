@@ -21,8 +21,10 @@ export const Projects = (): JSX.Element | null => {
           className="group ease -mx-4 flex gap-x-4 rounded-xl border-none px-4 pt-4 transition-colors hover:bg-neutral-50 dark:hover:bg-neutral-900"
           href={project.url}
           key={project._id}
+          rel="noopener noreferrer"
+          target="_blank"
         >
-          <div className="mt-0.5 h-9 w-9 shrink-0 overflow-hidden rounded-[10px] border border-neutral bg-neutral-100 shadow-shorter dark:bg-neutral-800">
+          <div className="mt-0.5 h-9 w-9 shrink-0 overflow-hidden rounded-[10px] border border-neutral-200 bg-neutral-100 shadow-shorter dark:border-neutral-800 dark:bg-neutral-800">
             <div className="flex h-full items-center justify-center font-semibold text-neutral-400 text-sm">
               <Image
                 alt={`${project.name} logo`}
