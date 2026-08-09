@@ -38,6 +38,7 @@ const getAccessToken = async (): Promise<SpotifyTokenResponse> => {
       "Content-Type": "application/x-www-form-urlencoded",
     },
     method: "POST",
+    signal: AbortSignal.timeout(5000),
   });
 
   if (!response.ok) {
@@ -55,9 +56,10 @@ const getNowPlaying =
       headers: {
         Authorization: `Bearer ${access_token}`,
       },
+      signal: AbortSignal.timeout(5000),
     });
 
-    if (response.status === 204 || response.status > 400) {
+    if (response.status === 204 || response.status >= 400) {
       return null;
     }
 
@@ -74,12 +76,34 @@ async function getLatestSongFromDb() {
   return latestSong;
 }
 
+export async function logSongToDb(songData: {
+  album: string;
+  artist: string;
+  songUrl: string;
+  title: string;
+}) {
+  try {
+    await db
+      .insert(spotify)
+      .values(songData)
+      .onConflictDoUpdate({
+        set: {
+          lastPlayedAt: sql`(CURRENT_TIMESTAMP)`,
+          playCount: sql`${spotify.playCount} + 1`,
+        },
+        target: spotify.songUrl,
+      });
+  } catch (error) {
+    console.error("Failed to log song to database:", error);
+  }
+}
+
 async function getCurrentOrLastSongUncached(): Promise<SongData | null> {
   try {
     // Check if currently playing
     const nowPlaying = await getNowPlaying();
 
-    // If currently playing a track, update database and return it
+    // If currently playing a track, return it
     if (
       nowPlaying &&
       nowPlaying.currently_playing_type === "track" &&
@@ -97,18 +121,6 @@ async function getCurrentOrLastSongUncached(): Promise<SongData | null> {
         songUrl: item.external_urls.spotify,
         title: item.name,
       };
-
-      // Update database with current song (upsert: increment play count if exists)
-      await db
-        .insert(spotify)
-        .values(songData)
-        .onConflictDoUpdate({
-          set: {
-            lastPlayedAt: sql`(CURRENT_TIMESTAMP)`,
-            playCount: sql`${spotify.playCount} + 1`,
-          },
-          target: spotify.songUrl,
-        });
 
       return {
         ...songData,

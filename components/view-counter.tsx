@@ -1,14 +1,22 @@
-import type { View } from "@/lib/types";
+"use client";
+
+import { useEffect } from "react";
+import { increment } from "@/lib/actions";
 
 export default function ViewCounter({
   slug,
-  allViews,
+  count,
+  trackView = false,
 }: {
   slug: string;
-  allViews: View[];
+  count: number;
+  trackView?: boolean;
 }) {
-  const viewsForSlug = allViews.find((view) => view.slug === slug);
-  const number = Number(viewsForSlug?.count || 0);
+  useEffect(() => {
+    if (trackView) {
+      increment(slug);
+    }
+  }, [slug, trackView]);
 
-  return <p>{`${number.toLocaleString()} views`}</p>;
+  return <p>{`${count.toLocaleString()} views`}</p>;
 }

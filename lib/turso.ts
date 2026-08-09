@@ -9,4 +9,3 @@ const client = createClient({
 });
 
 export const db = drizzle({ client, schema: { spotify, views } });
-export const turso = client;
