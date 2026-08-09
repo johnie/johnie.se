@@ -4,15 +4,15 @@ import type { Metadata } from "next";
 import { Mdx } from "@/components/mdx";
 
 export const metadata: Metadata = {
-  title: "Today I Learned",
   description:
     "Quick learnings and discoveries about development, tools, and technology.",
   openGraph: {
-    title: "Today I Learned",
     description:
       "Quick learnings and discoveries about development, tools, and technology.",
+    title: "Today I Learned",
     type: "website",
   },
+  title: "Today I Learned",
 };
 
 export default function TodayILearned() {

@@ -5,7 +5,7 @@ import { hasImage } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
 export const Projects = (): JSX.Element | null => {
-  if (!allProjects || allProjects.length === 0) {
+  if (allProjects.length === 0) {
     return null;
   }
 
@@ -32,7 +32,7 @@ export const Projects = (): JSX.Element | null => {
                 loading={index < 2 ? undefined : "lazy"}
                 priority={index < 2}
                 src={project.image}
-                style={{ width: "auto", height: "auto" }}
+                style={{ height: "auto", width: "auto" }}
                 width={36}
               />
             </div>

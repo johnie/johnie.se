@@ -7,9 +7,9 @@ import { Views } from "@/components/views";
 import { groupPostsByYear } from "@/lib/content-utils";
 
 export const metadata: Metadata = {
-  title: "Writing",
   description:
     "Thoughts on AI-augmented engineering, leadership, and productivity systems.",
+  title: "Writing",
 };
 
 export default async function BlogPage() {

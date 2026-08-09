@@ -29,15 +29,15 @@ const formEncode = (
 
 const getAccessToken = async (): Promise<SpotifyTokenResponse> => {
   const response = await fetch(TOKEN_ENDPOINT, {
-    method: "POST",
-    headers: {
-      Authorization: `Basic ${basic}`,
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
     body: formEncode({
       grant_type: "refresh_token",
       refresh_token: env.SPOTIFY_API_REFRESH_TOKEN,
     }),
+    headers: {
+      Authorization: `Basic ${basic}`,
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    method: "POST",
   });
 
   if (!response.ok) {
@@ -92,10 +92,10 @@ async function getCurrentOrLastSongUncached(): Promise<SongData | null> {
         .join(", ");
 
       const songData = {
-        title: item.name,
         album: item.album.name,
         artist,
         songUrl: item.external_urls.spotify,
+        title: item.name,
       };
 
       // Update database with current song (upsert: increment play count if exists)
@@ -103,11 +103,11 @@ async function getCurrentOrLastSongUncached(): Promise<SongData | null> {
         .insert(spotify)
         .values(songData)
         .onConflictDoUpdate({
-          target: spotify.songUrl,
           set: {
-            playCount: sql`${spotify.playCount} + 1`,
             lastPlayedAt: sql`(CURRENT_TIMESTAMP)`,
+            playCount: sql`${spotify.playCount} + 1`,
           },
+          target: spotify.songUrl,
         });
 
       return {
@@ -124,11 +124,11 @@ async function getCurrentOrLastSongUncached(): Promise<SongData | null> {
     }
 
     return {
-      title: latestSong.title,
-      artist: latestSong.artist,
       album: latestSong.album,
-      songUrl: latestSong.songUrl,
+      artist: latestSong.artist,
       isPlaying: false,
+      songUrl: latestSong.songUrl,
+      title: latestSong.title,
     };
   } catch {
     // If Spotify API fails, fallback to latest from database
@@ -139,11 +139,11 @@ async function getCurrentOrLastSongUncached(): Promise<SongData | null> {
     }
 
     return {
-      title: latestSong.title,
-      artist: latestSong.artist,
       album: latestSong.album,
-      songUrl: latestSong.songUrl,
+      artist: latestSong.artist,
       isPlaying: false,
+      songUrl: latestSong.songUrl,
+      title: latestSong.title,
     };
   }
 }

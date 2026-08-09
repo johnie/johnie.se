@@ -1,9 +1,10 @@
 "use client";
 import { CopyIcon, FileImageIcon } from "@phosphor-icons/react";
+import type { MouseEvent } from "react";
 import { toast } from "sonner";
 
-const copyBio = (text: string) => {
-  navigator.clipboard.writeText(text);
+const copyBio = ({ currentTarget }: MouseEvent<HTMLButtonElement>) => {
+  navigator.clipboard.writeText(currentTarget.value);
   toast.success("Copied bio to clipboard");
 };
 
@@ -15,8 +16,9 @@ export const AboutActions = ({ bio }: { bio: string }) => (
   <div className="flex items-center justify-between md:-ml-4 md:justify-start">
     <button
       className="ease flex items-center rounded-xl border-none px-4 py-2 text-neutral-500 text-sm transition-colors hover:bg-neutral-50 md:text-base dark:text-neutral-400 dark:hover:bg-neutral-900"
-      onClick={() => copyBio(bio)}
+      onClick={copyBio}
       type="button"
+      value={bio}
     >
       <CopyIcon className="mr-2 text-current" size={18} />
       Copy bio

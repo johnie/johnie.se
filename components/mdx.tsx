@@ -11,18 +11,24 @@ type CustomLinkProps = React.ComponentProps<typeof Link> & {
   children?: React.ReactNode;
 } & React.ComponentProps<"a">;
 
-const CustomLink: React.FC<CustomLinkProps> = (props) => {
-  const href = props.href;
-
+const CustomLink: React.FC<CustomLinkProps> = ({
+  children,
+  href,
+  ...props
+}) => {
   if (typeof href === "string" && href.startsWith("/")) {
-    return <Link {...props}>{props.children}</Link>;
+    return (
+      <Link href={href} {...props}>
+        {children}
+      </Link>
+    );
   }
 
   if (typeof href === "string" && href.startsWith("#")) {
-    return <a {...props} />;
+    return <a href={href} {...props} />;
   }
 
-  return <a rel="noopener noreferrer" target="_blank" {...props} />;
+  return <a href={href} rel="noopener noreferrer" target="_blank" {...props} />;
 };
 
 type CustomImageProps = ImageProps & {
@@ -147,17 +153,17 @@ function ConsCard({ title, cons }: ConsCardProps) {
 }
 
 const components: MDXComponents = {
-  Image: RoundedImage,
   a: CustomLink,
+  Badge,
+  Bio,
   Callout,
+  ConsCard,
   h1: H1,
   h2: H2,
   h3: H3,
-  ul: UL,
+  Image: RoundedImage,
   ProsCard,
-  ConsCard,
-  Bio,
-  Badge,
+  ul: UL,
 };
 
 export function Mdx({ code }: { code: string }) {

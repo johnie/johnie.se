@@ -1,12 +1,12 @@
 export default function robots() {
   return {
+    host: "https://johnie.se",
     rules: [
       {
-        userAgent: "*",
         allow: "/",
+        userAgent: "*",
       },
     ],
     sitemap: "https://johnie.se/sitemap.xml",
-    host: "https://johnie.se",
   };
 }

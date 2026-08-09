@@ -4,43 +4,43 @@ import { SITE_URL } from "@/lib/constants";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const blogs = allPosts.map((post) => ({
-    url: `${SITE_URL}/writing/${post.slug}`,
-    lastModified: post.lastModified || post.publishedAt,
     changeFrequency: "monthly" as const,
+    lastModified: post.lastModified || post.publishedAt,
     priority: 0.7,
+    url: `${SITE_URL}/writing/${post.slug}`,
   }));
 
   const pages = allPages.map((page) => ({
-    url: `${SITE_URL}/${page.slug}`,
-    lastModified: new Date().toISOString(),
     changeFrequency: "monthly" as const,
+    lastModified: new Date().toISOString(),
     priority: 0.5,
+    url: `${SITE_URL}/${page.slug}`,
   }));
 
   const routes: MetadataRoute.Sitemap = [
     {
-      url: SITE_URL,
-      lastModified: new Date().toISOString(),
       changeFrequency: "weekly",
+      lastModified: new Date().toISOString(),
       priority: 1.0,
+      url: SITE_URL,
     },
     {
-      url: `${SITE_URL}/about`,
-      lastModified: new Date().toISOString(),
       changeFrequency: "monthly",
+      lastModified: new Date().toISOString(),
       priority: 0.8,
+      url: `${SITE_URL}/about`,
     },
     {
-      url: `${SITE_URL}/writing`,
-      lastModified: new Date().toISOString(),
       changeFrequency: "weekly",
+      lastModified: new Date().toISOString(),
       priority: 0.9,
+      url: `${SITE_URL}/writing`,
     },
     {
-      url: `${SITE_URL}/til`,
-      lastModified: new Date().toISOString(),
       changeFrequency: "weekly",
+      lastModified: new Date().toISOString(),
       priority: 0.6,
+      url: `${SITE_URL}/til`,
     },
   ];
 

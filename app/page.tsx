@@ -14,14 +14,14 @@ export default function Home() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    name: "Johnie Hjelm",
-    url: SITE_URL,
-    description: "Committed to developing individuals and teams for success.",
     author: {
       "@type": "Person",
       name: "Johnie Hjelm",
       url: SITE_URL,
     },
+    description: "Committed to developing individuals and teams for success.",
+    name: "Johnie Hjelm",
+    url: SITE_URL,
   };
 
   return (

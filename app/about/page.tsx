@@ -5,9 +5,9 @@ import { Mdx } from "@/components/mdx";
 import { SITE_URL } from "@/lib/constants";
 
 export const metadata: Metadata = {
-  title: "About",
   description:
     "Learn about Johnie Hjelm, a developer, engineering leader, and inclusive tech advocate focused on building products and leading teams to success.",
+  title: "About",
 };
 
 const About = () => {
@@ -20,16 +20,16 @@ const About = () => {
   const personSchema = {
     "@context": "https://schema.org",
     "@type": "Person",
-    name: "Johnie Hjelm",
-    url: SITE_URL,
-    jobTitle: "Developer, Engineering Leader, and Inclusive Tech Advocate",
     description:
       "Committed to developing individuals and teams for success. Developer, engineering leader, and inclusive tech advocate focused on building products and leading teams.",
+    jobTitle: "Developer, Engineering Leader, and Inclusive Tech Advocate",
+    name: "Johnie Hjelm",
     sameAs: [
       "https://github.com/johnie",
       "https://twitter.com/johniehjelm",
       "https://www.linkedin.com/in/johniehjelm",
     ],
+    url: SITE_URL,
   };
 
   return (

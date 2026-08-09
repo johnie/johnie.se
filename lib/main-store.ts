@@ -8,6 +8,6 @@ export interface MainStore {
 
 export const useMainStore = create<MainStore>((set) => ({
   isCmdOpen: false,
-  toggleCmd: () => set((state) => ({ isCmdOpen: !state.isCmdOpen })),
   setCmd: (isCmdOpen) => set({ isCmdOpen }),
+  toggleCmd: () => set((state) => ({ isCmdOpen: !state.isCmdOpen })),
 }));

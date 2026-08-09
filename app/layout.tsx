@@ -12,48 +12,48 @@ import { SITE_URL } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
 const inter = Inter({
+  display: "swap",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
-  display: "swap",
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(SITE_URL),
-  title: {
-    default: "Johnie Hjelm",
-    template: "%s | Johnie Hjelm",
-  },
-  description: "Committed to developing individuals and teams for success.",
-  authors: [{ name: "Johnie Hjelm", url: SITE_URL }],
-  keywords: "Johnie, Hjelm, Designer, Developer, Entrepreneur, Crip",
   alternates: {
     canonical: SITE_URL,
     types: {
       "application/rss+xml": `${SITE_URL}/feed.xml`,
     },
   },
+  authors: [{ name: "Johnie Hjelm", url: SITE_URL }],
+  description: "Committed to developing individuals and teams for success.",
+  keywords: "Johnie, Hjelm, Designer, Developer, Entrepreneur, Crip",
+  metadataBase: new URL(SITE_URL),
   openGraph: {
-    title: "Johnie Hjelm",
     description: "Committed to developing individuals and teams for success.",
-    url: SITE_URL,
-    siteName: "Johnie Hjelm",
     locale: "en-US",
+    siteName: "Johnie Hjelm",
+    title: "Johnie Hjelm",
     type: "website",
+    url: SITE_URL,
   },
   robots: {
-    index: true,
     follow: true,
     googleBot: {
-      index: true,
       follow: true,
-      "max-video-preview": -1,
+      index: true,
       "max-image-preview": "large",
       "max-snippet": -1,
+      "max-video-preview": -1,
     },
+    index: true,
+  },
+  title: {
+    default: "Johnie Hjelm",
+    template: "%s | Johnie Hjelm",
   },
   twitter: {
-    title: "Johnie Hjelm",
     card: "summary_large_image",
+    title: "Johnie Hjelm",
   },
 };
 

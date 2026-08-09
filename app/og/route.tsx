@@ -17,46 +17,46 @@ export async function GET(req: NextRequest) {
     return new ImageResponse(
       <div
         style={{
-          height: "100%",
-          width: "100%",
+          alignItems: "flex-start",
+          backgroundImage: "url(https://johnie.se/images/og-image.png)",
           display: "flex",
           flexDirection: "column",
-          alignItems: "flex-start",
+          height: "100%",
           justifyContent: "center",
-          backgroundImage: "url(https://johnie.se/images/og-image.png)",
+          width: "100%",
         }}
       >
         <div
           style={{
-            marginLeft: 190,
-            marginRight: 190,
-            display: "flex",
-            fontSize: 100,
-            fontFamily: "Inter",
-            fontWeight: "bold",
-            letterSpacing: "-0.05em",
-            fontStyle: "normal",
-            color: "transparent",
             backgroundClip: "text",
             backgroundImage: "linear-gradient(to right, #fafafa, #d4d4d4)",
+            color: "transparent",
+            display: "flex",
+            fontFamily: "Inter",
+            fontSize: 100,
+            fontStyle: "normal",
+            fontWeight: "bold",
+            letterSpacing: "-0.05em",
             lineHeight: "120px",
-            whiteSpace: "pre-wrap",
+            marginLeft: 190,
+            marginRight: 190,
             textShadow: "0 0 15px rgba(0, 0, 0, 0.25)",
+            whiteSpace: "pre-wrap",
           }}
         >
           {postTitle}
         </div>
       </div>,
       {
-        width: 1920,
-        height: 1080,
         fonts: [
           {
-            name: "Inter",
             data: font,
+            name: "Inter",
             style: "normal",
           },
         ],
+        height: 1080,
+        width: 1920,
       }
     );
   } catch {

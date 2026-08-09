@@ -3,12 +3,12 @@ import Image from "next/image";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Login ‹ Johnie",
   description: "Bold of you to assume this is WordPress",
   robots: {
-    index: false,
     follow: false,
+    index: false,
   },
+  title: "Login ‹ Johnie",
 };
 
 export default function WpAdminPage() {

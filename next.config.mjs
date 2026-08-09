@@ -3,7 +3,14 @@ import { get } from "@vercel/edge-config";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  typedRoutes: true,
+  headers() {
+    return [
+      {
+        headers: securityHeaders,
+        source: "/(.*)",
+      },
+    ];
+  },
   images: {
     formats: ["image/avif", "image/webp"],
     remotePatterns: [new URL("https://media0.giphy.com/**")],
@@ -11,14 +18,14 @@ const nextConfig = {
   async redirects() {
     const manualRedirects = [
       {
-        source: "/ai",
         destination: "/writing/ai-manifesto",
         permanent: true,
+        source: "/ai",
       },
       {
-        source: "/skills",
         destination: "https://github.com/johnie/skills",
         permanent: true,
+        source: "/skills",
       },
     ];
 
@@ -29,14 +36,7 @@ const nextConfig = {
       return manualRedirects;
     }
   },
-  headers() {
-    return [
-      {
-        source: "/(.*)",
-        headers: securityHeaders,
-      },
-    ];
-  },
+  typedRoutes: true,
 };
 
 const ContentSecurityPolicy = `

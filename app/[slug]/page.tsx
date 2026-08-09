@@ -15,7 +15,7 @@ export async function generateMetadata({
 }: {
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-  const slug = (await params).slug;
+  const { slug } = await params;
   const page = allPages.find((p) => p._meta.path === slug);
 
   if (!page) {
@@ -23,15 +23,15 @@ export async function generateMetadata({
   }
 
   return {
-    title: page.title,
-    description: page.summary,
     alternates: {
       canonical: `${SITE_URL}/${slug}`,
     },
+    description: page.summary,
     openGraph: {
-      title: page.title,
       description: page.summary,
+      title: page.title,
     },
+    title: page.title,
   };
 }
 
@@ -40,7 +40,7 @@ export default async function Page({
 }: {
   params: Promise<{ slug: string }>;
 }) {
-  const slug = (await params).slug;
+  const { slug } = await params;
   const page = allPages.find((p) => p._meta.path === slug);
 
   if (!page) {
