@@ -13,8 +13,20 @@ const nextConfig = {
   },
   images: {
     formats: ["image/avif", "image/webp"],
-    remotePatterns: [new URL("https://media0.giphy.com/**")],
+    remotePatterns: [
+      {
+        hostname: "media0.giphy.com",
+        pathname: "/**",
+        protocol: "https",
+      },
+      {
+        hostname: "i.scdn.co",
+        pathname: "/**",
+        protocol: "https",
+      },
+    ],
   },
+  poweredByHeader: false,
   async redirects() {
     const manualRedirects = [
       {
@@ -43,9 +55,9 @@ const ContentSecurityPolicy = `
     default-src 'self' vercel.live;
     script-src 'self' 'unsafe-eval' 'unsafe-inline' cdn.vercel-insights.com vercel.live pulse.hjelm.cloud;
     style-src 'self' 'unsafe-inline';
-    img-src * blob: data:;
+    img-src 'self' blob: data: https://i.scdn.co https://media0.giphy.com https://johnie.se;
     media-src 'none';
-    connect-src *;
+    connect-src 'self' https://pulse.hjelm.cloud https://api.spotify.com https://accounts.spotify.com https://vitals.vercel-insights.com;
     font-src 'self' data:;
 `;
 
