@@ -1,12 +1,10 @@
 import type { Post } from "content-collections";
 
 export const sortPostsByDate = (posts: Post[]): Post[] =>
-  posts.sort((a, b) => {
-    if (new Date(a.publishedAt) > new Date(b.publishedAt)) {
-      return -1;
-    }
-    return 1;
-  });
+  [...posts].sort(
+    (a, b) =>
+      new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+  );
 
 export function groupPostsByYear(posts: Post[]): [string, Post[]][] {
   const sorted = sortPostsByDate(posts);

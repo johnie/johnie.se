@@ -1,6 +1,7 @@
-import { exec } from "node:child_process";
+import { execFile } from "node:child_process";
 import { createHash } from "node:crypto";
 import { statSync } from "node:fs";
+import path from "node:path";
 import { defineCollection, defineConfig } from "@content-collections/core";
 import { compileMDX, type Options } from "@content-collections/mdx";
 import rehypeShiki from "@shikijs/rehype";
@@ -9,18 +10,20 @@ import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeSlug from "rehype-slug";
 import remarkGfm from "remark-gfm";
 import z from "zod";
+import { SITE_URL } from "./lib/constants";
 
-function run(cmd: string) {
+function runGitLog(filePath: string): Promise<string> {
   return new Promise((resolve, reject) => {
-    exec(cmd, (error, stdout, stderr) => {
-      if (error) {
-        return reject(error);
+    execFile(
+      "git",
+      ["log", "-1", "--format=%ai", "--", `content/${filePath}`],
+      (error, stdout) => {
+        if (error) {
+          return reject(error);
+        }
+        resolve(stdout);
       }
-      if (stderr) {
-        return reject(stderr);
-      }
-      resolve(stdout);
-    });
+    );
   });
 }
 
@@ -33,7 +36,8 @@ function generateId(inputString: string): string {
 }
 
 const getFileCreationDate = (filePath: string) => {
-  const stats = statSync(filePath);
+  const fullPath = path.join(process.cwd(), "content/til", filePath);
+  const stats = statSync(fullPath);
   return new Date(stats.birthtime).toISOString();
 };
 
@@ -70,24 +74,24 @@ const setStructuredData = (doc: {
   author: {
     "@type": "Person",
     name: "Johnie Hjelm",
-    url: "https://johnie.se",
+    url: SITE_URL,
   },
   dateModified: doc.publishedAt,
   datePublished: doc.publishedAt,
   description: doc.summary,
   headline: doc.title,
   image: doc.image
-    ? `https://johnie.se${doc.image}`
-    : `https://johnie.se/og?title=${encodeURIComponent(doc.title)}`,
+    ? `${SITE_URL}${doc.image}`
+    : `${SITE_URL}/og?title=${encodeURIComponent(doc.title)}`,
   mainEntityOfPage: {
-    "@id": `https://johnie.se/writing/${doc._meta.path}`,
+    "@id": `${SITE_URL}/writing/${doc._meta.path}`,
     "@type": "WebPage",
   },
   publisher: {
     "@type": "Person",
     name: "Johnie Hjelm",
   },
-  url: `https://johnie.se/writing/${doc._meta.path}`,
+  url: `${SITE_URL}/writing/${doc._meta.path}`,
 });
 
 const PostSchema = z.object({
@@ -118,9 +122,7 @@ const Post = defineCollection({
       document._meta.filePath,
       async (filePath) => {
         try {
-          const stdout = (await run(
-            `git log -1 --format=%ai -- content/${filePath}`
-          )) as string;
+          const stdout = await runGitLog(filePath);
           return new Date(stdout.toString().trim()).toISOString();
         } catch {
           return new Date().toISOString();
