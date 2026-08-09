@@ -21,8 +21,8 @@ export const Footer = () => (
   <footer className="my-10">
     <GetInTouch show={false} />
     <Spotify />
-    <h3 className="mb-2 text-neutral-400 text-sm">
+    <p className="mb-2 text-neutral-400 text-sm">
       © {new Date().getFullYear().toString()} Johnie Hjelm.
-    </h3>
+    </p>
   </footer>
 );

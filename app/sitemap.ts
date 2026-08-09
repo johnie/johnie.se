@@ -1,4 +1,4 @@
-import { allPages, allPosts } from "content-collections";
+import { allPages, allPosts, allTodayILearneds } from "content-collections";
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/constants";
 
@@ -10,12 +10,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
     url: `${SITE_URL}/writing/${post.slug}`,
   }));
 
-  const pages = allPages.map((page) => ({
+  const tils = allTodayILearneds.map((til) => ({
     changeFrequency: "monthly" as const,
-    lastModified: new Date().toISOString(),
-    priority: 0.5,
-    url: `${SITE_URL}/${page.slug}`,
+    lastModified: til.publishedAt,
+    priority: 0.6,
+    url: `${SITE_URL}/til/${til.slug}`,
   }));
+
+  const pages = allPages
+    .filter((page) => page.slug !== "about")
+    .map((page) => ({
+      changeFrequency: "monthly" as const,
+      lastModified: new Date().toISOString(),
+      priority: 0.5,
+      url: `${SITE_URL}/${page.slug}`,
+    }));
 
   const routes: MetadataRoute.Sitemap = [
     {
@@ -44,5 +53,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ];
 
-  return [...routes, ...pages, ...blogs];
+  return [...routes, ...pages, ...blogs, ...tils];
 }
