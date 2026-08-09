@@ -23,9 +23,6 @@ importers:
       '@t3-oss/env-nextjs':
         specifier: ^0.13.11
         version: 0.13.11(typescript@7.0.2)(zod@4.4.3)
-      '@types/mdx':
-        specifier: ^2.0.14
-        version: 2.0.14
       '@vercel/edge-config':
         specifier: ^1.5.1
         version: 1.5.1(next@16.3.0(@types/node@26.2.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8))
@@ -68,9 +65,6 @@ importers:
       remark-gfm:
         specifier: ^4.0.1
         version: 4.0.1
-      shiki:
-        specifier: ^4.4.2
-        version: 4.4.2
       sonner:
         specifier: ^2.0.7
         version: 2.0.7(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
@@ -105,8 +99,11 @@ importers:
       '@tailwindcss/typography':
         specifier: ^0.5.20
         version: 0.5.20(tailwindcss@4.3.3)
+      '@types/mdx':
+        specifier: ^2.0.14
+        version: 2.0.14
       '@types/node':
-        specifier: latest
+        specifier: ^26.2.0
         version: 26.2.0
       '@types/react':
         specifier: ^19.2.18
@@ -127,7 +124,7 @@ importers:
         specifier: ^4.3.3
         version: 4.3.3
       typescript:
-        specifier: latest
+        specifier: ^7.0.2
         version: 7.0.2
       ultracite:
         specifier: 7.10.1
