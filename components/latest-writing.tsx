@@ -8,7 +8,7 @@ import { sortPostsByDate } from "@/lib/content-utils";
 const TOTAL_ITEMS = 3;
 
 export const LatestWriting = (): JSX.Element | null => {
-  if (!allPosts || allPosts.length === 0) {
+  if (allPosts.length === 0) {
     return null;
   }
 

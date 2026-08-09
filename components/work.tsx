@@ -5,7 +5,7 @@ import { hasImage } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
 export const WorkExperience = (): JSX.Element | null => {
-  if (!allWorks || allWorks.length === 0) {
+  if (allWorks.length === 0) {
     return null;
   }
   const items = allWorks

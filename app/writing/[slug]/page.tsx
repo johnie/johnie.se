@@ -33,28 +33,28 @@ export async function generateMetadata({
     : `${SITE_URL}/og?title=${title}`;
 
   return {
-    title,
-    description,
     alternates: {
       canonical: `${SITE_URL}/writing/${slug}`,
     },
+    description,
     openGraph: {
-      title,
       description,
-      type: "article",
-      publishedTime,
-      url: `${SITE_URL}/writing/${slug}`,
       images: [
         {
           url: ogImage,
         },
       ],
+      publishedTime,
+      title,
+      type: "article",
+      url: `${SITE_URL}/writing/${slug}`,
     },
+    title,
     twitter: {
       card: "summary_large_image",
-      title,
       description,
       images: [ogImage],
+      title,
     },
   };
 }
@@ -76,18 +76,18 @@ export default async function Post({ params }: { params: Params }) {
   const blogPostingSchema = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    headline: post.title,
-    datePublished: post.publishedAt,
-    dateModified: post.lastModified,
-    description: post.summary,
-    image: post.image
-      ? `${SITE_URL}${post.image}`
-      : `${SITE_URL}/og?title=${post.title}`,
-    url: `${SITE_URL}/writing/${post.slug}`,
     author: {
       "@type": "Person",
       name: "Johnie Hjelm",
     },
+    dateModified: post.lastModified,
+    datePublished: post.publishedAt,
+    description: post.summary,
+    headline: post.title,
+    image: post.image
+      ? `${SITE_URL}${post.image}`
+      : `${SITE_URL}/og?title=${post.title}`,
+    url: `${SITE_URL}/writing/${post.slug}`,
   };
 
   const breadcrumbSchema = {
@@ -96,21 +96,21 @@ export default async function Post({ params }: { params: Params }) {
     itemListElement: [
       {
         "@type": "ListItem",
-        position: 1,
-        name: "Home",
         item: SITE_URL,
+        name: "Home",
+        position: 1,
       },
       {
         "@type": "ListItem",
-        position: 2,
-        name: "Writing",
         item: `${SITE_URL}/writing`,
+        name: "Writing",
+        position: 2,
       },
       {
         "@type": "ListItem",
-        position: 3,
-        name: post.title,
         item: `${SITE_URL}/writing/${post.slug}`,
+        name: post.title,
+        position: 3,
       },
     ],
   };

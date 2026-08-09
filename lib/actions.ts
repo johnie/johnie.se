@@ -15,13 +15,13 @@ export async function increment(slug: string) {
   try {
     await db
       .insert(views)
-      .values({ slug, count: 1 })
+      .values({ count: 1, slug })
       .onConflictDoUpdate({
-        target: views.slug,
         set: {
           count: sql`${views.count} + 1`,
           updatedAt: sql`CURRENT_TIMESTAMP`,
         },
+        target: views.slug,
       });
   } catch (error: unknown) {
     // Log error but don't throw - view counting shouldn't break the page
@@ -37,8 +37,8 @@ async function getViewsCountUncached(): Promise<View[]> {
   const result = await db.select().from(views);
 
   return result.map((row) => ({
-    slug: row.slug,
     count: row.count,
+    slug: row.slug,
     updatedAt: row.updatedAt,
   }));
 }

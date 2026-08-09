@@ -10,33 +10,34 @@ import clsx from "clsx";
 import { type HTMLMotionProps, LayoutGroup, motion } from "framer-motion";
 import Link, { type LinkProps } from "next/link";
 import { usePathname } from "next/navigation";
+import { useCallback } from "react";
 import { useMainStore } from "@/lib/main-store";
 import type { NavLink } from "@/lib/types";
 
 export const NAV_LINKS: NavLink[] = [
   {
+    enabled: true,
+    icon: <HouseIcon size={18} />,
     name: "Home",
     slug: "/",
-    icon: <HouseIcon size={18} />,
-    enabled: true,
   },
   {
+    enabled: true,
+    icon: <UserIcon size={18} />,
     name: "About",
     slug: "/about",
-    icon: <UserIcon size={18} />,
-    enabled: true,
   },
   {
+    enabled: true,
+    icon: <PencilSimpleIcon size={18} />,
     name: "Writing",
     slug: "/writing",
-    icon: <PencilSimpleIcon size={18} />,
-    enabled: true,
   },
   {
+    enabled: true,
+    icon: <BrainIcon size={18} />,
     name: "TIL",
     slug: "/til",
-    icon: <BrainIcon size={18} />,
-    enabled: true,
   },
 ];
 
@@ -46,6 +47,8 @@ export default function Navigation() {
   if (pathname.includes("/writing/")) {
     pathname = "/writing";
   }
+
+  const openCommandPalette = useCallback(() => setCmd(true), [setCmd]);
 
   return (
     <LayoutGroup>
@@ -71,9 +74,9 @@ export default function Navigation() {
                       } as HTMLMotionProps<"div">)}
                       layoutId="sidebar"
                       transition={{
-                        type: "spring",
-                        stiffness: 350,
                         damping: 30,
+                        stiffness: 350,
+                        type: "spring",
                       }}
                     />
                   ) : null}
@@ -86,7 +89,7 @@ export default function Navigation() {
         <button
           aria-label="Open command palette (⌘K)"
           className="group ml-2 hidden cursor-pointer text-muted-foreground text-sm md:block"
-          onClick={() => setCmd(true)}
+          onClick={openCommandPalette}
           type="button"
         >
           <kbd className="ease pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-medium font-mono text-[10px] text-muted-foreground opacity-100 transition-colors group-hover:bg-neutral-300 dark:group-hover:bg-neutral-700">

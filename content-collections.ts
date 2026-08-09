@@ -38,7 +38,6 @@ const getFileCreationDate = (filePath: string) => {
 };
 
 const mdxOptions: Options = {
-  remarkPlugins: [remarkGfm],
   rehypePlugins: [
     rehypeSlug,
     [
@@ -56,6 +55,7 @@ const mdxOptions: Options = {
       },
     ],
   ],
+  remarkPlugins: [remarkGfm],
 };
 
 const setStructuredData = (doc: {
@@ -67,45 +67,45 @@ const setStructuredData = (doc: {
 }) => ({
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  headline: doc.title,
-  datePublished: doc.publishedAt,
-  dateModified: doc.publishedAt,
-  description: doc.summary,
-  image: doc.image
-    ? `https://johnie.se${doc.image}`
-    : `https://johnie.se/og?title=${encodeURIComponent(doc.title)}`,
-  url: `https://johnie.se/writing/${doc._meta.path}`,
   author: {
     "@type": "Person",
     name: "Johnie Hjelm",
     url: "https://johnie.se",
   },
+  dateModified: doc.publishedAt,
+  datePublished: doc.publishedAt,
+  description: doc.summary,
+  headline: doc.title,
+  image: doc.image
+    ? `https://johnie.se${doc.image}`
+    : `https://johnie.se/og?title=${encodeURIComponent(doc.title)}`,
+  mainEntityOfPage: {
+    "@id": `https://johnie.se/writing/${doc._meta.path}`,
+    "@type": "WebPage",
+  },
   publisher: {
     "@type": "Person",
     name: "Johnie Hjelm",
   },
-  mainEntityOfPage: {
-    "@type": "WebPage",
-    "@id": `https://johnie.se/writing/${doc._meta.path}`,
-  },
+  url: `https://johnie.se/writing/${doc._meta.path}`,
 });
 
 const PostSchema = z.object({
-  title: z.string(),
+  content: z.string(),
+  image: z.string().optional(),
+  leading: z.boolean().optional().default(false),
   publishedAt: z
     .string()
     .refine((value) => !Number.isNaN(Date.parse(value)), "Invalid date string")
     .transform<string>((value) => new Date(value).toISOString()),
   summary: z.string(),
-  image: z.string().optional(),
-  leading: z.boolean().optional().default(false),
-  content: z.string(),
+  title: z.string(),
 });
 
 const Post = defineCollection({
-  name: "Post",
   directory: "content/",
   include: "*.mdx",
+  name: "Post",
   schema: PostSchema,
   transform: async (document, context) => {
     const mdx = await compileMDX(context, document, mdxOptions);
@@ -130,24 +130,24 @@ const Post = defineCollection({
 
     return {
       ...document,
-      slug,
-      readingTime,
-      structuredData,
       lastModified,
       mdx,
+      readingTime,
+      slug,
+      structuredData,
     };
   },
 });
 
 const Page = defineCollection({
-  name: "Page",
   directory: "content/page/",
   include: "*.mdx",
+  name: "Page",
   schema: z.object({
-    title: z.string(),
-    summary: z.string(),
-    image: z.string().optional(),
     content: z.string(),
+    image: z.string().optional(),
+    summary: z.string(),
+    title: z.string(),
   }),
   transform: async (document, context) => {
     const mdx = await compileMDX(context, document, mdxOptions);
@@ -155,25 +155,25 @@ const Page = defineCollection({
 
     return {
       ...document,
-      slug,
       mdx,
+      slug,
     };
   },
 });
 
 const Work = defineCollection({
-  name: "Work",
   directory: "content/work/",
   include: "*.yml",
+  name: "Work",
   parser: "yaml",
   schema: z.object({
     company: z.string(),
-    role: z.string(),
-    url: z.string().optional(),
-    startYear: z.number().int(),
     endYear: z.number().int().optional(),
-    present: z.boolean().optional(),
     image: z.string().optional(),
+    present: z.boolean().optional(),
+    role: z.string(),
+    startYear: z.number().int(),
+    url: z.string().optional(),
   }),
   transform: (document) => {
     const _id = generateId(
@@ -187,18 +187,18 @@ const Work = defineCollection({
 });
 
 const Project = defineCollection({
-  name: "Project",
   directory: "content/projects/",
   include: "*.yml",
+  name: "Project",
   parser: "yaml",
   schema: z.object({
-    name: z.string(),
-    description: z.string(),
-    url: z.string().optional(),
-    projectType: z.string().optional(),
-    image: z.string().optional(),
-    order: z.number().optional(),
     active: z.boolean().optional(),
+    description: z.string(),
+    image: z.string().optional(),
+    name: z.string(),
+    order: z.number().optional(),
+    projectType: z.string().optional(),
+    url: z.string().optional(),
   }),
   transform: (document) => {
     const _id = generateId(document.name + document.url);
@@ -210,10 +210,11 @@ const Project = defineCollection({
 });
 
 export const TodayILearned = defineCollection({
-  name: "TodayILearned",
   directory: "content/til",
   include: "*.mdx",
+  name: "TodayILearned",
   schema: z.object({
+    content: z.string(),
     publishedAt: z
       .string()
       .refine(
@@ -224,7 +225,6 @@ export const TodayILearned = defineCollection({
       .optional(),
     type: z.enum(["article", "code", "podcast", "general"]).optional(),
     url: z.string().optional(),
-    content: z.string(),
   }),
   transform: async (document, context) => {
     const mdx = await compileMDX(context, document, mdxOptions);
@@ -234,9 +234,9 @@ export const TodayILearned = defineCollection({
 
     return {
       ...document,
-      slug,
       mdx,
       publishedAt,
+      slug,
     };
   },
 });

@@ -7,7 +7,7 @@ export default function ViewCounter({
   slug: string;
   allViews: View[];
 }) {
-  const viewsForSlug = allViews?.find((view) => view.slug === slug);
+  const viewsForSlug = allViews.find((view) => view.slug === slug);
   const number = Number(viewsForSlug?.count || 0);
 
   return <p>{`${number.toLocaleString()} views`}</p>;

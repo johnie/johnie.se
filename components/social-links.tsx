@@ -9,34 +9,34 @@ import type { SocialLink } from "@/lib/types";
 
 export const LINKS: SocialLink[] = [
   {
+    enabled: true,
     href: "mailto:johnie@hjelm.im",
     icon: <EnvelopeIcon size={20} />,
     name: "Email",
-    enabled: true,
   },
   {
+    enabled: true,
     href: "https://github.com/johnie",
     icon: <GithubLogoIcon size={20} />,
     name: "Github",
-    enabled: true,
   },
   {
+    enabled: true,
     href: "https://linkedin.com/in/johniehjelm",
     icon: <LinkedinLogoIcon size={20} />,
     name: "LinkedIn",
-    enabled: true,
   },
   {
+    enabled: true,
     href: "https://instagram.com/johnie",
     icon: <InstagramLogoIcon size={20} />,
     name: "Instagram",
-    enabled: true,
   },
   {
+    enabled: true,
     href: "https://threads.net/@johnie",
     icon: <ThreadsLogoIcon size={20} />,
     name: "Threads",
-    enabled: true,
   },
 ];
 

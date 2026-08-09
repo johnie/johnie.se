@@ -33,8 +33,8 @@ export function GET() {
 
   return new Response(feed, {
     headers: {
-      "Content-Type": "application/xml",
       "Cache-Control": "public, max-age=3600, s-maxage=3600",
+      "Content-Type": "application/xml",
     },
   });
 }
