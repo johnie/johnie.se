@@ -1,5 +1,5 @@
 import ViewCounter from "@/components/view-counter";
-import { getViewsCount, increment } from "@/lib/actions";
+import { getViewsCount } from "@/lib/actions";
 
 export async function Views({
   slug,
@@ -8,9 +8,6 @@ export async function Views({
   slug: string;
   trackView?: boolean;
 }) {
-  const views = await getViewsCount();
-  if (trackView) {
-    increment(slug);
-  }
-  return <ViewCounter allViews={views} slug={slug} />;
+  const count = await getViewsCount(slug);
+  return <ViewCounter count={count} slug={slug} trackView={trackView} />;
 }
