@@ -2,7 +2,7 @@ import { allPosts } from "content-collections";
 import { SITE_URL } from "@/lib/constants";
 
 export function GET() {
-  const posts = allPosts.sort(
+  const posts = [...allPosts].sort(
     (a, b) =>
       new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
   );
@@ -34,7 +34,7 @@ export function GET() {
   return new Response(feed, {
     headers: {
       "Cache-Control": "public, max-age=3600, s-maxage=3600",
-      "Content-Type": "application/xml",
+      "Content-Type": "application/rss+xml; charset=utf-8",
     },
   });
 }

@@ -8,6 +8,15 @@ import { SITE_URL } from "@/lib/constants";
 export const metadata: Metadata = {
   description:
     "Developer, engineering leader, and inclusive tech advocate focused on building products and leading teams to success. Explore my writing, work experience, and projects.",
+  openGraph: {
+    description:
+      "Developer, engineering leader, and inclusive tech advocate focused on building products and leading teams to success. Explore my writing, work experience, and projects.",
+    images: [{ url: `${SITE_URL}/og` }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    images: [`${SITE_URL}/og`],
+  },
 };
 
 export default function Home() {
@@ -52,17 +61,17 @@ export default function Home() {
         innovation, it&lsquo;s the execution that leads to success.
       </p>
       <SocialLinks />
-      <h3 className="mt-10 mb-2 text-neutral-700 text-xl dark:text-neutral-200">
+      <h2 className="mt-10 mb-2 text-neutral-700 text-xl dark:text-neutral-200">
         Latest Writing
-      </h3>
+      </h2>
       <LatestWriting />
-      <h3 className="mt-10 mb-2 text-neutral-700 text-xl dark:text-neutral-200">
+      <h2 className="mt-10 mb-2 text-neutral-700 text-xl dark:text-neutral-200">
         Work
-      </h3>
+      </h2>
       <WorkExperience />
-      <h3 className="mt-10 mb-2 text-neutral-700 text-xl dark:text-neutral-200">
+      <h2 className="mt-10 mb-2 text-neutral-700 text-xl dark:text-neutral-200">
         Projects
-      </h3>
+      </h2>
       <Projects />
     </div>
   );

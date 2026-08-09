@@ -11,7 +11,7 @@ const fontData = fetch(
 export async function GET(req: NextRequest) {
   try {
     const { searchParams } = req.nextUrl;
-    const postTitle = searchParams.get("title");
+    const postTitle = searchParams.get("title") || "Johnie Hjelm";
     const font = await fontData;
 
     return new ImageResponse(

@@ -30,6 +30,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   openGraph: {
     description: "Committed to developing individuals and teams for success.",
+    images: [{ url: `${SITE_URL}/og` }],
     locale: "en-US",
     siteName: "Johnie Hjelm",
     title: "Johnie Hjelm",
@@ -53,6 +54,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
+    images: [`${SITE_URL}/og`],
     title: "Johnie Hjelm",
   },
 };
@@ -74,12 +76,12 @@ export default function RootLayout({
         <div className="mx-auto w-full px-4 text-neutral-700 md:max-w-170 dark:text-neutral-300">
           <div>
             <div className="flex min-h-dvh w-full flex-col justify-between">
-              <div className="grid grid-cols-2 items-center py-8 text-neutral-700 md:py-16 dark:text-neutral-300">
+              <header className="grid grid-cols-2 items-center py-8 text-neutral-700 md:py-16 dark:text-neutral-300">
                 <Link href="/" rel="home">
                   <Logo />
                 </Link>
                 <Navigation />
-              </div>
+              </header>
               <main id="main-content">{children}</main>
               <Footer />
             </div>
