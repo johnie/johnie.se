@@ -2,8 +2,11 @@
 
 import dynamic from "next/dynamic";
 
-export const CMD = dynamic(
-  () => import("@/components/cmd").then((mod) => mod.CMD),
+export const Cmd = dynamic(
+  async () => {
+    const cmdModule = await import("@/components/cmd");
+    return cmdModule.Cmd;
+  },
   {
     ssr: false,
   }

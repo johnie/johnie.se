@@ -10,9 +10,9 @@ updates:
     schedule:
       interval: "weekly"
     commit-message:
-      prefix: 'deps: '
+      prefix: "deps: "
     groups:
-       dependencies:
-          applies-to: version-updates
-          patterns:
-            - "*"
+      dependencies:
+        applies-to: version-updates
+        patterns:
+          - "*"

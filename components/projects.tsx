@@ -1,7 +1,8 @@
 import { allProjects } from "content-collections";
 import Image from "next/image";
 import type { JSX } from "react";
-import { hasImage } from "@/lib/types";
+
+import { hasImage, hasUrl } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
 export const Projects = (): JSX.Element | null => {
@@ -12,20 +13,22 @@ export const Projects = (): JSX.Element | null => {
   const items = allProjects
     .filter((project) => Boolean(project.active))
     .filter(hasImage)
-    .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+    .filter(hasUrl)
+    .toSorted((a, b) => (a.order ?? 0) - (b.order ?? 0));
 
   return (
     <div>
       {items.map((project, index, { length }) => (
         <a
           className="group ease -mx-4 flex gap-x-4 rounded-xl border-none px-4 pt-4 transition-colors hover:bg-neutral-50 dark:hover:bg-neutral-900"
+          aria-label={`${project.name}: ${project.description}`}
           href={project.url}
           key={project._id}
           rel="noopener noreferrer"
           target="_blank"
         >
-          <div className="mt-0.5 h-9 w-9 shrink-0 overflow-hidden rounded-[10px] border border-neutral-200 bg-neutral-100 shadow-shorter dark:border-neutral-800 dark:bg-neutral-800">
-            <div className="flex h-full items-center justify-center font-semibold text-neutral-400 text-sm">
+          <div className="shadow-shorter mt-0.5 h-9 w-9 shrink-0 overflow-hidden rounded-[10px] border border-neutral-200 bg-neutral-100 dark:border-neutral-800 dark:bg-neutral-800">
+            <div className="flex h-full items-center justify-center text-sm font-semibold text-neutral-400">
               <Image
                 alt={`${project.name} logo`}
                 className="h-9 w-9"
@@ -41,9 +44,9 @@ export const Projects = (): JSX.Element | null => {
           </div>
           <div
             className={cn(
-              "flex flex-auto flex-col pb-4 text-neutral-700 text-sm group-hover:border-transparent dark:text-neutral-300",
+              "flex flex-auto flex-col pb-4 text-sm text-neutral-700 group-hover:border-transparent dark:text-neutral-300",
               {
-                "border-neutral-100 border-b dark:border-neutral-900":
+                "border-b border-neutral-100 dark:border-neutral-900":
                   index + 1 !== length,
               }
             )}
@@ -51,7 +54,7 @@ export const Projects = (): JSX.Element | null => {
             <div>{project.name}</div>
             <div className="flex items-center justify-between gap-x-2 text-neutral-500 dark:text-neutral-500">
               <div>{project.description}</div>
-              <div className="rounded-full border border-black border-opacity-5 bg-neutral-100 px-2 text-xs dark:bg-neutral-800 dark:text-neutral-500">
+              <div className="border-opacity-5 rounded-full border border-black bg-neutral-100 px-2 text-xs dark:bg-neutral-800 dark:text-neutral-500">
                 {project.projectType}
               </div>
             </div>

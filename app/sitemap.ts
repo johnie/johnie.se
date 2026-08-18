@@ -1,5 +1,6 @@
 import { allPages, allPosts, allTodayILearneds } from "content-collections";
 import type { MetadataRoute } from "next";
+
 import { SITE_URL } from "@/lib/constants";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -30,7 +31,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     {
       changeFrequency: "weekly",
       lastModified: new Date().toISOString(),
-      priority: 1.0,
+      priority: 1,
       url: SITE_URL,
     },
     {

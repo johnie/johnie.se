@@ -1,19 +1,18 @@
+import { readFile } from "node:fs/promises";
+import path from "node:path";
+
 import { ImageResponse } from "next/og";
 import type { NextRequest } from "next/server";
 
-export const runtime = "edge";
+// Load the bundled font once per cold start.
+const fontData = await readFile(
+  path.join(process.cwd(), "public/fonts/Inter-Bold.ttf")
+);
 
-// Cache font at module level - only fetched once per cold start
-const fontData = fetch(
-  new URL("../../public/fonts/Inter-Bold.ttf", import.meta.url)
-).then((res) => res.arrayBuffer());
-
-export async function GET(req: NextRequest) {
+export const GET = (req: NextRequest) => {
   try {
     const { searchParams } = req.nextUrl;
     const postTitle = searchParams.get("title") || "Johnie Hjelm";
-    const font = await fontData;
-
     return new ImageResponse(
       <div
         style={{
@@ -50,7 +49,7 @@ export async function GET(req: NextRequest) {
       {
         fonts: [
           {
-            data: font,
+            data: fontData,
             name: "Inter",
             style: "normal",
           },
@@ -64,4 +63,4 @@ export async function GET(req: NextRequest) {
       status: 500,
     });
   }
-}
+};

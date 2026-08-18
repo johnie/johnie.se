@@ -1,7 +1,10 @@
-import { allPosts, type Post } from "content-collections";
+import { allPosts } from "content-collections";
+import type { Post } from "content-collections";
 import { format } from "date-fns";
 import Link from "next/link";
-import { type JSX, Suspense } from "react";
+import { Suspense } from "react";
+import type { JSX } from "react";
+
 import { Views } from "@/components/views";
 import { sortPostsByDate } from "@/lib/content-utils";
 
@@ -23,10 +26,10 @@ export const LatestWriting = (): JSX.Element | null => {
           key={post.slug}
         >
           <div className="flex w-full flex-col">
-            <p className="text-neutral-700 text-sm tracking-tight md:text-base dark:text-neutral-300">
+            <p className="text-sm tracking-tight text-neutral-700 md:text-base dark:text-neutral-300">
               {post.title}
             </p>
-            <div className="flex items-center text-neutral-500 text-sm dark:text-neutral-500">
+            <div className="flex items-center text-sm text-neutral-500 dark:text-neutral-500">
               <p>{format(new Date(post.publishedAt), "dd MMMM, yyyy")}</p>
               <span className="mx-4">•</span>
               <p>{post.readingTime}</p>

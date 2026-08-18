@@ -1,4 +1,4 @@
-name: 'dold'
+name: "dold"
 description: One-time secret sharing service.
 url: https://dold.app
 projectType: web

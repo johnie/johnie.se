@@ -1,12 +1,12 @@
 import type { Post } from "content-collections";
 
 export const sortPostsByDate = (posts: Post[]): Post[] =>
-  [...posts].sort(
+  [...posts].toSorted(
     (a, b) =>
       new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
   );
 
-export function groupPostsByYear(posts: Post[]): [string, Post[]][] {
+export const groupPostsByYear = (posts: Post[]): [string, Post[]][] => {
   const sorted = sortPostsByDate(posts);
   const grouped: Record<string, Post[]> = {};
 
@@ -18,5 +18,5 @@ export function groupPostsByYear(posts: Post[]): [string, Post[]][] {
     grouped[year].push(post);
   }
 
-  return Object.entries(grouped).sort(([a], [b]) => Number(b) - Number(a));
-}
+  return Object.entries(grouped).toSorted(([a], [b]) => Number(b) - Number(a));
+};

@@ -5,6 +5,7 @@ import {
   LinkedinLogoIcon,
   ThreadsLogoIcon,
 } from "@phosphor-icons/react/dist/ssr";
+
 import type { SocialLink } from "@/lib/types";
 
 export const LINKS: SocialLink[] = [

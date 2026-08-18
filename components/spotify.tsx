@@ -1,8 +1,9 @@
 import { MusicNoteIcon } from "@phosphor-icons/react/dist/ssr";
+
 import { getCurrentOrLastSong } from "@/lib/spotify";
 import { cn } from "@/lib/utils";
 
-export async function Spotify() {
+export const Spotify = async () => {
   const song = await getCurrentOrLastSong();
 
   if (!song) {
@@ -11,7 +12,7 @@ export async function Spotify() {
 
   return (
     <a
-      className="group mb-2 flex items-center gap-2 text-neutral-400 text-sm transition-colors hover:text-neutral-200"
+      className="group mb-2 flex items-center gap-2 text-sm text-neutral-400 transition-colors hover:text-neutral-200"
       href={song.songUrl}
       rel="noopener noreferrer"
       target="_blank"
@@ -33,4 +34,4 @@ export async function Spotify() {
       </div>
     </a>
   );
-}
+};

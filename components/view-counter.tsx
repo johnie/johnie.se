@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect } from "react";
+
 import { increment } from "@/lib/actions";
 
-export default function ViewCounter({
+const ViewCounter = ({
   slug,
   count,
   trackView = false,
@@ -11,7 +12,7 @@ export default function ViewCounter({
   slug: string;
   count: number;
   trackView?: boolean;
-}) {
+}) => {
   useEffect(() => {
     if (trackView) {
       increment(slug);
@@ -19,4 +20,6 @@ export default function ViewCounter({
   }, [slug, trackView]);
 
   return <p>{`${count.toLocaleString()} views`}</p>;
-}
+};
+
+export default ViewCounter;
