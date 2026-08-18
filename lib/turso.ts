@@ -1,5 +1,6 @@
 import { createClient } from "@libsql/client";
 import { drizzle } from "drizzle-orm/libsql";
+
 import { spotify, views } from "@/lib/db/schema";
 import { env } from "@/lib/env";
 

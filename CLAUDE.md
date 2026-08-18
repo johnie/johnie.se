@@ -9,6 +9,7 @@ This is a personal website built with Next.js 16 (App Router) for Johnie Hjelm. 
 ## Development Commands
 
 **Development server:**
+
 ```bash
 npm run dev
 # Uses Next.js with Turbopack for faster builds
@@ -16,11 +17,13 @@ npm run dev
 ```
 
 **Production build:**
+
 ```bash
 npm run build
 ```
 
 **Linting:**
+
 ```bash
 npm run lint
 # Uses ESLint with Next.js config
@@ -37,6 +40,7 @@ The project uses **@content-collections** for content management, configured in 
 - TypeScript path alias: `content-collections` → `./.content-collections/generated`
 
 **Content types:**
+
 1. **Post** (`content/*.mdx`) - Blog posts with frontmatter (title, publishedAt, summary, image, leading)
 2. **Page** (`content/page/*.mdx`) - Static pages
 3. **Work** (`content/work/*.yml`) - Work experience entries
@@ -44,6 +48,7 @@ The project uses **@content-collections** for content management, configured in 
 5. **TodayILearned** (`content/til/*.mdx`) - TIL entries with type (article/code/podcast/general)
 
 All MDX content is compiled with:
+
 - `remark-gfm` for GitHub Flavored Markdown
 - `rehype-shiki` with 'vesper' theme for syntax highlighting
 - `rehype-slug` and `rehype-autolink-headings` for heading anchors
@@ -51,8 +56,9 @@ All MDX content is compiled with:
 - Git-based last modified dates via `git log`
 
 **Import pattern:**
+
 ```typescript
-import { allPosts } from 'content-collections';
+import { allPosts } from "content-collections";
 ```
 
 ### App Structure (Next.js App Router)
@@ -87,6 +93,7 @@ app/
 ### Database & Analytics
 
 **Turso (LibSQL):**
+
 - Database client configured in `lib/turso.ts`
 - Used for view counting (`lib/actions.ts`)
 - Views table: `slug`, `count`, `updated_at`
@@ -94,6 +101,7 @@ app/
 - View counting disabled in development mode
 
 **Analytics:**
+
 - OpenPanel analytics integrated in root layout
 - Tracks screen views, outgoing links, and attributes
 
@@ -102,6 +110,7 @@ app/
 Environment variables are validated using `@t3-oss/env-nextjs` in `lib/env.ts`:
 
 Required variables:
+
 - `TURSO_DATABASE_URL` - Turso database URL
 - `TURSO_AUTH_TOKEN` - Turso authentication token
 - `OPENPANEL_CLIENT_ID` - OpenPanel analytics client ID
@@ -109,6 +118,7 @@ Required variables:
 ### Configuration Files
 
 **next.config.mjs:**
+
 - `typedRoutes: true` - Enables Next.js typed routes
 - Image optimization: AVIF and WebP formats
 - Redirects from Vercel Edge Config
@@ -116,6 +126,7 @@ Required variables:
 - Wrapped with `withContentCollections` for content processing
 
 **eslint.config.mjs:**
+
 - Extends `next/core-web-vitals` and `next/typescript`
 - Ignores: node_modules, .next, out, dist, build, public, .content-collections
 
@@ -144,17 +155,19 @@ Required variables:
 ## Content Authoring
 
 When creating new blog posts, use this frontmatter structure:
+
 ```yaml
 ---
 title: "Post Title"
 publishedAt: "2024-01-01"
 summary: "Post summary"
-image: "/path/to/image.jpg"  # optional
-leading: false                # optional, for featured posts
+image: "/path/to/image.jpg" # optional
+leading: false # optional, for featured posts
 ---
 ```
 
 Available MDX components in posts:
+
 - `<Callout emoji="🎉">content</Callout>`
 - `<ProsCard title="Tool" pros={["Pro 1", "Pro 2"]} />`
 - `<ConsCard title="Tool" cons={["Con 1", "Con 2"]} />`

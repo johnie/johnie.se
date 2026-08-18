@@ -7,10 +7,11 @@ import {
   UserIcon,
 } from "@phosphor-icons/react";
 import clsx from "clsx";
-import { type HTMLMotionProps, LayoutGroup, motion } from "framer-motion";
-import Link, { type LinkProps } from "next/link";
+import { LayoutGroup, motion } from "framer-motion";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCallback } from "react";
+
 import { useMainStore } from "@/lib/main-store";
 import type { NavLink } from "@/lib/types";
 
@@ -41,7 +42,7 @@ export const NAV_LINKS: NavLink[] = [
   },
 ];
 
-export default function Navigation() {
+const Navigation = () => {
   const { setCmd } = useMainStore();
   let pathname = usePathname() || "/";
   if (pathname.includes("/writing/")) {
@@ -61,17 +62,14 @@ export default function Navigation() {
                 className={clsx("ease flex align-middle transition-all", {
                   "text-muted-foreground dark:text-muted-foreground": !isActive,
                 })}
-                href={`${slug}` as LinkProps<"/">["href"]}
+                href={slug}
                 key={slug}
               >
                 <span className="relative px-3 py-1">
                   {slug === pathname ? (
                     <motion.div
                       initial={false}
-                      {...({
-                        className:
-                          "absolute h-full inset-0 bg-neutral-200 dark:bg-muted rounded-md",
-                      } as HTMLMotionProps<"div">)}
+                      className="dark:bg-muted absolute inset-0 h-full rounded-md bg-neutral-200"
                       layoutId="sidebar"
                       transition={{
                         damping: 30,
@@ -88,15 +86,17 @@ export default function Navigation() {
         </div>
         <button
           aria-label="Open command palette (⌘K)"
-          className="group ml-2 hidden cursor-pointer text-muted-foreground text-sm md:block"
+          className="group text-muted-foreground ml-2 hidden cursor-pointer text-sm md:block"
           onClick={openCommandPalette}
           type="button"
         >
-          <kbd className="ease pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-medium font-mono text-[10px] text-muted-foreground opacity-100 transition-colors group-hover:bg-neutral-300 dark:group-hover:bg-neutral-700">
+          <kbd className="ease bg-muted text-muted-foreground pointer-events-none inline-flex h-5 items-center gap-1 rounded border px-1.5 font-mono text-[10px] font-medium opacity-100 transition-colors select-none group-hover:bg-neutral-300 dark:group-hover:bg-neutral-700">
             <span className="text-xs">⌘</span>K
           </kbd>
         </button>
       </nav>
     </LayoutGroup>
   );
-}
+};
+
+export default Navigation;

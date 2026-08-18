@@ -1,20 +1,20 @@
 import { allPages } from "content-collections";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+
 import { Mdx } from "@/components/mdx";
 import { SITE_URL } from "@/lib/constants";
 
-export async function generateStaticParams() {
-  return allPages.map((page) => ({
+export const generateStaticParams = () =>
+  allPages.map((page) => ({
     slug: page._meta.path,
   }));
-}
 
-export async function generateMetadata({
+export const generateMetadata = async ({
   params,
 }: {
   params: Promise<{ slug: string }>;
-}): Promise<Metadata> {
+}): Promise<Metadata> => {
   const { slug } = await params;
   const page = allPages.find((p) => p._meta.path === slug);
 
@@ -33,13 +33,9 @@ export async function generateMetadata({
     },
     title: page.title,
   };
-}
+};
 
-export default async function Page({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
+const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const { slug } = await params;
   const page = allPages.find((p) => p._meta.path === slug);
 
@@ -49,7 +45,7 @@ export default async function Page({
 
   return (
     <article>
-      <h1 className="mb-8 bg-linear-to-r from-neutral-800 to-neutral-500 bg-clip-text font-semibold text-3xl text-transparent dark:from-neutral-100 dark:to-neutral-400">
+      <h1 className="mb-8 bg-linear-to-r from-neutral-800 to-neutral-500 bg-clip-text text-3xl font-semibold text-transparent dark:from-neutral-100 dark:to-neutral-400">
         {page.title}
       </h1>
 
@@ -58,4 +54,6 @@ export default async function Page({
       </div>
     </article>
   );
-}
+};
+
+export default Page;

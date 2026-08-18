@@ -1,19 +1,24 @@
+import type { Route } from "next";
 import type { ReactNode } from "react";
 
 export type RequiredField<T, K extends keyof T> = T & Required<Pick<T, K>>;
 export type WithImage<T extends { image?: string }> = RequiredField<T, "image">;
 
-export function hasImage<T extends { image?: string }>(
+export const hasImage = <T extends { image?: string }>(
   item: T
-): item is WithImage<T> {
-  return typeof item.image === "string" && item.image.length > 0;
-}
+): item is WithImage<T> =>
+  typeof item.image === "string" && item.image.length > 0;
+
+export const hasUrl = <T extends { url?: string }>(
+  item: T
+): item is RequiredField<T, "url"> =>
+  typeof item.url === "string" && item.url.length > 0;
 
 export interface NavLink {
   enabled?: boolean;
   icon?: ReactNode;
   name: string;
-  slug: string;
+  slug: Route;
 }
 
 export interface SocialLink {

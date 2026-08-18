@@ -2,6 +2,7 @@
 import type { Route } from "next";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+
 import { NAV_LINKS as navLinks } from "@/components/nav";
 import { LINKS as socialLinks } from "@/components/social-links";
 import {
@@ -15,11 +16,9 @@ import {
 } from "@/components/ui/command";
 import { useMainStore } from "@/lib/main-store";
 
-function isInternalRoute(slug: string): slug is Route {
-  return slug.startsWith("/");
-}
+const isInternalRoute = (slug: string): slug is Route => slug.startsWith("/");
 
-export const CMD = () => {
+export const Cmd = () => {
   const { toggleCmd, isCmdOpen, setCmd } = useMainStore();
   const { push } = useRouter();
 

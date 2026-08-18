@@ -1,7 +1,8 @@
 import { allWorks } from "content-collections";
 import Image from "next/image";
 import type { JSX } from "react";
-import { hasImage } from "@/lib/types";
+
+import { hasImage, hasUrl } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
 export const WorkExperience = (): JSX.Element | null => {
@@ -10,20 +11,22 @@ export const WorkExperience = (): JSX.Element | null => {
   }
   const items = allWorks
     .filter(hasImage)
-    .sort((a, b) => b.startYear - a.startYear);
+    .filter(hasUrl)
+    .toSorted((a, b) => b.startYear - a.startYear);
 
   return (
     <div>
       {items.map((work, index, { length }) => (
         <a
           className="group ease -mx-4 flex gap-x-4 rounded-xl border-none px-4 pt-4 transition-colors hover:bg-neutral-50 dark:hover:bg-neutral-900"
+          aria-label={`${work.company}: ${work.role}`}
           href={work.url}
           key={work._id}
           rel="noopener noreferrer"
           target="_blank"
         >
-          <div className="mt-0.5 h-9 w-9 shrink-0 overflow-hidden rounded-full bg-neutral-100 shadow-shorter dark:bg-neutral-800">
-            <div className="flex h-full items-center justify-center font-semibold text-neutral-400 text-sm">
+          <div className="shadow-shorter mt-0.5 h-9 w-9 shrink-0 overflow-hidden rounded-full bg-neutral-100 dark:bg-neutral-800">
+            <div className="flex h-full items-center justify-center text-sm font-semibold text-neutral-400">
               <Image
                 alt={`${work.company} logo`}
                 className="h-9 w-9"
@@ -38,9 +41,9 @@ export const WorkExperience = (): JSX.Element | null => {
           </div>
           <div
             className={cn(
-              "flex flex-auto flex-col pb-4 text-neutral-700 text-sm group-hover:border-transparent dark:text-neutral-300",
+              "flex flex-auto flex-col pb-4 text-sm text-neutral-700 group-hover:border-transparent dark:text-neutral-300",
               {
-                "border-neutral-100 border-b dark:border-neutral-900":
+                "border-b border-neutral-100 dark:border-neutral-900":
                   index + 1 !== length,
               }
             )}

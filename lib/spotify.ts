@@ -1,5 +1,6 @@
 import { desc, sql } from "drizzle-orm";
 import { unstable_cache } from "next/cache";
+
 import { spotify } from "@/lib/db/schema";
 import { db } from "@/lib/turso";
 import type {
@@ -7,6 +8,7 @@ import type {
   SpotifyCurrentlyPlayingResponse,
   SpotifyTokenResponse,
 } from "@/lib/types";
+
 import { env } from "./env";
 
 const basic = Buffer.from(
@@ -66,7 +68,7 @@ const getNowPlaying =
     return response.json();
   };
 
-async function getLatestSongFromDb() {
+const getLatestSongFromDb = async () => {
   const [latestSong] = await db
     .select()
     .from(spotify)
@@ -74,14 +76,14 @@ async function getLatestSongFromDb() {
     .limit(1);
 
   return latestSong;
-}
+};
 
-export async function logSongToDb(songData: {
+export const logSongToDb = async (songData: {
   album: string;
   artist: string;
   songUrl: string;
   title: string;
-}) {
+}) => {
   try {
     await db
       .insert(spotify)
@@ -96,9 +98,9 @@ export async function logSongToDb(songData: {
   } catch (error) {
     console.error("Failed to log song to database:", error);
   }
-}
+};
 
-async function getCurrentOrLastSongUncached(): Promise<SongData | null> {
+const getCurrentOrLastSongUncached = async (): Promise<SongData | null> => {
   try {
     // Check if currently playing
     const nowPlaying = await getNowPlaying();
@@ -158,7 +160,7 @@ async function getCurrentOrLastSongUncached(): Promise<SongData | null> {
       title: latestSong.title,
     };
   }
-}
+};
 
 // Cache Spotify data for 60 seconds to reduce API calls
 export const getCurrentOrLastSong = unstable_cache(

@@ -4,7 +4,8 @@ import { Inter } from "next/font/google";
 import Link from "next/link";
 import Script from "next/script";
 import { Toaster } from "sonner";
-import { CMD } from "@/components/cmd-loader";
+
+import { Cmd } from "@/components/cmd-loader";
 import { Footer } from "@/components/footer";
 import { Logo } from "@/components/logo";
 import Navigation from "@/components/nav";
@@ -59,42 +60,38 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  return (
-    <html className="dark" lang="en">
-      <body className={cn("antialiased", inter.className)}>
-        <a
-          className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:bg-white focus:p-4 focus:text-black dark:focus:bg-black dark:focus:text-white"
-          href="#main-content"
-        >
-          Skip to content
-        </a>
-        <div className="mx-auto w-full px-4 text-neutral-700 md:max-w-170 dark:text-neutral-300">
-          <div>
-            <div className="flex min-h-dvh w-full flex-col justify-between">
-              <header className="grid grid-cols-2 items-center py-8 text-neutral-700 md:py-16 dark:text-neutral-300">
-                <Link href="/" rel="home">
-                  <Logo />
-                </Link>
-                <Navigation />
-              </header>
-              <main id="main-content">{children}</main>
-              <Footer />
-            </div>
+const RootLayout = ({ children }: { children: React.ReactNode }) => (
+  <html className="dark" lang="en">
+    <body className={cn("antialiased", inter.className)}>
+      <a
+        className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:bg-white focus:p-4 focus:text-black dark:focus:bg-black dark:focus:text-white"
+        href="#main-content"
+      >
+        Skip to content
+      </a>
+      <div className="mx-auto w-full px-4 text-neutral-700 md:max-w-170 dark:text-neutral-300">
+        <div>
+          <div className="flex min-h-dvh w-full flex-col justify-between">
+            <header className="grid grid-cols-2 items-center py-8 text-neutral-700 md:py-16 dark:text-neutral-300">
+              <Link href="/" rel="home">
+                <Logo />
+              </Link>
+              <Navigation />
+            </header>
+            <main id="main-content">{children}</main>
+            <Footer />
           </div>
         </div>
-        <Toaster richColors />
-        <CMD />
-        <Script
-          data-website-id="12583e8d-e6ac-4653-83f9-a8fd899f03fb"
-          defer
-          src="https://pulse.hjelm.cloud/script.js"
-        />
-      </body>
-    </html>
-  );
-}
+      </div>
+      <Toaster richColors />
+      <Cmd />
+      <Script
+        data-website-id="12583e8d-e6ac-4653-83f9-a8fd899f03fb"
+        defer
+        src="https://pulse.hjelm.cloud/script.js"
+      />
+    </body>
+  </html>
+);
+
+export default RootLayout;

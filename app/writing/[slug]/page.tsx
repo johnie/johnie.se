@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
+
 import { Mdx } from "@/components/mdx";
 import { Views } from "@/components/views";
 import { SITE_URL } from "@/lib/constants";
@@ -11,11 +12,11 @@ import { cn } from "@/lib/utils";
 
 type Params = Promise<{ slug: string }>;
 
-export async function generateMetadata({
+export const generateMetadata = async ({
   params,
 }: {
   params: Params;
-}): Promise<Metadata | undefined> {
+}): Promise<Metadata | undefined> => {
   const { slug } = await params;
   const post = allPosts.find((p) => p.slug === slug);
   if (!post) {
@@ -57,15 +58,14 @@ export async function generateMetadata({
       title,
     },
   };
-}
+};
 
-export async function generateStaticParams() {
-  return allPosts.map((post) => ({
+export const generateStaticParams = () =>
+  allPosts.map((post) => ({
     slug: post.slug,
   }));
-}
 
-export default async function Post({ params }: { params: Params }) {
+const Post = async ({ params }: { params: Params }) => {
   const { slug } = await params;
   const post = allPosts.find((p) => p.slug === slug);
 
@@ -114,34 +114,27 @@ export default async function Post({ params }: { params: Params }) {
       },
     ],
   };
+  const blogPostingSchemaJson = JSON.stringify(blogPostingSchema).replaceAll(
+    "<",
+    "\\u003c"
+  );
+  const breadcrumbSchemaJson = JSON.stringify(breadcrumbSchema).replaceAll(
+    "<",
+    "\\u003c"
+  );
 
   return (
     <section>
-      <script
-        // biome-ignore lint/security/noDangerouslySetInnerHtml: Safe - JSON-LD structured data with static content
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(blogPostingSchema),
-        }}
-        suppressHydrationWarning
-        type="application/ld+json"
-      />
-      <script
-        // biome-ignore lint/security/noDangerouslySetInnerHtml: Safe - JSON-LD structured data with static content
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(breadcrumbSchema),
-        }}
-        suppressHydrationWarning
-        type="application/ld+json"
-      />
+      <script type="application/ld+json">{blogPostingSchemaJson}</script>
+      <script type="application/ld+json">{breadcrumbSchemaJson}</script>
       <Link
-        className="relative mb-4 inline-block font-semibold text-neutral-600 text-sm transition-colors duration-150 hover:text-neutral-700 dark:text-neutral-500 dark:hover:text-neutral-400"
+        className="relative mb-4 inline-block text-sm font-semibold text-neutral-600 transition-colors duration-150 hover:text-neutral-700 dark:text-neutral-500 dark:hover:text-neutral-400"
         href="/writing"
       >
         <svg
-          aria-label="Go back"
+          aria-hidden="true"
           className="-mt-1 mr-1 inline-block h-4 w-4"
           fill="none"
-          role="img"
           stroke="currentColor"
           viewBox="0 0 24 24"
           xmlns="http://www.w3.org/2000/svg"
@@ -155,10 +148,10 @@ export default async function Post({ params }: { params: Params }) {
         </svg>
         <span>Go back</span>
       </Link>
-      <h1 className="title bg-linear-to-r from-neutral-800 to-neutral-500 bg-clip-text font-bold text-3xl text-transparent tracking-tighter dark:from-neutral-100 dark:to-neutral-400">
+      <h1 className="title bg-linear-to-r from-neutral-800 to-neutral-500 bg-clip-text text-3xl font-bold tracking-tighter text-transparent dark:from-neutral-100 dark:to-neutral-400">
         {post.title}
       </h1>
-      <div className="mt-2 mb-8 flex items-center justify-between text-neutral-600 text-sm">
+      <div className="mt-2 mb-8 flex items-center justify-between text-sm text-neutral-600">
         <p>{format(new Date(post.publishedAt), "dd MMMM, yyyy")}</p>
         <div className="flex gap-2">
           <p>{post.readingTime}</p>
@@ -177,4 +170,6 @@ export default async function Post({ params }: { params: Params }) {
       </article>
     </section>
   );
-}
+};
+
+export default Post;

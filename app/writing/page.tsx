@@ -3,6 +3,7 @@ import { format } from "date-fns";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
+
 import { Views } from "@/components/views";
 import { groupPostsByYear } from "@/lib/content-utils";
 
@@ -12,15 +13,15 @@ export const metadata: Metadata = {
   title: "Writing",
 };
 
-export default async function BlogPage() {
+const BlogPage = () => {
   const postsByYear = groupPostsByYear(allPosts);
 
   return (
     <section>
-      <h1 className="mb-8 bg-linear-to-r from-neutral-800 to-neutral-500 bg-clip-text font-semibold text-3xl text-transparent dark:from-neutral-100 dark:to-neutral-400">
+      <h1 className="mb-8 bg-linear-to-r from-neutral-800 to-neutral-500 bg-clip-text text-3xl font-semibold text-transparent dark:from-neutral-100 dark:to-neutral-400">
         Thoughts. Tools. Leadership.
       </h1>
-      <p className="mb-8 text-neutral-500 leading-6.25 dark:text-neutral-400">
+      <p className="mb-8 leading-6.25 text-neutral-500 dark:text-neutral-400">
         Here you&lsquo;ll find my thoughts on AI-augmented engineering,
         leadership for makers, productivity systems, and the occasional personal
         reflection. With 15+ years in tech, I write about what actually works,
@@ -30,7 +31,7 @@ export default async function BlogPage() {
         {postsByYear.map(([year, posts]) => (
           <div key={year}>
             <div className="first:pt-0">
-              <span className="font-medium text-neutral-400 text-sm dark:text-neutral-500">
+              <span className="text-sm font-medium text-neutral-400 dark:text-neutral-500">
                 {year}
               </span>
             </div>
@@ -41,10 +42,10 @@ export default async function BlogPage() {
                 key={post.slug}
               >
                 <div className="flex w-full flex-col space-y-1">
-                  <p className="text-neutral-700 leading-snug tracking-tight dark:text-neutral-300">
+                  <p className="leading-snug tracking-tight text-neutral-700 dark:text-neutral-300">
                     {post.title}
                   </p>
-                  <div className="flex items-center gap-3 text-neutral-500 text-sm">
+                  <div className="flex items-center gap-3 text-sm text-neutral-500">
                     <p>{format(new Date(post.publishedAt), "dd MMMM, yyyy")}</p>
                     <span>•</span>
                     <p>{post.readingTime}</p>
@@ -61,4 +62,6 @@ export default async function BlogPage() {
       </div>
     </section>
   );
-}
+};
+
+export default BlogPage;

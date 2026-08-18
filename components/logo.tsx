@@ -13,10 +13,9 @@ const Logo: React.FC<LogoProps> = ({
   ...props
 }: LogoProps) => (
   <svg
-    aria-label="Johnie Hjelm logo"
+    aria-hidden="true"
     fill="currentColor"
     height={height}
-    role="img"
     viewBox="0 0 795 792"
     width={width}
     {...props}

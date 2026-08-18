@@ -2,38 +2,40 @@ import { execFile } from "node:child_process";
 import { createHash } from "node:crypto";
 import { statSync } from "node:fs";
 import path from "node:path";
+import { promisify } from "node:util";
+
 import { defineCollection, defineConfig } from "@content-collections/core";
-import { compileMDX, type Options } from "@content-collections/mdx";
+import { compileMDX } from "@content-collections/mdx";
+import type { Options } from "@content-collections/mdx";
 import rehypeShiki from "@shikijs/rehype";
 import calcReadingTime from "reading-time";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeSlug from "rehype-slug";
 import remarkGfm from "remark-gfm";
 import z from "zod";
+
 import { SITE_URL } from "./lib/constants";
 
-function runGitLog(filePath: string): Promise<string> {
-  return new Promise((resolve, reject) => {
-    execFile(
-      "git",
-      ["log", "-1", "--format=%ai", "--", `content/${filePath}`],
-      (error, stdout) => {
-        if (error) {
-          return reject(error);
-        }
-        resolve(stdout);
-      }
-    );
-  });
-}
+const execFileAsync = promisify(execFile);
 
-function generateId(inputString: string): string {
+const runGitLog = async (filePath: string): Promise<string> => {
+  const { stdout } = await execFileAsync("git", [
+    "log",
+    "-1",
+    "--format=%ai",
+    "--",
+    `content/${filePath}`,
+  ]);
+  return stdout;
+};
+
+const generateId = (inputString: string): string => {
   const hash = createHash("sha256").update(inputString).digest("hex");
 
   const shortId = Buffer.from(hash).toString("base64").slice(0, 8);
 
   return shortId;
-}
+};
 
 const getFileCreationDate = (filePath: string) => {
   const fullPath = path.join(process.cwd(), "content/til", filePath);

@@ -4,7 +4,9 @@ import { index, integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 export const views = sqliteTable("VIEWS", {
   count: integer("count").notNull().default(0),
   slug: text("slug").primaryKey().notNull(),
-  updatedAt: text("updated_at").notNull().default(sql`(CURRENT_TIMESTAMP)`),
+  updatedAt: text("updated_at")
+    .notNull()
+    .default(sql`(CURRENT_TIMESTAMP)`),
 });
 
 export const spotify = sqliteTable(

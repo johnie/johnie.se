@@ -1,7 +1,6 @@
 # johnie.se
 
-Personal website and digital garden for Johnie Hjelm.
-Features blog posts, TIL entries, work history, and projects.
+Personal website and digital garden for Johnie Hjelm. Features blog posts, TIL entries, work history, and projects.
 
 **[johnie.se](https://johnie.se)**
 

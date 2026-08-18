@@ -6,13 +6,19 @@ image: "/images/writing/vault.png"
 leading: false
 ---
 
-<Image alt={'Obsidian Vault'} src={'/images/writing/vault.png'} width={1280} height={720} priority />
+<Image
+  alt={"Obsidian Vault"}
+  src={"/images/writing/vault.png"}
+  width={1280}
+  height={720}
+  priority
+/>
 
 Your notes are lonely.
 
 That brilliant insight from last Tuesday? Buried in a file you'll never open again. The connection between your API architecture decision and that article about performance tradeoffs? Lost forever because the two notes never met.
 
-Most note-taking is archaeology. You dig through folders hoping to find something useful. But what if your vault could think *with* you, surfacing connections, maintaining context, and evolving alongside your understanding?
+Most note-taking is archaeology. You dig through folders hoping to find something useful. But what if your vault could think _with_ you, surfacing connections, maintaining context, and evolving alongside your understanding?
 
 This is a practical guide to making that happen using [Obsidian](https://obsidian.md) and [Claude Code](https://claude.ai/code), combining the best local-first knowledge base with an AI that can read, understand, and help you navigate your thinking.
 
@@ -33,8 +39,7 @@ The `CLAUDE.md` file is your teaching document, placed at your vault's root, it 
 ```markdown
 # Vault Philosophy
 
-This vault tracks projects, thinking, and reference material.
-Core principle: capture quickly, structure deliberately.
+This vault tracks projects, thinking, and reference material. Core principle: capture quickly, structure deliberately.
 
 ## Structure (PARA-inspired)
 
@@ -54,23 +59,22 @@ Core principle: capture quickly, structure deliberately.
 
 Every note needs:
 ---
-created: YYYY-MM-DD
-tags: [relevant, tags]
-status: active | completed | archived
+
+created: YYYY-MM-DD tags: [relevant, tags] status: active | completed | archived
 ---
 
 ## Linking Expectations
 
-- Link inline, not at the bottom. Write "because [[async beats sync]]"
-  not "Related: async-beats-sync"
+- Link inline, not at the bottom. Write "because [[async beats sync]]" not "Related: async-beats-sync"
 - Every note should have at least one incoming link
 - Hub pages link to all related notes in a topic
 
 ## Naming Conventions
 
 Notes are claims, not topics:
-- *Don't*: "API design thoughts"
-- *Good*: "GraphQL works best for client-driven queries"
+
+- _Don't_: "API design thoughts"
+- _Good_: "GraphQL works best for client-driven queries"
 
 The title should complete the sentence "I believe that..."
 
@@ -126,9 +130,7 @@ This turns scattered notes into actionable structure in seconds.
 ```markdown
 # Team Sync Jan 20
 
-Discussed the API refactor. Sarah thinks we should use GraphQL.
-Mike mentioned performance concerns. Need to follow up.
-Also talked about the release timeline.
+Discussed the API refactor. Sarah thinks we should use GraphQL. Mike mentioned performance concerns. Need to follow up. Also talked about the release timeline.
 ```
 
 This note will die alone. No links, vague title, no structure.
@@ -163,8 +165,7 @@ Weekly sync covering GraphQL migration decision and Q1 timeline.
 - Caching strategy for GraphQL queries → discuss in [[Architecture Review Feb 1]]
 - Client migration plan for mobile apps → needs [[People/Emma]]'s input
 
-**Status:** In progress
-**Next sync:** Jan 27, 2026
+**Status:** In progress **Next sync:** Jan 27, 2026
 ```
 
 ### The Backlink Footer
@@ -211,6 +212,7 @@ Search finds files. Thinking partners synthesize.
 ### Not reviewing Claude's work
 
 AI makes mistakes. It will:
+
 - Create duplicate notes
 - Misunderstand your conventions
 - Add links that don't make sense
