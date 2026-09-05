@@ -6,7 +6,7 @@ import {
   PencilSimpleIcon,
   UserIcon,
 } from "@phosphor-icons/react";
-import clsx from "clsx";
+import { clsx } from "clsx";
 import { LayoutGroup, motion } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -43,7 +43,7 @@ export const NAV_LINKS: NavLink[] = [
 ];
 
 const Navigation = () => {
-  const { setCmd } = useMainStore();
+  const setCmd = useMainStore((state) => state.setCmd);
   let pathname = usePathname() || "/";
   if (pathname.includes("/writing/")) {
     pathname = "/writing";

@@ -1,7 +1,7 @@
 "use client";
 import type { Route } from "next";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useRef } from "react";
 
 import { NAV_LINKS as navLinks } from "@/components/nav";
 import { LINKS as socialLinks } from "@/components/social-links";
@@ -19,19 +19,10 @@ import { useMainStore } from "@/lib/main-store";
 const isInternalRoute = (slug: string): slug is Route => slug.startsWith("/");
 
 export const Cmd = () => {
-  const { toggleCmd, isCmdOpen, setCmd } = useMainStore();
+  const isCmdOpen = useMainStore((state) => state.isCmdOpen);
+  const setCmd = useMainStore((state) => state.setCmd);
   const { push } = useRouter();
-
-  useEffect(() => {
-    const down = (e: KeyboardEvent) => {
-      if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
-        e.preventDefault();
-        toggleCmd();
-      }
-    };
-    document.addEventListener("keydown", down);
-    return () => document.removeEventListener("keydown", down);
-  }, [toggleCmd]);
+  const previousFocus = useRef(document.activeElement);
 
   const goTo = (slug: string) => {
     if (slug.startsWith("mailto:")) {
@@ -53,7 +44,16 @@ export const Cmd = () => {
   };
 
   return (
-    <CommandDialog onOpenChange={setCmd} open={isCmdOpen}>
+    <CommandDialog
+      onCloseAutoFocus={(event) => {
+        event.preventDefault();
+        if (previousFocus.current instanceof HTMLElement) {
+          previousFocus.current.focus();
+        }
+      }}
+      onOpenChange={setCmd}
+      open={isCmdOpen}
+    >
       <CommandInput placeholder="Type a command or search..." />
       <CommandList>
         <CommandEmpty>No results found.</CommandEmpty>
