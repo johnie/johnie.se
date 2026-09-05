@@ -23,10 +23,24 @@ const Command = ({
 );
 Command.displayName = CommandPrimitive.displayName;
 
-const CommandDialog = ({ children, ...props }: DialogProps) => (
+type CommandDialogProps = DialogProps & {
+  onCloseAutoFocus?: React.ComponentProps<
+    typeof DialogContent
+  >["onCloseAutoFocus"];
+};
+
+const CommandDialog = ({
+  children,
+  onCloseAutoFocus,
+  ...props
+}: CommandDialogProps) => (
   <Dialog {...props}>
-    <DialogTitle className="sr-only">Commands</DialogTitle>
-    <DialogContent className="overflow-hidden p-0 shadow-lg">
+    <DialogContent
+      aria-describedby={undefined}
+      className="overflow-hidden p-0 shadow-lg"
+      onCloseAutoFocus={onCloseAutoFocus}
+    >
+      <DialogTitle className="sr-only">Commands</DialogTitle>
       <Command className="[&_[cmdk-group-heading]]:text-muted-foreground [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group]]:px-2 [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:h-5 [&_[cmdk-item]_svg]:w-5 [&_[data-cmdk-input-wrapper]_svg]:h-5 [&_[data-cmdk-input-wrapper]_svg]:w-5">
         {children}
       </Command>
