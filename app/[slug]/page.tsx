@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { Mdx } from "@/components/mdx";
-import { SITE_URL } from "@/lib/constants";
+import { createPageMetadata } from "@/lib/metadata";
 
 export const generateStaticParams = () =>
   allPages.map((page) => ({
@@ -22,17 +22,11 @@ export const generateMetadata = async ({
     return {};
   }
 
-  return {
-    alternates: {
-      canonical: `${SITE_URL}/${slug}`,
-    },
+  return createPageMetadata({
     description: page.summary,
-    openGraph: {
-      description: page.summary,
-      title: page.title,
-    },
+    path: `/${slug}`,
     title: page.title,
-  };
+  });
 };
 
 const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {

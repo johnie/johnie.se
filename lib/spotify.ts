@@ -69,13 +69,18 @@ const getNowPlaying =
   };
 
 const getLatestSongFromDb = async () => {
-  const [latestSong] = await db
-    .select()
-    .from(spotify)
-    .orderBy(desc(spotify.lastPlayedAt))
-    .limit(1);
+  try {
+    const [latestSong] = await db
+      .select()
+      .from(spotify)
+      .orderBy(desc(spotify.lastPlayedAt))
+      .limit(1);
 
-  return latestSong;
+    return latestSong;
+  } catch (error: unknown) {
+    console.error("Failed to get latest Spotify song:", error);
+    return null;
+  }
 };
 
 export const logSongToDb = async (songData: {

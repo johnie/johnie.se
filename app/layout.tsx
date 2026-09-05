@@ -20,7 +20,6 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   alternates: {
-    canonical: SITE_URL,
     types: {
       "application/rss+xml": `${SITE_URL}/feed.xml`,
     },
@@ -32,7 +31,7 @@ export const metadata: Metadata = {
   openGraph: {
     description: "Committed to developing individuals and teams for success.",
     images: [{ url: `${SITE_URL}/og` }],
-    locale: "en-US",
+    locale: "en_US",
     siteName: "Johnie Hjelm",
     title: "Johnie Hjelm",
     type: "website",

@@ -1,17 +1,18 @@
 import { allPosts } from "content-collections";
 import { format } from "date-fns";
-import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
 
 import { Views } from "@/components/views";
 import { groupPostsByYear } from "@/lib/content-utils";
+import { createPageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata = createPageMetadata({
   description:
     "Thoughts on AI-augmented engineering, leadership, and productivity systems.",
+  path: "/writing",
   title: "Writing",
-};
+});
 
 const BlogPage = () => {
   const postsByYear = groupPostsByYear(allPosts);

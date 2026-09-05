@@ -12,7 +12,7 @@ import calcReadingTime from "reading-time";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeSlug from "rehype-slug";
 import remarkGfm from "remark-gfm";
-import z from "zod";
+import { z } from "zod";
 
 import { SITE_URL } from "./lib/constants";
 
@@ -104,7 +104,7 @@ const PostSchema = z.object({
     .string()
     .refine((value) => !Number.isNaN(Date.parse(value)), "Invalid date string")
     .transform<string>((value) => new Date(value).toISOString()),
-  summary: z.string(),
+  summary: z.string().trim().min(1, "Post summary must not be empty"),
   title: z.string(),
 });
 
@@ -127,7 +127,7 @@ const Post = defineCollection({
           const stdout = await runGitLog(filePath);
           return new Date(stdout.toString().trim()).toISOString();
         } catch {
-          return new Date().toISOString();
+          return document.publishedAt;
         }
       }
     );

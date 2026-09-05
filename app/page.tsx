@@ -1,24 +1,16 @@
-import type { Metadata } from "next";
-
 import { LatestWriting } from "@/components/latest-writing";
 import { Projects } from "@/components/projects";
 import { SocialLinks } from "@/components/social-links";
 import { WorkExperience } from "@/components/work";
 import { SITE_URL } from "@/lib/constants";
+import { createPageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata = createPageMetadata({
   description:
-    "Developer, engineering leader, and inclusive tech advocate focused on building products and leading teams to success. Explore my writing, work experience, and projects.",
-  openGraph: {
-    description:
-      "Developer, engineering leader, and inclusive tech advocate focused on building products and leading teams to success. Explore my writing, work experience, and projects.",
-    images: [{ url: `${SITE_URL}/og` }],
-  },
-  twitter: {
-    card: "summary_large_image",
-    images: [`${SITE_URL}/og`],
-  },
-};
+    "Developer, engineering leader, and inclusive tech advocate. Read Johnie Hjelm's writing on AI, team leadership, and productivity, and explore his work.",
+  path: "/",
+  title: "Developer & Engineering Leader",
+});
 
 const Home = () => {
   const jsonLd = {

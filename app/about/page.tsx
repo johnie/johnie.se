@@ -1,15 +1,16 @@
 import { allPages } from "content-collections";
-import type { Metadata } from "next";
 import Image from "next/image";
 
 import { Mdx } from "@/components/mdx";
 import { SITE_URL } from "@/lib/constants";
+import { createPageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata = createPageMetadata({
   description:
     "Learn about Johnie Hjelm, a developer, engineering leader, and inclusive tech advocate focused on building products and leading teams to success.",
+  path: "/about",
   title: "About",
-};
+});
 
 const About = () => {
   const content = allPages.find((page) => page._meta.path === "about");
@@ -27,7 +28,6 @@ const About = () => {
     name: "Johnie Hjelm",
     sameAs: [
       "https://github.com/johnie",
-      "https://twitter.com/johniehjelm",
       "https://www.linkedin.com/in/johniehjelm",
     ],
     url: SITE_URL,
@@ -46,11 +46,12 @@ const About = () => {
       <article className="prose prose-quoteless prose-neutral dark:prose-invert">
         <div className="mb-4 w-full">
           <Image
-            alt="Johnie"
+            alt="Johnie Hjelm"
             blurDataURL="data:image/webp;base64,UklGRoADAABXRUJQVlA4WAoAAAAgAAAA7wAAnwAASUNDUMgBAAAAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADZWUDggkgEAADATAJ0BKvAAoAA+0WCqUaglI6KkUNo5ABoJaW7gQQaTbf+3Tz22I6LG/JH0ARU48C4YWK4YQJFyeQB1XlWU+V+BMIOh9UvRzgalARKJvz4kFbILDRFKZAaLReiTFQxcyOG1CxqL5YNfSLGLwpNis553t5Qk0Csh9o7KrwcwwkgGWVGPwpNpvDXOe4XPVDGY/DEgbqOu+At20q7hTFbbj5C/AAD+70j5Q65T2Wz2l+5Rua4Fk3R+REX+PPTRy3TyxckhoOK1HRfNjjYY9VPuMSu5w+lwJMOIHVckfSsqj3vgmz1UGWQFduwU4WGcTdfErKlZ54Yh14YBxFn3y4GQBqk1LuGHczOICDbXYIE7Uxu2B2cl76zlNG6PW2XqazHrAOei8ngWrssSNVIcQJpTwNqQ37fytTEO7eMeS+yQYAaEfwPr/WMsJ7kks9O58EtnUSiI29PRTtBB8c26CH4FBzpXXaZRe7qpDczUVPJO4qAFNtU2dJ+EaaV7LfRY2QCYfJTmibrhvcYXk+2x68FYsdQAAA=="
             className="h-auto w-full rounded"
             height={432}
             priority
+            sizes="(min-width: 768px) 648px, calc(100vw - 32px)"
             src="/images/johnie-omni.jpg"
             width={648}
           />

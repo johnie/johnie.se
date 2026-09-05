@@ -1,3 +1,5 @@
+import { Suspense } from "react";
+
 import { Spotify } from "@/components/spotify";
 
 const GetInTouch = ({ show }: { show: boolean }) => {
@@ -20,7 +22,11 @@ const GetInTouch = ({ show }: { show: boolean }) => {
 export const Footer = () => (
   <footer className="my-10">
     <GetInTouch show={false} />
-    <Spotify />
+    <div className="mb-2 min-h-5">
+      <Suspense fallback={null}>
+        <Spotify />
+      </Suspense>
+    </div>
     <p className="mb-2 text-sm text-neutral-400">
       © {new Date().getFullYear().toString()} Johnie Hjelm.
     </p>

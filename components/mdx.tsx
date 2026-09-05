@@ -69,7 +69,12 @@ type CustomImageProps = ImageProps & {
 };
 
 const RoundedImage: React.FC<CustomImageProps> = ({ alt, ...props }) => (
-  <Image alt={alt} className="rounded-lg" {...props} />
+  <Image
+    alt={alt}
+    className="rounded-lg"
+    sizes="(min-width: 768px) 648px, calc(100vw - 32px)"
+    {...props}
+  />
 );
 
 const Callout: React.FC<CalloutProps> = ({ emoji, children }) => (
