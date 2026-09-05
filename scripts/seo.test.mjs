@@ -20,6 +20,32 @@ const responsiveSizes = 'sizes="(min-width: 768px) 648px, calc(100vw - 32px)"';
 const fetchPage = async (path) =>
   await fetch(new URL(path, baseUrl), { signal: AbortSignal.timeout(20_000) });
 
+const assertIndexablePageMarkup = (html, canonical) => {
+  equal(new URL(html.match(canonicalPattern)?.groups.url).href, canonical.href);
+  equal(new URL(html.match(ogUrlPattern)?.groups.url).href, canonical.href);
+  match(html, descriptionPattern);
+  ok(html.includes(`type="application/rss+xml" href="${siteUrl}/feed.xml"`));
+
+  const title = html.match(titlePattern)?.groups.title;
+  const ogTitle = html.match(ogTitlePattern)?.groups.title;
+  const twitterTitle = html.match(twitterTitlePattern)?.groups.title;
+  ok(title && ogTitle && twitterTitle);
+  ok(title.startsWith(ogTitle), "Open Graph title must describe this page");
+  ok(title.startsWith(twitterTitle), "Twitter title must describe this page");
+  match(html, /<meta name="twitter:description" content="[^"]+"/u);
+  doesNotMatch(
+    html,
+    /<meta name="(?:robots|googlebot)" content="[^"]*noindex/u
+  );
+  equal([...html.matchAll(headingPattern)].length, 1, "Expected one H1");
+
+  for (const entry of html.matchAll(structuredDataPattern)) {
+    const schema = JSON.parse(entry.groups.json);
+    equal(schema["@context"], "https://schema.org");
+    ok(schema["@type"]);
+  }
+};
+
 test("sitemap lists only canonical, indexable pages with metadata", async (t) => {
   const response = await fetchPage("/sitemap.xml");
   equal(response.status, 200);
@@ -42,42 +68,7 @@ test("sitemap lists only canonical, indexable pages with metadata", async (t) =>
         equal(page.redirected, false, "Sitemap URLs must not redirect");
         const html = await page.text();
 
-        equal(
-          new URL(html.match(canonicalPattern)?.groups.url).href,
-          canonical.href
-        );
-        equal(
-          new URL(html.match(ogUrlPattern)?.groups.url).href,
-          canonical.href
-        );
-        match(html, descriptionPattern);
-        ok(
-          html.includes(`type="application/rss+xml" href="${siteUrl}/feed.xml"`)
-        );
-        const title = html.match(titlePattern)?.groups.title;
-        const ogTitle = html.match(ogTitlePattern)?.groups.title;
-        const twitterTitle = html.match(twitterTitlePattern)?.groups.title;
-        ok(title && ogTitle && twitterTitle);
-        ok(
-          title.startsWith(ogTitle),
-          "Open Graph title must describe this page"
-        );
-        ok(
-          title.startsWith(twitterTitle),
-          "Twitter title must describe this page"
-        );
-        match(html, /<meta name="twitter:description" content="[^"]+"/u);
-        doesNotMatch(
-          html,
-          /<meta name="(?:robots|googlebot)" content="[^"]*noindex/u
-        );
-        equal([...html.matchAll(headingPattern)].length, 1, "Expected one H1");
-
-        for (const entry of html.matchAll(structuredDataPattern)) {
-          const schema = JSON.parse(entry.groups.json);
-          equal(schema["@context"], "https://schema.org");
-          ok(schema["@type"]);
-        }
+        assertIndexablePageMarkup(html, canonical);
 
         if (
           canonical.pathname === "/about" ||
