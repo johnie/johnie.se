@@ -12,7 +12,7 @@ export const Spotify = async () => {
 
   return (
     <a
-      className="group mb-2 flex items-center gap-2 text-sm text-neutral-400 transition-colors hover:text-neutral-200"
+      className="group flex items-center gap-2 text-sm text-neutral-400 transition-colors hover:text-neutral-200"
       href={song.songUrl}
       rel="noopener noreferrer"
       target="_blank"
@@ -23,12 +23,12 @@ export const Spotify = async () => {
           size={16}
         />
       </div>
-      <div className="flex items-center gap-1">
-        <span className="font-medium text-neutral-300 group-hover:text-neutral-100">
+      <div className="flex min-w-0 items-center gap-1">
+        <span className="truncate font-medium text-neutral-300 group-hover:text-neutral-100">
           {song.title}
         </span>
-        <span className="text-neutral-500">by</span>
-        <span className="text-neutral-400 group-hover:text-neutral-200">
+        <span className="shrink-0 text-neutral-500">by</span>
+        <span className="truncate text-neutral-400 group-hover:text-neutral-200">
           {song.artist}
         </span>
       </div>

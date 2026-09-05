@@ -1,7 +1,7 @@
 "use server";
 
 import { eq, sql } from "drizzle-orm";
-import { revalidateTag, unstable_cache } from "next/cache";
+import { unstable_cache } from "next/cache";
 import { z } from "zod";
 
 import { env } from "@/lib/env";
@@ -32,8 +32,6 @@ export const increment = async (slug: string) => {
         },
         target: views.slug,
       });
-
-    revalidateTag("views", { expire: 0 });
   } catch (error: unknown) {
     // Log error but don't throw - view counting shouldn't break the page
     console.error("Failed to increment view count:", error);
@@ -54,10 +52,11 @@ const getViewsCountUncached = async (slug: string): Promise<number> => {
   }
 };
 
-// Cache view counts for 60 seconds to reduce database queries
+// Counts can lag by 60 seconds. Do not invalidate on every increment:
+// doing so would expire cached counts and pages on every article view.
 export const getViewsCount = async (slug: string): Promise<number> =>
   await unstable_cache(
     () => getViewsCountUncached(slug),
     [`views-count-${slug}`],
-    { revalidate: 60, tags: ["views"] }
+    { revalidate: 60 }
   )();

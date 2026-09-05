@@ -31,11 +31,12 @@ export const generateMetadata = async ({
   } = post;
   const ogImage = image
     ? `${SITE_URL}${image}`
-    : `${SITE_URL}/og?title=${title}`;
+    : `${SITE_URL}/og?title=${encodeURIComponent(title)}`;
 
   return {
     alternates: {
       canonical: `${SITE_URL}/writing/${slug}`,
+      types: { "application/rss+xml": `${SITE_URL}/feed.xml` },
     },
     description,
     openGraph: {
@@ -45,7 +46,10 @@ export const generateMetadata = async ({
           url: ogImage,
         },
       ],
+      locale: "en_US",
+      modifiedTime: post.lastModified,
       publishedTime,
+      siteName: "Johnie Hjelm",
       title,
       type: "article",
       url: `${SITE_URL}/writing/${slug}`,
@@ -86,7 +90,7 @@ const Post = async ({ params }: { params: Params }) => {
     headline: post.title,
     image: post.image
       ? `${SITE_URL}${post.image}`
-      : `${SITE_URL}/og?title=${post.title}`,
+      : `${SITE_URL}/og?title=${encodeURIComponent(post.title)}`,
     url: `${SITE_URL}/writing/${post.slug}`,
   };
 

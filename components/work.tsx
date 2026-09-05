@@ -32,8 +32,7 @@ export const WorkExperience = (): JSX.Element | null => {
                 className="h-9 w-9"
                 decoding="async"
                 height="36"
-                loading={index < 2 ? undefined : "lazy"}
-                priority={index < 2}
+                loading="lazy"
                 src={work.image}
                 width="36"
               />

@@ -34,8 +34,7 @@ export const Projects = (): JSX.Element | null => {
                 className="h-9 w-9"
                 decoding="async"
                 height={36}
-                loading={index < 2 ? undefined : "lazy"}
-                priority={index < 2}
+                loading="lazy"
                 src={project.image}
                 style={{ height: "auto", width: "auto" }}
                 width={36}
