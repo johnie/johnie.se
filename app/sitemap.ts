@@ -6,7 +6,7 @@ import { SITE_URL } from "@/lib/constants";
 export default function sitemap(): MetadataRoute.Sitemap {
   const blogs = allPosts.map((post) => ({
     changeFrequency: "monthly" as const,
-    lastModified: post.lastModified || post.publishedAt,
+    lastModified: post.lastModified ?? post.publishedAt,
     priority: 0.7,
     url: `${SITE_URL}/writing/${post.slug}`,
   }));

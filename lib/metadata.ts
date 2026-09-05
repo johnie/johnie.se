@@ -13,7 +13,7 @@ export const createPageMetadata = ({
 }): Metadata => {
   const url = new URL(path, SITE_URL).toString();
   const socialTitle = `${title} | Johnie Hjelm`;
-  const image = `${SITE_URL}/og?title=${encodeURIComponent(title)}`;
+  const imageUrl = `${SITE_URL}/og?title=${encodeURIComponent(title)}`;
 
   return {
     alternates: {
@@ -23,7 +23,7 @@ export const createPageMetadata = ({
     description,
     openGraph: {
       description,
-      images: [{ url: image }],
+      images: [{ url: imageUrl }],
       locale: "en_US",
       siteName: "Johnie Hjelm",
       title: socialTitle,
@@ -34,7 +34,7 @@ export const createPageMetadata = ({
     twitter: {
       card: "summary_large_image",
       description,
-      images: [image],
+      images: [imageUrl],
       title: socialTitle,
     },
   };

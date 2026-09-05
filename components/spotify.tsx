@@ -17,12 +17,10 @@ export const Spotify = async () => {
       rel="noopener noreferrer"
       target="_blank"
     >
-      <div className="flex items-center gap-2">
-        <MusicNoteIcon
-          className={cn(song.isPlaying ? "text-[#1DB954]" : "text-neutral-500")}
-          size={16}
-        />
-      </div>
+      <MusicNoteIcon
+        className={cn(song.isPlaying ? "text-[#1DB954]" : "text-neutral-500")}
+        size={16}
+      />
       <div className="flex min-w-0 items-center gap-1">
         <span className="truncate font-medium text-neutral-300 group-hover:text-neutral-100">
           {song.title}
