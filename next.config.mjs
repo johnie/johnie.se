@@ -84,6 +84,7 @@ const nextConfig = {
 
     try {
       const edgeConfigRedirects = await get("redirects");
+
       return [...manualRedirects, ...(edgeConfigRedirects || [])];
     } catch {
       return manualRedirects;

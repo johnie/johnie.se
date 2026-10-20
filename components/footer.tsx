@@ -1,6 +1,8 @@
-import { Suspense } from "react";
+import { cache, Suspense } from "react";
 
 import { Spotify } from "@/components/spotify";
+
+const getCurrentYear = cache(() => new Date().getFullYear().toString());
 
 const GetInTouch = ({ show }: { show: boolean }) => {
   if (!show) {
@@ -28,7 +30,7 @@ export const Footer = () => (
       </Suspense>
     </div>
     <p className="mb-2 text-sm text-neutral-400">
-      © {new Date().getFullYear().toString()} Johnie Hjelm.
+      © {getCurrentYear()} Johnie Hjelm.
     </p>
   </footer>
 );

@@ -25,6 +25,7 @@ const Home = () => {
     name: "Johnie Hjelm",
     url: SITE_URL,
   };
+
   const jsonLdString = JSON.stringify(jsonLd).replaceAll("<", "\\u003c");
 
   return (

@@ -12,9 +12,11 @@ export const groupPostsByYear = (posts: Post[]): [string, Post[]][] => {
 
   for (const post of sorted) {
     const year = new Date(post.publishedAt).getFullYear().toString();
+
     if (!grouped[year]) {
       grouped[year] = [];
     }
+
     grouped[year].push(post);
   }
 

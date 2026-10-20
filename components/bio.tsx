@@ -4,6 +4,7 @@ const startYear = (year: number) => {
   const today = new Date();
   const startDate = new Date(year, 0, 1);
   const yearsToday = today.getFullYear() - startDate.getFullYear();
+
   return yearsToday;
 };
 

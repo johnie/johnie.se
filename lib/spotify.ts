@@ -14,8 +14,10 @@ import { env } from "./env";
 const basic = Buffer.from(
   `${env.SPOTIFY_API_CLIENT_ID}:${env.SPOTIFY_API_CLIENT_SECRET}`
 ).toString("base64");
+
 const NOW_PLAYING_ENDPOINT =
   "https://api.spotify.com/v1/me/player/currently-playing";
+
 const TOKEN_ENDPOINT = "https://accounts.spotify.com/api/token";
 
 const formEncode = (
@@ -79,6 +81,7 @@ const getLatestSongFromDb = async () => {
     return latestSong;
   } catch (error: unknown) {
     console.error("Failed to get latest Spotify song:", error);
+
     return null;
   }
 };
@@ -118,6 +121,7 @@ const getCurrentOrLastSongUncached = async (): Promise<SongData | null> => {
       nowPlaying.is_playing
     ) {
       const { item } = nowPlaying;
+
       const artist = item.album.artists
         .map((albumArtist) => albumArtist.name)
         .join(", ");

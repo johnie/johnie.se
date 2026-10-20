@@ -1,5 +1,4 @@
-import { doesNotMatch, equal, match, ok } from "node:assert/strict";
-import { test } from "node:test";
+import { assert, describe, it } from "vitest";
 
 const baseUrl = process.env.SEO_BASE_URL ?? "http://localhost:3000";
 const siteUrl = "https://johnie.se";
@@ -10,10 +9,13 @@ const ogUrlPattern = /<meta property="og:url" content="(?<url>[^"]+)"/u;
 const descriptionPattern = /<meta name="description" content="[^"]+"/u;
 const titlePattern = /<title>(?<title>[^<]+)<\/title>/u;
 const ogTitlePattern = /<meta property="og:title" content="(?<title>[^"]+)"/u;
+
 const twitterTitlePattern =
   /<meta name="twitter:title" content="(?<title>[^"]+)"/u;
+
 const structuredDataPattern =
   /<script type="application\/ld\+json">(?<json>[^<]+)<\/script>/gu;
+
 const imagePattern = /<img\b[^>]*>/gu;
 const responsiveSizes = 'sizes="(min-width: 768px) 648px, calc(100vw - 32px)"';
 
@@ -21,51 +23,68 @@ const fetchPage = async (path) =>
   await fetch(new URL(path, baseUrl), { signal: AbortSignal.timeout(20_000) });
 
 const assertIndexablePageMarkup = (html, canonical) => {
-  equal(new URL(html.match(canonicalPattern)?.groups.url).href, canonical.href);
-  equal(new URL(html.match(ogUrlPattern)?.groups.url).href, canonical.href);
-  match(html, descriptionPattern);
-  ok(html.includes(`type="application/rss+xml" href="${siteUrl}/feed.xml"`));
+  assert.strictEqual(
+    new URL(html.match(canonicalPattern)?.groups.url).href,
+    canonical.href
+  );
+  assert.strictEqual(
+    new URL(html.match(ogUrlPattern)?.groups.url).href,
+    canonical.href
+  );
+  assert.match(html, descriptionPattern);
+  assert.include(html, `type="application/rss+xml" href="${siteUrl}/feed.xml"`);
 
   const title = html.match(titlePattern)?.groups.title;
   const ogTitle = html.match(ogTitlePattern)?.groups.title;
   const twitterTitle = html.match(twitterTitlePattern)?.groups.title;
-  ok(title && ogTitle && twitterTitle);
-  ok(title.startsWith(ogTitle), "Open Graph title must describe this page");
-  ok(title.startsWith(twitterTitle), "Twitter title must describe this page");
-  match(html, /<meta name="twitter:description" content="[^"]+"/u);
-  doesNotMatch(
+  assert.isOk(title && ogTitle && twitterTitle);
+  assert.isTrue(
+    title.startsWith(ogTitle),
+    "Open Graph title must describe this page"
+  );
+  assert.isTrue(
+    title.startsWith(twitterTitle),
+    "Twitter title must describe this page"
+  );
+  assert.match(html, /<meta name="twitter:description" content="[^"]+"/u);
+  assert.notMatch(
     html,
     /<meta name="(?:robots|googlebot)" content="[^"]*noindex/u
   );
-  equal([...html.matchAll(headingPattern)].length, 1, "Expected one H1");
+  assert.lengthOf([...html.matchAll(headingPattern)], 1, "Expected one H1");
 
   for (const entry of html.matchAll(structuredDataPattern)) {
     const schema = JSON.parse(entry.groups.json);
-    equal(schema["@context"], "https://schema.org");
-    ok(schema["@type"]);
+    assert.strictEqual(schema["@context"], "https://schema.org");
+    assert.isOk(schema["@type"]);
   }
 };
 
-test("sitemap lists only canonical, indexable pages with metadata", async (t) => {
-  const response = await fetchPage("/sitemap.xml");
-  equal(response.status, 200);
-  const xml = await response.text();
-  const urls = [...xml.matchAll(sitemapLocationPattern)].map(
-    (entry) => entry.groups.url
-  );
+describe("SEO", () => {
+  it("sitemap lists only canonical, indexable pages with metadata", async () => {
+    const response = await fetchPage("/sitemap.xml");
+    assert.strictEqual(response.status, 200);
+    const xml = await response.text();
 
-  ok(urls.length > 0);
-  equal(new Set(urls).size, urls.length, "Sitemap URLs must be unique");
-  doesNotMatch(xml, /<loc>[^<]*\/til\//u);
+    const urls = [...xml.matchAll(sitemapLocationPattern)].map(
+      (entry) => entry.groups.url
+    );
 
-  await Promise.all(
-    urls.map(async (url) => {
-      const canonical = new URL(url);
-      await t.test(canonical.pathname, async () => {
-        equal(canonical.origin, siteUrl);
+    assert.isAbove(urls.length, 0);
+    assert.strictEqual(
+      new Set(urls).size,
+      urls.length,
+      "Sitemap URLs must be unique"
+    );
+    assert.notMatch(xml, /<loc>[^<]*\/til\//u);
+
+    await Promise.all(
+      urls.map(async (url) => {
+        const canonical = new URL(url);
+        assert.strictEqual(canonical.origin, siteUrl);
         const page = await fetchPage(canonical.pathname);
-        equal(page.status, 200);
-        equal(page.redirected, false, "Sitemap URLs must not redirect");
+        assert.strictEqual(page.status, 200, canonical.pathname);
+        assert.isFalse(page.redirected, "Sitemap URLs must not redirect");
         const html = await page.text();
 
         assertIndexablePageMarkup(html, canonical);
@@ -75,38 +94,40 @@ test("sitemap lists only canonical, indexable pages with metadata", async (t) =>
           canonical.pathname.startsWith("/writing/")
         ) {
           for (const image of html.matchAll(imagePattern)) {
-            ok(
-              image[0].includes(responsiveSizes),
+            assert.include(
+              image[0],
+              responsiveSizes,
               "Content images need responsive sizes"
             );
           }
         }
-      });
-    })
-  );
-});
+      })
+    );
+  });
 
-test("robots.txt advertises the sitemap and allows crawling", async () => {
-  const response = await fetchPage("/robots.txt");
-  equal(response.status, 200);
-  const body = await response.text();
-  ok(body.includes(`Sitemap: ${siteUrl}/sitemap.xml`));
-  match(body, /Allow: \/(?:\r?\n|$)/u);
-});
+  it("robots.txt advertises the sitemap and allows crawling", async () => {
+    const response = await fetchPage("/robots.txt");
+    assert.strictEqual(response.status, 200);
+    const body = await response.text();
+    assert.include(body, `Sitemap: ${siteUrl}/sitemap.xml`);
+    assert.match(body, /Allow: \/(?:\r?\n|$)/u);
+  });
 
-test("removed TIL sitemap entries remain genuine 404s", async () => {
-  const response = await fetchPage("/til/undici");
-  equal(response.status, 404);
-});
+  it("removed TIL sitemap entries remain genuine 404s", async () => {
+    const response = await fetchPage("/til/undici");
+    assert.strictEqual(response.status, 404);
+  });
 
-test("homepage work and project logos are lazy loaded", async () => {
-  const response = await fetchPage("/");
-  equal(response.status, 200);
-  const html = await response.text();
-  const images = [...html.matchAll(imagePattern)];
-  ok(images.length > 0);
-  for (const image of images) {
-    ok(image[0].includes('loading="lazy"'));
-    doesNotMatch(image[0], /fetchPriority="high"/iu);
-  }
+  it("homepage work and project logos are lazy loaded", async () => {
+    const response = await fetchPage("/");
+    assert.strictEqual(response.status, 200);
+    const html = await response.text();
+    const images = [...html.matchAll(imagePattern)];
+    assert.isAbove(images.length, 0);
+
+    for (const image of images) {
+      assert.include(image[0], 'loading="lazy"');
+      assert.notMatch(image[0], /fetchPriority="high"/iu);
+    }
+  });
 });

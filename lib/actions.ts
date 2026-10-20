@@ -17,6 +17,7 @@ export const increment = async (slug: string) => {
   }
 
   const parsed = slugSchema.safeParse(slug);
+
   if (!parsed.success) {
     return;
   }
@@ -45,9 +46,11 @@ const getViewsCountUncached = async (slug: string): Promise<number> => {
 
   try {
     const result = await db.select().from(views).where(eq(views.slug, slug));
+
     return result[0]?.count ?? 0;
   } catch (error: unknown) {
     console.error("Failed to get view count:", error);
+
     return 0;
   }
 };
