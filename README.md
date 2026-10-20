@@ -20,6 +20,20 @@ Built with modern web technologies:
 - **[OpenPanel](https://openpanel.dev)** — Privacy-first analytics
 - **[Vercel](https://vercel.com)** — Hosting and deployment
 - **[Drizzle ORM](https://orm.drizzle.team)** — Database operations
-- **[Ultracite](https://www.ultracite.ai/)** — Code quality (Biome preset)
+- **[Ultracite](https://www.ultracite.ai/)** — Code quality (Oxlint and Oxfmt presets)
+
+## Development
+
+Use Node.js LTS **24.22.0** (pinned in `.nvmrc`) and pnpm **12.14.0** (pinned in `package.json`). The Node engine is restricted to `24.x` so deployments also stay on LTS.
+
+```sh
+nvm install
+nvm use
+corepack enable
+pnpm install --frozen-lockfile
+pnpm dev
+```
+
+Configure Spotify and Turso credentials in `.env.local` before running the app; required variables are defined in `lib/env.ts`.
 
 Built by [Johnie Hjelm](https://johnie.se)
