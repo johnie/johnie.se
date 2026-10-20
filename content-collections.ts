@@ -26,6 +26,7 @@ const runGitLog = async (filePath: string): Promise<string> => {
     "--",
     `content/${filePath}`,
   ]);
+
   return stdout;
 };
 
@@ -40,6 +41,7 @@ const generateId = (inputString: string): string => {
 const getFileCreationDate = (filePath: string) => {
   const fullPath = path.join(process.cwd(), "content/til", filePath);
   const stats = statSync(fullPath);
+
   return new Date(stats.birthtime).toISOString();
 };
 
@@ -116,15 +118,19 @@ const Post = defineCollection({
   transform: async (document, context) => {
     const mdx = await compileMDX(context, document, mdxOptions);
     const slug = document._meta.path;
+
     const readingTime = calcReadingTime(document.content, {
       wordsPerMinute: 275,
     }).text;
+
     const structuredData = setStructuredData(document);
+
     const lastModified = await context.cache(
       document._meta.filePath,
       async (filePath) => {
         try {
           const stdout = await runGitLog(filePath);
+
           return new Date(stdout.toString().trim()).toISOString();
         } catch {
           return document.publishedAt;
@@ -183,6 +189,7 @@ const Work = defineCollection({
     const _id = generateId(
       document.company + document.role + document.startYear
     );
+
     return {
       ...document,
       _id,
@@ -206,6 +213,7 @@ const Project = defineCollection({
   }),
   transform: (document) => {
     const _id = generateId(document.name + document.url);
+
     return {
       ...document,
       _id,
@@ -233,6 +241,7 @@ export const TodayILearned = defineCollection({
   transform: async (document, context) => {
     const mdx = await compileMDX(context, document, mdxOptions);
     const slug = document._meta.path;
+
     const publishedAt =
       document.publishedAt ?? getFileCreationDate(document._meta.filePath);
 

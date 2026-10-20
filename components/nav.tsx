@@ -45,6 +45,7 @@ export const NAV_LINKS: NavLink[] = [
 const Navigation = () => {
   const setCmd = useMainStore((state) => state.setCmd);
   let pathname = usePathname() || "/";
+
   if (pathname.includes("/writing/")) {
     pathname = "/writing";
   }
@@ -55,8 +56,13 @@ const Navigation = () => {
     <LayoutGroup>
       <nav className="fade relative flex flex-row items-center justify-end px-0 pb-0 md:relative">
         <div className="flex flex-row space-x-2 rounded-lg bg-neutral-50 p-1 text-sm dark:bg-black">
-          {NAV_LINKS.filter((i) => Boolean(i.enabled)).map(({ slug, name }) => {
+          {NAV_LINKS.map(({ enabled, slug, name }) => {
+            if (!enabled) {
+              return null;
+            }
+
             const isActive = slug === pathname;
+
             return (
               <Link
                 className={clsx("ease flex align-middle transition-all", {

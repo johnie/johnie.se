@@ -20,6 +20,32 @@ Built with modern web technologies:
 - **[OpenPanel](https://openpanel.dev)** — Privacy-first analytics
 - **[Vercel](https://vercel.com)** — Hosting and deployment
 - **[Drizzle ORM](https://orm.drizzle.team)** — Database operations
-- **[Ultracite](https://www.ultracite.ai/)** — Code quality (Biome preset)
+- **[Ultracite](https://www.ultracite.ai/)** — Code quality (Oxlint and Oxfmt presets)
+
+## Development
+
+Use Node.js LTS **24.22.0** (pinned in `.nvmrc`) and pnpm **12.14.0** (pinned in `package.json`). The Node engine is restricted to `24.x` so deployments also stay on LTS.
+
+```sh
+nvm install
+nvm use
+corepack enable
+pnpm install --frozen-lockfile
+pnpm dev
+```
+
+Configure Spotify and Turso credentials in `.env.local` before running the app; required variables are defined in `lib/env.ts`.
+
+### Quality checks
+
+```sh
+pnpm check
+pnpm typecheck
+pnpm build
+```
+
+The SEO regression suite uses Vitest against a running application. Start the production server with `pnpm start`, then run `pnpm test:seo` in another terminal. Set `SEO_BASE_URL` to target a different address (default: `http://localhost:3000`).
+
+Oxlint's JavaScript plugins reserve roughly 6 GiB of virtual memory per worker. Small Linux hosts may need additional swap to satisfy the kernel's memory reservation policy; adding 6 GiB of swap resolved the allocator failure on a host with 4 GiB RAM and 1 GiB swap. See [the upstream allocator issue](https://github.com/oxc-project/oxc/issues/20331). Keep the configured plugins and rules enabled.
 
 Built by [Johnie Hjelm](https://johnie.se)

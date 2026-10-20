@@ -13,6 +13,7 @@ export const GET = (req: NextRequest) => {
   try {
     const { searchParams } = req.nextUrl;
     const postTitle = searchParams.get("title") || "Johnie Hjelm";
+
     return new ImageResponse(
       <div
         style={{

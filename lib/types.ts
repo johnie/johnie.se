@@ -2,6 +2,7 @@ import type { Route } from "next";
 import type { ReactNode } from "react";
 
 export type RequiredField<T, K extends keyof T> = T & Required<Pick<T, K>>;
+
 export type WithImage<T extends { image?: string }> = RequiredField<T, "image">;
 
 export const hasImage = <T extends { image?: string }>(

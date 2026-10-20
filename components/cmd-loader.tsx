@@ -8,6 +8,7 @@ import { useMainStore } from "@/lib/main-store";
 const CommandPalette = dynamic(
   async () => {
     const cmdModule = await import("@/components/cmd");
+
     return cmdModule.Cmd;
   },
   {
@@ -28,6 +29,7 @@ export const Cmd = () => {
     };
 
     document.addEventListener("keydown", handleKeyDown);
+
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, [toggleCmd]);
 

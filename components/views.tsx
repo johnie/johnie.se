@@ -9,5 +9,6 @@ export const Views = async ({
   trackView?: boolean;
 }) => {
   const count = await getViewsCount(slug);
+
   return <ViewCounter count={count} slug={slug} trackView={trackView} />;
 };

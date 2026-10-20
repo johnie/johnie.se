@@ -9,6 +9,7 @@ export const WorkExperience = (): JSX.Element | null => {
   if (allWorks.length === 0) {
     return null;
   }
+
   const items = allWorks
     .filter(hasImage)
     .filter(hasUrl)

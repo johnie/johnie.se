@@ -1,4 +1,5 @@
 "use client";
+
 import type { Route } from "next";
 import { useRouter } from "next/navigation";
 import { useRef } from "react";
@@ -28,12 +29,14 @@ export const Cmd = () => {
     if (slug.startsWith("mailto:")) {
       window.location.href = slug;
       setCmd(false);
+
       return;
     }
 
     if (isInternalRoute(slug)) {
       push(slug);
       setCmd(false);
+
       return;
     }
 
@@ -47,6 +50,7 @@ export const Cmd = () => {
     <CommandDialog
       onCloseAutoFocus={(event) => {
         event.preventDefault();
+
         if (previousFocus.current instanceof HTMLElement) {
           previousFocus.current.focus();
         }

@@ -19,6 +19,7 @@ export const generateMetadata = async ({
 }): Promise<Metadata | undefined> => {
   const { slug } = await params;
   const post = allPosts.find((p) => p.slug === slug);
+
   if (!post) {
     return;
   }
@@ -29,6 +30,7 @@ export const generateMetadata = async ({
     summary: description,
     image,
   } = post;
+
   const ogImage = image
     ? `${SITE_URL}${image}`
     : `${SITE_URL}/og?title=${encodeURIComponent(title)}`;
@@ -118,10 +120,12 @@ const Post = async ({ params }: { params: Params }) => {
       },
     ],
   };
+
   const blogPostingSchemaJson = JSON.stringify(blogPostingSchema).replaceAll(
     "<",
     "\\u003c"
   );
+
   const breadcrumbSchemaJson = JSON.stringify(breadcrumbSchema).replaceAll(
     "<",
     "\\u003c"

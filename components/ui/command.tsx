@@ -21,6 +21,7 @@ const Command = ({
     {...props}
   />
 );
+
 Command.displayName = CommandPrimitive.displayName;
 
 type CommandDialogProps = DialogProps & {
@@ -108,6 +109,7 @@ const CommandSeparator = ({
     {...props}
   />
 );
+
 CommandSeparator.displayName = CommandPrimitive.Separator.displayName;
 
 const CommandItem = ({
@@ -137,6 +139,7 @@ const CommandShortcut = ({
     {...props}
   />
 );
+
 CommandShortcut.displayName = "CommandShortcut";
 
 export {

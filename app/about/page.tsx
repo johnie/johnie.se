@@ -32,6 +32,7 @@ const About = () => {
     ],
     url: SITE_URL,
   };
+
   const personSchemaJson = JSON.stringify(personSchema).replaceAll(
     "<",
     "\\u003c"
