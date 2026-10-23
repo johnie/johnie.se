@@ -1,8 +1,10 @@
-import { cache, Suspense } from "react";
+import { Await } from "@tanstack/react-router";
+import { Suspense } from "react";
 
 import { Spotify } from "@/components/spotify";
+import type { SongData } from "@/lib/types";
 
-const getCurrentYear = cache(() => new Date().getFullYear().toString());
+const getCurrentYear = () => new Date().getFullYear().toString();
 
 const GetInTouch = ({ show }: { show: boolean }) => {
   if (!show) {
@@ -21,12 +23,14 @@ const GetInTouch = ({ show }: { show: boolean }) => {
   );
 };
 
-export const Footer = () => (
+export const Footer = ({ song }: { song: Promise<SongData | null> }) => (
   <footer className="my-10">
     <GetInTouch show={false} />
     <div className="mb-2 min-h-5">
       <Suspense fallback={null}>
-        <Spotify />
+        <Await promise={song}>
+          {(resolved) => <Spotify song={resolved} />}
+        </Await>
       </Suspense>
     </div>
     <p className="mb-2 text-sm text-neutral-400">

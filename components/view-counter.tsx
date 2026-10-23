@@ -1,8 +1,6 @@
-"use client";
-
 import { useEffect } from "react";
 
-import { increment } from "@/lib/actions";
+import { incrementView } from "@/lib/views.functions";
 
 const ViewCounter = ({
   slug,
@@ -15,7 +13,7 @@ const ViewCounter = ({
 }) => {
   useEffect(() => {
     if (trackView) {
-      increment(slug);
+      incrementView({ data: { slug } }).catch(() => null);
     }
   }, [slug, trackView]);
 

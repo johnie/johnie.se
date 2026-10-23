@@ -1,15 +1,12 @@
-"use client";
-
 import {
   BrainIcon,
   HouseIcon,
   PencilSimpleIcon,
   UserIcon,
 } from "@phosphor-icons/react";
+import { Link, useLocation } from "@tanstack/react-router";
 import { clsx } from "clsx";
 import { LayoutGroup, motion } from "framer-motion";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useCallback } from "react";
 
 import { useMainStore } from "@/lib/main-store";
@@ -44,7 +41,7 @@ export const NAV_LINKS: NavLink[] = [
 
 const Navigation = () => {
   const setCmd = useMainStore((state) => state.setCmd);
-  let pathname = usePathname() || "/";
+  let pathname = useLocation({ select: (location) => location.pathname });
 
   if (pathname.includes("/writing/")) {
     pathname = "/writing";
@@ -68,7 +65,7 @@ const Navigation = () => {
                 className={clsx("ease flex align-middle transition-all", {
                   "text-muted-foreground dark:text-muted-foreground": !isActive,
                 })}
-                href={slug}
+                to={slug}
                 key={slug}
               >
                 <span className="relative px-3 py-1">
