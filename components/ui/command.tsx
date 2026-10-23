@@ -1,5 +1,3 @@
-"use client";
-
 import { MagnifyingGlassIcon } from "@phosphor-icons/react";
 import { DialogTitle } from "@radix-ui/react-dialog";
 import type { DialogProps } from "@radix-ui/react-dialog";

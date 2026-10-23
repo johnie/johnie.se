@@ -1,5 +1,3 @@
-"use client";
-
 import { XIcon } from "@phosphor-icons/react";
 import {
   Close,

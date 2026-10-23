@@ -1,11 +1,9 @@
 import { MusicNoteIcon } from "@phosphor-icons/react/dist/ssr";
 
-import { getCurrentOrLastSong } from "@/lib/spotify";
+import type { SongData } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
-export const Spotify = async () => {
-  const song = await getCurrentOrLastSong();
-
+export const Spotify = ({ song }: { song: SongData | null }) => {
   if (!song) {
     return null;
   }

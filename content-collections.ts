@@ -5,13 +5,7 @@ import path from "node:path";
 import { promisify } from "node:util";
 
 import { defineCollection, defineConfig } from "@content-collections/core";
-import { compileMDX } from "@content-collections/mdx";
-import type { Options } from "@content-collections/mdx";
-import rehypeShiki from "@shikijs/rehype";
 import calcReadingTime from "reading-time";
-import rehypeAutolinkHeadings from "rehype-autolink-headings";
-import rehypeSlug from "rehype-slug";
-import remarkGfm from "remark-gfm";
 import { z } from "zod";
 
 import { SITE_URL } from "./lib/constants";
@@ -43,27 +37,6 @@ const getFileCreationDate = (filePath: string) => {
   const stats = statSync(fullPath);
 
   return new Date(stats.birthtime).toISOString();
-};
-
-const mdxOptions: Options = {
-  rehypePlugins: [
-    rehypeSlug,
-    [
-      rehypeShiki,
-      {
-        theme: "vesper",
-      },
-    ],
-    [
-      rehypeAutolinkHeadings,
-      {
-        properties: {
-          className: ["anchor"],
-        },
-      },
-    ],
-  ],
-  remarkPlugins: [remarkGfm],
 };
 
 const setStructuredData = (doc: {
@@ -116,10 +89,10 @@ const Post = defineCollection({
   name: "Post",
   schema: PostSchema,
   transform: async (document, context) => {
-    const mdx = await compileMDX(context, document, mdxOptions);
+    const { content, ...rest } = document;
     const slug = document._meta.path;
 
-    const readingTime = calcReadingTime(document.content, {
+    const readingTime = calcReadingTime(content, {
       wordsPerMinute: 275,
     }).text;
 
@@ -139,9 +112,9 @@ const Post = defineCollection({
     );
 
     return {
-      ...document,
+      ...rest,
       lastModified,
-      mdx,
+      mdxPath: `/content/${document._meta.filePath}`,
       readingTime,
       slug,
       structuredData,
@@ -159,13 +132,13 @@ const Page = defineCollection({
     summary: z.string(),
     title: z.string(),
   }),
-  transform: async (document, context) => {
-    const mdx = await compileMDX(context, document, mdxOptions);
+  transform: (document) => {
+    const { content: _content, ...rest } = document;
     const slug = document._meta.path;
 
     return {
-      ...document,
-      mdx,
+      ...rest,
+      mdxPath: `/content/page/${document._meta.filePath}`,
       slug,
     };
   },
@@ -238,16 +211,16 @@ export const TodayILearned = defineCollection({
     type: z.enum(["article", "code", "podcast", "general"]).optional(),
     url: z.string().optional(),
   }),
-  transform: async (document, context) => {
-    const mdx = await compileMDX(context, document, mdxOptions);
+  transform: (document) => {
+    const { content: _content, ...rest } = document;
     const slug = document._meta.path;
 
     const publishedAt =
       document.publishedAt ?? getFileCreationDate(document._meta.filePath);
 
     return {
-      ...document,
-      mdx,
+      ...rest,
+      mdxPath: `/content/til/${document._meta.filePath}`,
       publishedAt,
       slug,
     };
