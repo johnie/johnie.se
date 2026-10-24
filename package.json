@@ -16,6 +16,7 @@
     "fix": "ultracite fix",
     "prepare": "lefthook install",
     "preview": "vite preview",
+    "spotify:auth": "node --env-file-if-exists=.dev.vars scripts/spotify-auth.ts",
     "test": "vitest run --project unit",
     "test:seo": "vitest run --project seo --testTimeout=60000",
     "typecheck": "tsc --noEmit"

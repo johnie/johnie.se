@@ -51,6 +51,12 @@ Configure the three Spotify credentials in gitignored `.dev.vars` before running
 
 In production, provision the same three names as Worker secrets. With the configured Node compatibility and compatibility date, Cloudflare populates `process.env` from secret bindings, so `getServerEnv()` reads them without renaming or client-side exposure.
 
+Spotify refresh tokens expire 6 months after authorization; Now playing then logs `Spotify token request failed: 400 invalid_grant` and falls back to the last logged song. To issue a new one, add `http://127.0.0.1:8888/callback` as a Redirect URI in the Spotify app settings, then run `pnpm spotify:auth` with the client ID and secret in `.dev.vars` or the environment and open the printed URL. The script prints only the refresh token on stdout, so it can be piped straight into the Worker secret:
+
+```sh
+pnpm -s spotify:auth | pnpm exec wrangler secret put SPOTIFY_API_REFRESH_TOKEN
+```
+
 Vite serves development and production preview on port 3000. If a clean checkout cannot resolve `content-collections` on first development startup, run `pnpm build` once to generate the metadata. MDX edits hot reload without a restart.
 
 ### Cloudflare Workers
