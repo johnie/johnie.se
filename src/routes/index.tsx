@@ -1,11 +1,13 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { Link, createFileRoute } from "@tanstack/react-router";
 
+import { OmniLogo } from "@/components/omni-logo";
 import { PostList } from "@/components/post-list";
 import { Projects } from "@/components/projects";
 import { SocialLinks } from "@/components/social-links";
 import { WorkExperience } from "@/components/work";
-import { SITE_URL } from "@/lib/constants";
+import { SITE_DESCRIPTION, SITE_URL } from "@/lib/constants";
 import { createPageHead, serializeJsonLd } from "@/lib/metadata";
+import { getViewCounts } from "@/lib/views.functions";
 import { writing } from "@/lib/writing";
 
 const LATEST_POST_COUNT = 3;
@@ -27,7 +29,7 @@ const Home = () => {
       name: "Johnie Hjelm",
       url: SITE_URL,
     },
-    description: "Committed to developing individuals and teams for success.",
+    description: SITE_DESCRIPTION,
     name: "Johnie Hjelm",
     url: SITE_URL,
   };
@@ -38,21 +40,39 @@ const Home = () => {
     <div>
       <script type="application/ld+json">{jsonLdString}</script>
       <h1 className="mt-1.5 text-xl leading-snug tracking-[-0.01em] text-neutral-700 dark:text-neutral-200">
-        <span className="font-semibold">Johnie Hjelm</span> is committed to
-        developing individuals and teams for success.
+        I&rsquo;m <span className="font-semibold">Johnie Hjelm</span>, Head of
+        Engineering at{" "}
+        <a
+          className="inline-block transition-opacity hover:opacity-70"
+          href="https://omni.se"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          <OmniLogo className="inline-block h-[0.8em] w-auto align-baseline" />
+          <span className="sr-only">Omni</span>
+        </a>
+        . I build teams, still write code, and think a lot about where the craft
+        goes when typing stops being the bottleneck.
       </h1>
       <p className="mt-8 leading-6.25 text-neutral-500 dark:text-neutral-400">
-        Since my teenage years, I have engaged in both design and coding,
-        unwilling to be confined to just one specialty. I have excelled as a
-        Jack of all Trades across different teams, engaging in a wide range of
-        tasks from graphic and digital design to both frontend and backend
-        development, along with product and API strategy.
+        I started as a high school intern at a Stockholm web agency in 2009,
+        doing design and code because I couldn&rsquo;t pick one. I&rsquo;ve
+        always hunted for shortcuts: remapped keys, snippets, tools, little
+        scripts, anything to keep up with my own brain. I have spinal muscular
+        atrophy, and around twenty-five my hands started falling behind, so the
+        hunt got serious. Nothing ever fully closed the gap. AI is the first
+        tool that finally keeps up with what I want to build.
       </p>
       <p className="mt-8 leading-6.25 text-neutral-500 dark:text-neutral-400">
-        In addition to technology, I have a strong enthusiasm for efficient team
-        management and intelligent work habits. I think a team&lsquo;s wellness
-        is crucial for effective operations, and although ideas inspire
-        innovation, it&lsquo;s the execution that leads to success.
+        I write about leadership, AI, and building when your body changes the
+        rules. The{" "}
+        <Link
+          className="text-neutral-700 underline decoration-neutral-300 underline-offset-2 dark:text-neutral-300 dark:decoration-neutral-600"
+          to="/about"
+        >
+          longer version
+        </Link>{" "}
+        is on the about page.
       </p>
       <SocialLinks />
       {featuredPosts.length > 0 ? (
@@ -84,7 +104,7 @@ export const Route = createFileRoute("/")({
   head: () =>
     createPageHead({
       description:
-        "Developer, engineering leader, and inclusive tech advocate. Read Johnie Hjelm's writing on AI, team leadership, and productivity, and explore his work.",
+        "Johnie Hjelm is Head of Engineering at Omni. Writing on engineering leadership, inclusive teams, and AI as assistive technology.",
       path: "/",
       title: "Developer & Engineering Leader",
     }),
