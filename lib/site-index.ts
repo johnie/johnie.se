@@ -1,7 +1,7 @@
 import { allPages } from "content-collections";
 import type { Page } from "content-collections";
 
-import { SITE_URL } from "@/lib/constants";
+import { SITE_DESCRIPTION, SITE_URL } from "@/lib/constants";
 import { postUrl, writing } from "@/lib/writing";
 import type { Writing } from "@/lib/writing";
 import type { FileRouteTypes } from "@/src/routeTree.gen";
@@ -66,7 +66,7 @@ export const createSiteIndex = ({
   <channel>
     <title>Johnie Hjelm</title>
     <link>${SITE_URL}</link>
-    <description>Committed to developing individuals and teams for success.</description>
+    <description>${SITE_DESCRIPTION}</description>
     <language>en</language>
     <lastBuildDate>${builtAt.toUTCString()}</lastBuildDate>
     <atom:link href="${SITE_URL}/feed.xml" rel="self" type="application/rss+xml"/>

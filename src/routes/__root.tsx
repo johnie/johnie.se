@@ -14,7 +14,7 @@ import { Logo } from "@/components/logo";
 import Navigation from "@/components/nav";
 import NotFound from "@/components/not-found";
 import { Toaster } from "@/components/ui/toast";
-import { SITE_URL } from "@/lib/constants";
+import { SITE_DESCRIPTION, SITE_URL } from "@/lib/constants";
 import { getSpotifySong } from "@/lib/spotify.functions";
 
 import appCss from "../styles/globals.css?url";
@@ -72,7 +72,7 @@ export const Route = createRootRoute({
       { title: "Johnie Hjelm" },
       {
         name: "description",
-        content: "Committed to developing individuals and teams for success.",
+        content: SITE_DESCRIPTION,
       },
       { name: "author", content: "Johnie Hjelm" },
       {
@@ -87,7 +87,7 @@ export const Route = createRootRoute({
       },
       {
         property: "og:description",
-        content: "Committed to developing individuals and teams for success.",
+        content: SITE_DESCRIPTION,
       },
       { property: "og:image", content: `${SITE_URL}/og` },
       { property: "og:locale", content: "en_US" },
