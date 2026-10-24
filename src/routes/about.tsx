@@ -31,7 +31,7 @@ const About = () => {
   return (
     <div>
       <script type="application/ld+json">{personSchemaJson}</script>
-      <h1 className="mb-8 bg-linear-to-r from-neutral-800 to-neutral-500 bg-clip-text text-3xl font-semibold text-transparent dark:from-neutral-100 dark:to-neutral-400">
+      <h1 className="mb-8 bg-linear-to-r from-neutral-800 to-neutral-500 bg-clip-text text-3xl font-semibold text-transparent dark:from-neutral-100 dark:to-neutral-300">
         {page.title}
       </h1>
       <article className="prose prose-quoteless prose-neutral dark:prose-invert">

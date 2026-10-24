@@ -19,14 +19,14 @@ export const Projects = (): JSX.Element | null => {
     <div>
       {items.map((project, index, { length }) => (
         <a
-          className="group ease -mx-4 flex gap-x-4 rounded-xl border-none px-4 pt-4 transition-colors hover:bg-neutral-50 dark:hover:bg-neutral-900"
+          className="group -mx-4 flex gap-x-4 rounded-xl border-none px-4 pt-4 transition-colors hover:bg-neutral-50 active:bg-neutral-100 active:duration-0 dark:hover:bg-neutral-900 dark:active:bg-neutral-800"
           aria-label={`${project.name}: ${project.description}`}
           href={project.url}
           key={project._id}
           rel="noopener noreferrer"
           target="_blank"
         >
-          <div className="shadow-shorter mt-0.5 h-9 w-9 shrink-0 overflow-hidden rounded-[10px] border border-neutral-200 bg-neutral-100 dark:border-neutral-800 dark:bg-neutral-800">
+          <div className="mt-0.5 h-9 w-9 shrink-0 overflow-hidden rounded-[10px] border border-neutral-200 bg-neutral-100 dark:border-neutral-800 dark:bg-neutral-800">
             <div className="flex h-full items-center justify-center text-sm font-semibold text-neutral-400">
               <img
                 alt={`${project.name} logo`}
@@ -50,9 +50,9 @@ export const Projects = (): JSX.Element | null => {
             )}
           >
             <div>{project.name}</div>
-            <div className="flex items-center justify-between gap-x-2 text-neutral-500 dark:text-neutral-500">
+            <div className="flex items-center justify-between gap-x-2 text-neutral-500 dark:text-neutral-400">
               <div>{project.description}</div>
-              <div className="border-opacity-5 rounded-full border border-black bg-neutral-100 px-2 text-xs dark:bg-neutral-800 dark:text-neutral-500">
+              <div className="border-opacity-5 rounded-full border border-black bg-neutral-100 px-2 text-xs dark:bg-neutral-800 dark:text-neutral-300">
                 {project.projectType}
               </div>
             </div>

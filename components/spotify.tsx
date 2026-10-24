@@ -16,14 +16,14 @@ export const Spotify = ({ song }: { song: SongData | null }) => {
       target="_blank"
     >
       <MusicNoteIcon
-        className={cn(song.isPlaying ? "text-[#1DB954]" : "text-neutral-500")}
+        className={cn(song.isPlaying ? "text-[#1DB954]" : "text-neutral-400")}
         size={16}
       />
       <div className="flex min-w-0 items-center gap-1">
         <span className="truncate font-medium text-neutral-300 group-hover:text-neutral-100">
           {song.title}
         </span>
-        <span className="shrink-0 text-neutral-500">by</span>
+        <span className="shrink-0 text-neutral-400">by</span>
         <span className="truncate text-neutral-400 group-hover:text-neutral-200">
           {song.artist}
         </span>
