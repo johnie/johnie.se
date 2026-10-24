@@ -11,7 +11,7 @@ import { useCallback } from "react";
 import type { MouseEvent } from "react";
 
 import { preloadCommandPalette } from "@/components/cmd-loader";
-import { useMainStore } from "@/lib/main-store";
+import { openCmdFrom } from "@/lib/main-store";
 import type { NavLink } from "@/lib/types";
 
 export const NAV_LINKS: NavLink[] = [
@@ -42,7 +42,6 @@ export const NAV_LINKS: NavLink[] = [
 ];
 
 const Navigation = () => {
-  const openCmdFrom = useMainStore((state) => state.openCmdFrom);
   let pathname = useLocation({ select: (location) => location.pathname });
 
   if (pathname.includes("/writing/")) {
@@ -57,7 +56,7 @@ const Navigation = () => {
         y: rect.top + rect.height / 2,
       });
     },
-    [openCmdFrom]
+    []
   );
 
   return (

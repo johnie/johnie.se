@@ -13,7 +13,7 @@ import {
   CommandList,
   CommandSeparator,
 } from "@/components/ui/command";
-import { useMainStore } from "@/lib/main-store";
+import { setCmd, useMainStore } from "@/lib/main-store";
 import type { ViewportPoint } from "@/lib/main-store";
 
 // The dialog is centred in the viewport, so its own centre is the viewport
@@ -27,26 +27,25 @@ const originStyle = (
       }
     : undefined;
 
+const goTo = (slug: string) => {
+  if (slug.startsWith("mailto:")) {
+    window.location.href = slug;
+    setCmd(false);
+
+    return;
+  }
+
+  if (slug.startsWith("http") || slug.startsWith("//")) {
+    window.open(slug, "_blank", "noopener,noreferrer");
+    setCmd(false);
+  }
+};
+
 export const Cmd = () => {
   const isCmdOpen = useMainStore((state) => state.isCmdOpen);
   const cmdOrigin = useMainStore((state) => state.cmdOrigin);
-  const setCmd = useMainStore((state) => state.setCmd);
   const navigate = useNavigate();
   const previousFocus = useRef<Element | null>(null);
-
-  const goTo = (slug: string) => {
-    if (slug.startsWith("mailto:")) {
-      window.location.href = slug;
-      setCmd(false);
-
-      return;
-    }
-
-    if (slug.startsWith("http") || slug.startsWith("//")) {
-      window.open(slug, "_blank", "noopener,noreferrer");
-      setCmd(false);
-    }
-  };
 
   return (
     <CommandDialog

@@ -1,6 +1,6 @@
 import { lazy, Suspense, useEffect, useState } from "react";
 
-import { useMainStore } from "@/lib/main-store";
+import { toggleCmd, useMainStore } from "@/lib/main-store";
 
 const IDLE_PRELOAD_TIMEOUT_MS = 2000;
 
@@ -24,7 +24,6 @@ const CommandPalette = lazy(async () => {
 
 export const Cmd = () => {
   const isCmdOpen = useMainStore((state) => state.isCmdOpen);
-  const toggleCmd = useMainStore((state) => state.toggleCmd);
   // Stay mounted after the first open so the close animation can run.
   const [hasOpened, setHasOpened] = useState(false);
 
@@ -43,7 +42,7 @@ export const Cmd = () => {
     document.addEventListener("keydown", handleKeyDown);
 
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [toggleCmd]);
+  }, []);
 
   useEffect(() => {
     if ("requestIdleCallback" in window) {
