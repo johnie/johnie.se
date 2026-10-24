@@ -58,6 +58,16 @@ For routing-only changes without uploading application code, run `pnpm build` fo
 
 Static redirects live in `lib/redirects.ts`: `/ai` → `/writing/ai-manifesto` and `/skills` → GitHub. Add future entries there. Document security headers live in `lib/security-headers.ts`; `public/_headers` covers static assets. Spotify and the view-count row-set use the Worker Cache API with a 60-second TTL.
 
+### Turso to D1 migration
+
+The app still reads and writes Turso; the `johnie` D1 database holds a verified copy for the cutover. `scripts/turso-to-d1.mjs` reads one consistent Turso snapshot, writes it to `.wrangler/turso-to-d1/` as a D1-compatible SQL file (doubles as a backup), imports it with `wrangler d1 execute`, then compares schema, every table row, and `sqlite_sequence` against the snapshot:
+
+```sh
+node --env-file=.env.vercel.production.local scripts/turso-to-d1.mjs --database johnie --replace
+```
+
+Add `--local` to target the local D1 used by `pnpm dev`. Without `--replace`, the script refuses to touch a D1 database that already has tables, so it cannot silently overwrite writes made after cutover. Production keeps writing view counts and Spotify plays to Turso, so re-run the copy immediately before switching the app to the `DB` binding.
+
 ### Quality checks
 
 ```sh
