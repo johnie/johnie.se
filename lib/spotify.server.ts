@@ -1,8 +1,8 @@
 import { desc, sql } from "drizzle-orm";
 
 import { withEdgeCache } from "@/lib/cache.server";
+import { db } from "@/lib/db.server";
 import { spotify } from "@/lib/db/schema";
-import { getDb } from "@/lib/turso.server";
 import type {
   SongData,
   SpotifyCurrentlyPlayingResponse,
@@ -74,7 +74,7 @@ const getNowPlaying =
 
 const getLatestSongFromDb = async () => {
   try {
-    const [latestSong] = await getDb()
+    const [latestSong] = await db
       .select()
       .from(spotify)
       .orderBy(desc(spotify.lastPlayedAt))
@@ -95,7 +95,7 @@ export const logSongToDb = async (songData: {
   title: string;
 }) => {
   try {
-    await getDb()
+    await db
       .insert(spotify)
       .values(songData)
       .onConflictDoUpdate({

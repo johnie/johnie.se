@@ -9,8 +9,6 @@ const createServerEnv = () =>
       SPOTIFY_API_CLIENT_ID: z.string().min(1),
       SPOTIFY_API_CLIENT_SECRET: z.string().min(1),
       SPOTIFY_API_REFRESH_TOKEN: z.string().min(1),
-      TURSO_AUTH_TOKEN: z.string().min(1),
-      TURSO_DATABASE_URL: z.string().url(),
     },
   });
 
