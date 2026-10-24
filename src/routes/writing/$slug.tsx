@@ -17,7 +17,7 @@ const Post = () => {
       <script type="application/ld+json">{jsonLd.blogPosting}</script>
       <script type="application/ld+json">{jsonLd.breadcrumbs}</script>
       <Link
-        className="relative mb-4 inline-block text-sm font-semibold text-neutral-600 transition-colors duration-150 hover:text-neutral-700 dark:text-neutral-500 dark:hover:text-neutral-400"
+        className="relative mb-4 inline-block text-sm font-semibold text-neutral-600 transition-colors duration-150 hover:text-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-200"
         to="/writing"
       >
         <svg
@@ -35,12 +35,12 @@ const Post = () => {
             strokeWidth={2}
           />
         </svg>
-        <span>Go back</span>
+        <span>Writing</span>
       </Link>
-      <h1 className="title bg-linear-to-r from-neutral-800 to-neutral-500 bg-clip-text text-3xl font-bold tracking-tighter text-transparent dark:from-neutral-100 dark:to-neutral-400">
+      <h1 className="title bg-linear-to-r from-neutral-800 to-neutral-500 bg-clip-text text-3xl font-bold tracking-[-0.02em] text-transparent dark:from-neutral-100 dark:to-neutral-300">
         {post.title}
       </h1>
-      <div className="mt-2 mb-8 flex items-center justify-between text-sm text-neutral-600">
+      <div className="mt-2 mb-8 flex items-center justify-between text-sm text-neutral-600 dark:text-neutral-400">
         <p>{formatDate(post.publishedAt)}</p>
         <div className="flex gap-2">
           <p>{post.readingTime}</p>

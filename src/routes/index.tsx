@@ -29,7 +29,7 @@ const Home = () => {
   return (
     <div>
       <script type="application/ld+json">{jsonLdString}</script>
-      <h1 className="mt-1.5">
+      <h1 className="mt-1.5 text-xl leading-snug tracking-[-0.01em] text-neutral-700 dark:text-neutral-200">
         <span className="font-semibold">Johnie Hjelm</span> is committed to
         developing individuals and teams for success.
       </h1>
@@ -47,15 +47,15 @@ const Home = () => {
         innovation, it&lsquo;s the execution that leads to success.
       </p>
       <SocialLinks />
-      <h2 className="mt-10 mb-2 text-xl text-neutral-700 dark:text-neutral-200">
+      <h2 className="mt-10 mb-2 font-medium text-neutral-700 dark:text-neutral-200">
         Latest Writing
       </h2>
       <LatestWriting viewCounts={viewCounts} />
-      <h2 className="mt-10 mb-2 text-xl text-neutral-700 dark:text-neutral-200">
+      <h2 className="mt-10 mb-2 font-medium text-neutral-700 dark:text-neutral-200">
         Work
       </h2>
       <WorkExperience />
-      <h2 className="mt-10 mb-2 text-xl text-neutral-700 dark:text-neutral-200">
+      <h2 className="mt-10 mb-2 font-medium text-neutral-700 dark:text-neutral-200">
         Projects
       </h2>
       <Projects />
