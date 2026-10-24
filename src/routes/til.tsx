@@ -1,10 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { allTodayILearneds } from "content-collections";
-import { format } from "date-fns";
 
 import { Mdx } from "@/components/mdx";
 import { preloadMdx } from "@/lib/mdx-modules";
 import { createPageHead } from "@/lib/metadata";
+import { formatDate } from "@/lib/utils";
 
 const TodayILearned = () => {
   const tilsDescending = allTodayILearneds.toSorted(
@@ -27,7 +27,7 @@ const TodayILearned = () => {
             <span className="mr-2 flex size-8 items-center justify-center">
               <span className="size-3 rounded-full border-2 border-neutral-800 dark:border-neutral-200" />
             </span>
-            {format(new Date(til.publishedAt), "dd MMMM, yyyy")}
+            {formatDate(til.publishedAt)}
           </time>
           <div className="prose prose-quoteless prose-neutral dark:prose-invert prose-h3:mt-4">
             <Mdx path={til.mdxPath} />

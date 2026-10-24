@@ -1,11 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { allPosts } from "content-collections";
-import { format } from "date-fns";
 import { Suspense } from "react";
 
 import { Views } from "@/components/views";
 import { groupPostsByYear } from "@/lib/content-utils";
 import { createPageHead } from "@/lib/metadata";
+import { formatDate } from "@/lib/utils";
 import { getViewCounts } from "@/lib/views.functions";
 
 const BlogPage = () => {
@@ -43,7 +43,7 @@ const BlogPage = () => {
                     {post.title}
                   </p>
                   <div className="flex items-center gap-3 text-sm text-neutral-500">
-                    <p>{format(new Date(post.publishedAt), "dd MMMM, yyyy")}</p>
+                    <p>{formatDate(post.publishedAt)}</p>
                     <span>•</span>
                     <p>{post.readingTime}</p>
                     <span>•</span>

@@ -1,13 +1,13 @@
 import { Link } from "@tanstack/react-router";
 import { allPosts } from "content-collections";
 import type { Post } from "content-collections";
-import { format } from "date-fns";
 import { Suspense } from "react";
 import type { JSX } from "react";
 
 import { Views } from "@/components/views";
 import { sortPostsByDate } from "@/lib/content-utils";
 import type { ViewCounts } from "@/lib/types";
+import { formatDate } from "@/lib/utils";
 
 const TOTAL_ITEMS = 3;
 
@@ -36,7 +36,7 @@ export const LatestWriting = ({
               {post.title}
             </p>
             <div className="flex items-center text-sm text-neutral-500 dark:text-neutral-500">
-              <p>{format(new Date(post.publishedAt), "dd MMMM, yyyy")}</p>
+              <p>{formatDate(post.publishedAt)}</p>
               <span className="mx-4">•</span>
               <p>{post.readingTime}</p>
               <span className="mx-4">•</span>

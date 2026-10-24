@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 
+import { formatCount } from "@/lib/utils";
 import { incrementView } from "@/lib/views.functions";
 
 const ViewCounter = ({
@@ -17,7 +18,7 @@ const ViewCounter = ({
     }
   }, [slug, trackView]);
 
-  return <p>{`${count.toLocaleString()} views`}</p>;
+  return <p>{`${formatCount(count)} views`}</p>;
 };
 
 export default ViewCounter;

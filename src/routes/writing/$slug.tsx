@@ -1,13 +1,12 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { allPosts } from "content-collections";
-import { format } from "date-fns";
 import { Suspense } from "react";
 
 import { Mdx } from "@/components/mdx";
 import { Views } from "@/components/views";
 import { SITE_URL } from "@/lib/constants";
 import { preloadMdx } from "@/lib/mdx-modules";
-import { cn } from "@/lib/utils";
+import { cn, formatDate } from "@/lib/utils";
 import { getViewCounts } from "@/lib/views.functions";
 
 const Post = () => {
@@ -94,7 +93,7 @@ const Post = () => {
         {post.title}
       </h1>
       <div className="mt-2 mb-8 flex items-center justify-between text-sm text-neutral-600">
-        <p>{format(new Date(post.publishedAt), "dd MMMM, yyyy")}</p>
+        <p>{formatDate(post.publishedAt)}</p>
         <div className="flex gap-2">
           <p>{post.readingTime}</p>
           <span>•</span>
