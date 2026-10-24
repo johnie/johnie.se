@@ -36,11 +36,13 @@ pnpm dev
 
 Configure the five Spotify and Turso credentials in gitignored `.dev.vars` before running the app: `SPOTIFY_API_CLIENT_ID`, `SPOTIFY_API_CLIENT_SECRET`, `SPOTIFY_API_REFRESH_TOKEN`, `TURSO_AUTH_TOKEN`, and `TURSO_DATABASE_URL`. Validation is defined in `lib/env.server.ts`; credentials are read lazily on the server and are never injected into client code.
 
+In production, provision the same five names as Worker secrets. With the configured Node compatibility and compatibility date, Cloudflare populates `process.env` from secret bindings, so `getServerEnv()` reads them without renaming or client-side exposure.
+
 Vite serves development and production preview on port 3000. If a clean checkout cannot resolve `content-collections` on first development startup, run `pnpm build` once to generate the metadata. MDX edits hot reload without a restart.
 
 ### Cloudflare Workers
 
-`wrangler.jsonc` configures the Worker, static asset binding, Node compatibility, and observability. Generated `worker-configuration.d.ts` is committed; run `pnpm cf-typegen` whenever the Wrangler configuration changes.
+`wrangler.jsonc` targets the existing `johnie` Worker and configures its static asset binding, Node compatibility, and observability. Generated `worker-configuration.d.ts` is committed; run `pnpm cf-typegen` whenever the Wrangler configuration changes.
 
 ```sh
 pnpm build
