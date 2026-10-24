@@ -1,13 +1,13 @@
 import { sql } from "drizzle-orm";
 
 import { withEdgeCache } from "@/lib/cache.server";
+import { db } from "@/lib/db.server";
 import { views } from "@/lib/db/schema";
-import { getDb } from "@/lib/turso.server";
 import type { ViewCounts } from "@/lib/types";
 
 export const incrementViewCount = async (slug: string): Promise<void> => {
   try {
-    await getDb()
+    await db
       .insert(views)
       .values({ count: 1, slug })
       .onConflictDoUpdate({
@@ -26,7 +26,7 @@ export const incrementViewCount = async (slug: string): Promise<void> => {
 export const getAllViewCounts = async (): Promise<ViewCounts> => {
   try {
     return await withEdgeCache("views-counts", 60, async () => {
-      const rows = await getDb()
+      const rows = await db
         .select({ count: views.count, slug: views.slug })
         .from(views);
 

@@ -14,7 +14,7 @@ Built with modern web technologies:
 - **[Tailwind CSS v4](https://tailwindcss.com)** — Utility-first styling
 - **[Content Collections](https://www.content-collections.dev)** — Type-safe content metadata
 - **[MDX](https://mdxjs.com)** — React modules compiled at build time with `@mdx-js/rollup`; no runtime evaluation
-- **[Turso](https://turso.tech)** — Edge database (LibSQL)
+- **[Cloudflare D1](https://developers.cloudflare.com/d1/)** — Serverless SQLite database
 - **[Radix UI](https://www.radix-ui.com)** — Accessible component primitives
 - **[Zustand](https://zustand-demo.pmnd.rs)** — State management
 - **[OpenPanel](https://openpanel.dev)** — Privacy-first analytics
@@ -34,15 +34,15 @@ pnpm install --frozen-lockfile
 pnpm dev
 ```
 
-Configure the five Spotify and Turso credentials in gitignored `.dev.vars` before running the app: `SPOTIFY_API_CLIENT_ID`, `SPOTIFY_API_CLIENT_SECRET`, `SPOTIFY_API_REFRESH_TOKEN`, `TURSO_AUTH_TOKEN`, and `TURSO_DATABASE_URL`. Validation is defined in `lib/env.server.ts`; credentials are read lazily on the server and are never injected into client code.
+Configure the three Spotify credentials in gitignored `.dev.vars` before running the app: `SPOTIFY_API_CLIENT_ID`, `SPOTIFY_API_CLIENT_SECRET`, and `SPOTIFY_API_REFRESH_TOKEN`. Validation is defined in `lib/env.server.ts`; credentials are read lazily on the server and are never injected into client code.
 
-In production, provision the same five names as Worker secrets. With the configured Node compatibility and compatibility date, Cloudflare populates `process.env` from secret bindings, so `getServerEnv()` reads them without renaming or client-side exposure.
+In production, provision the same three names as Worker secrets. With the configured Node compatibility and compatibility date, Cloudflare populates `process.env` from secret bindings, so `getServerEnv()` reads them without renaming or client-side exposure.
 
 Vite serves development and production preview on port 3000. If a clean checkout cannot resolve `content-collections` on first development startup, run `pnpm build` once to generate the metadata. MDX edits hot reload without a restart.
 
 ### Cloudflare Workers
 
-`wrangler.jsonc` targets the existing `johnie` Worker in its default environment, with `johnie.se` as its primary Custom Domain. The `johnie.crip.workers.dev` endpoint and preview URLs remain enabled. The configuration defines the static asset binding, the production `DB` binding for `johnie` D1, Node compatibility, observability, and an intentionally empty `previews` block: the app still uses Turso, so remote previews must not bind to production D1. Generated `worker-configuration.d.ts` is committed; run `pnpm cf-typegen` whenever the Wrangler configuration changes. `pnpm preview` runs local Vite; `wrangler preview` creates a remote deployment and needs preview-safe Spotify/Turso credentials via `--secrets-file` if those routes are exercised.
+`wrangler.jsonc` targets the existing `johnie` Worker in its default environment, with `johnie.se` as its primary Custom Domain. The `johnie.crip.workers.dev` endpoint and preview URLs remain enabled. The configuration defines the static asset binding, the `DB` binding for the `johnie` D1 database, Node compatibility, observability, and an intentionally empty `previews` block so remote previews never write view counts or Spotify plays to production D1; without a `DB` binding those reads and writes fail and fall back as they do on any database error. Generated `worker-configuration.d.ts` is committed; run `pnpm cf-typegen` whenever the Wrangler configuration changes. `pnpm preview` runs local Vite against local D1; `wrangler preview` creates a remote deployment and needs preview-safe Spotify credentials via `--secrets-file` if those routes are exercised.
 
 ```sh
 pnpm build
@@ -52,21 +52,23 @@ pnpm exec wrangler deploy --dry-run
 
 The deployment target is **Workers Paid** (10 MiB compressed script limit, default 30-second CPU allowance). `/og` generates images at request time using bundled WebAssembly and the Inter Bold font from the asset binding. Public images are served as-is, without image optimization.
 
-When ready to publish, provision the five variables above with `wrangler secret put <NAME>`, then run `pnpm deploy`. Authentication, secret uploads, deployment, DNS, and custom-domain configuration are separate operator actions, not part of local verification.
+When ready to publish, provision the three variables above with `wrangler secret put <NAME>`, then run `pnpm deploy`. Authentication, secret uploads, deployment, DNS, and custom-domain configuration are separate operator actions, not part of local verification.
 
 For routing-only changes without uploading application code, run `pnpm build` followed by `pnpm exec wrangler triggers deploy --config dist/server/wrangler.json` (experimental). Use the generated configuration because the Cloudflare Vite plugin supplies the asset directory. An existing externally managed DNS record for a Custom Domain must be removed before attaching it to the Worker; Cloudflare then manages DNS and HTTPS for that hostname.
 
 Static redirects live in `lib/redirects.ts`: `/ai` → `/writing/ai-manifesto` and `/skills` → GitHub. Add future entries there. Document security headers live in `lib/security-headers.ts`; `public/_headers` covers static assets. Spotify and the view-count row-set use the Worker Cache API with a 60-second TTL.
 
-### Turso to D1 migration
+### Database
 
-The app still reads and writes Turso; the `johnie` D1 database holds a verified copy for the cutover. `scripts/turso-to-d1.mjs` reads one consistent Turso snapshot, writes it to `.wrangler/turso-to-d1/` as a D1-compatible SQL file (doubles as a backup), imports it with `wrangler d1 execute`, then compares schema, every table row, and `sqlite_sequence` against the snapshot:
+View counts and Spotify plays live in the `johnie` D1 database, accessed through the `DB` binding in `lib/db.server.ts` with Drizzle (`drizzle-orm/d1`); the schema is in `lib/db/schema.ts`. `pnpm dev` and `pnpm preview` use a local D1 under `.wrangler/state`, which starts empty. To seed it with a copy of production:
 
 ```sh
-node --env-file=.env.vercel.production.local scripts/turso-to-d1.mjs --database johnie --replace
+rm -rf .wrangler/state/v3/d1
+pnpm exec wrangler d1 export johnie --remote --output .wrangler/johnie.sql
+pnpm exec wrangler d1 execute johnie --local --file .wrangler/johnie.sql
 ```
 
-Add `--local` to target the local D1 used by `pnpm dev`. Without `--replace`, the script refuses to touch a D1 database that already has tables, so it cannot silently overwrite writes made after cutover. Production keeps writing view counts and Spotify plays to Turso, so re-run the copy immediately before switching the app to the `DB` binding.
+The export doubles as a backup. `pnpm db:push`, `db:generate`, `db:migrate`, and `db:studio` run drizzle-kit against the remote database over the D1 HTTP API and need `CLOUDFLARE_ACCOUNT_ID` and a `CLOUDFLARE_D1_TOKEN` API token with D1 edit permission in the environment.
 
 ### Quality checks
 
