@@ -2,6 +2,7 @@ import {
   BrainIcon,
   HouseIcon,
   PencilSimpleIcon,
+  ToolboxIcon,
   UserIcon,
 } from "@phosphor-icons/react";
 import { Link, useLocation } from "@tanstack/react-router";
@@ -34,10 +35,16 @@ export const NAV_LINKS: NavLink[] = [
     slug: "/writing",
   },
   {
-    enabled: true,
+    enabled: false,
     icon: <BrainIcon size={18} />,
     name: "TIL",
     slug: "/til",
+  },
+  {
+    enabled: true,
+    icon: <ToolboxIcon size={18} />,
+    name: "Uses",
+    slug: "/uses",
   },
 ];
 
