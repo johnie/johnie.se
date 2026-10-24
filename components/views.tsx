@@ -1,14 +1,24 @@
-import ViewCounter from "@/components/view-counter";
-import { getViewsCount } from "@/lib/actions";
+import { Await } from "@tanstack/react-router";
 
-export const Views = async ({
+import ViewCounter from "@/components/view-counter";
+import type { ViewCounts } from "@/lib/types";
+
+export const Views = ({
+  counts,
   slug,
   trackView = false,
 }: {
+  counts: Promise<ViewCounts>;
   slug: string;
   trackView?: boolean;
-}) => {
-  const count = await getViewsCount(slug);
-
-  return <ViewCounter count={count} slug={slug} trackView={trackView} />;
-};
+}) => (
+  <Await promise={counts}>
+    {(resolved) => (
+      <ViewCounter
+        count={resolved[slug] ?? 0}
+        slug={slug}
+        trackView={trackView}
+      />
+    )}
+  </Await>
+);

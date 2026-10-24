@@ -1,5 +1,4 @@
 import { allWorks } from "content-collections";
-import Image from "next/image";
 import type { JSX } from "react";
 
 import { hasImage, hasUrl } from "@/lib/types";
@@ -28,7 +27,7 @@ export const WorkExperience = (): JSX.Element | null => {
         >
           <div className="shadow-shorter mt-0.5 h-9 w-9 shrink-0 overflow-hidden rounded-full bg-neutral-100 dark:bg-neutral-800">
             <div className="flex h-full items-center justify-center text-sm font-semibold text-neutral-400">
-              <Image
+              <img
                 alt={`${work.company} logo`}
                 className="h-9 w-9"
                 decoding="async"

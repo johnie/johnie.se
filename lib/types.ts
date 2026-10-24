@@ -1,5 +1,6 @@
-import type { Route } from "next";
 import type { ReactNode } from "react";
+
+import type { FileRouteTypes } from "@/src/routeTree.gen";
 
 export type RequiredField<T, K extends keyof T> = T & Required<Pick<T, K>>;
 
@@ -19,7 +20,7 @@ export interface NavLink {
   enabled?: boolean;
   icon?: ReactNode;
   name: string;
-  slug: Route;
+  slug: FileRouteTypes["to"];
 }
 
 export interface SocialLink {
@@ -39,6 +40,8 @@ export interface View {
   slug: string;
   updatedAt: string;
 }
+
+export type ViewCounts = Record<string, number>;
 
 export interface SpotifyTokenResponse {
   access_token: string;

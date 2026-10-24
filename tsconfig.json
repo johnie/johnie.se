@@ -12,11 +12,7 @@
     "isolatedModules": true,
     "jsx": "react-jsx",
     "incremental": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
+    "types": ["node", "vite/client"],
     "paths": {
       "@/*": ["./*"],
       "content-collections": ["./.content-collections/generated"]
@@ -25,12 +21,9 @@
     "strictNullChecks": true
   },
   "include": [
-    "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts",
     ".content-collections/generated",
-    ".next/dev/types/**/*.ts",
     "**/*.d.ts",
     "types/**/*.d.ts"
   ],

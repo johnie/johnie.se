@@ -1,5 +1,4 @@
 import { allProjects } from "content-collections";
-import Image from "next/image";
 import type { JSX } from "react";
 
 import { hasImage, hasUrl } from "@/lib/types";
@@ -29,7 +28,7 @@ export const Projects = (): JSX.Element | null => {
         >
           <div className="shadow-shorter mt-0.5 h-9 w-9 shrink-0 overflow-hidden rounded-[10px] border border-neutral-200 bg-neutral-100 dark:border-neutral-800 dark:bg-neutral-800">
             <div className="flex h-full items-center justify-center text-sm font-semibold text-neutral-400">
-              <Image
+              <img
                 alt={`${project.name} logo`}
                 className="h-9 w-9"
                 decoding="async"

@@ -1,20 +1,13 @@
-"use client";
-
-import dynamic from "next/dynamic";
-import { useEffect } from "react";
+import { lazy, Suspense, useEffect } from "react";
 
 import { useMainStore } from "@/lib/main-store";
 
-const CommandPalette = dynamic(
-  async () => {
-    const cmdModule = await import("@/components/cmd");
+// Loaded only after opening: the palette reads document during initialization.
+const CommandPalette = lazy(async () => {
+  const { Cmd: Palette } = await import("@/components/cmd");
 
-    return cmdModule.Cmd;
-  },
-  {
-    ssr: false,
-  }
-);
+  return { default: Palette };
+});
 
 export const Cmd = () => {
   const isCmdOpen = useMainStore((state) => state.isCmdOpen);
@@ -33,5 +26,9 @@ export const Cmd = () => {
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, [toggleCmd]);
 
-  return isCmdOpen ? <CommandPalette /> : null;
+  return isCmdOpen ? (
+    <Suspense fallback={null}>
+      <CommandPalette />
+    </Suspense>
+  ) : null;
 };

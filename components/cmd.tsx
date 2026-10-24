@@ -1,7 +1,4 @@
-"use client";
-
-import type { Route } from "next";
-import { useRouter } from "next/navigation";
+import { useNavigate } from "@tanstack/react-router";
 import { useRef } from "react";
 
 import { NAV_LINKS as navLinks } from "@/components/nav";
@@ -17,24 +14,15 @@ import {
 } from "@/components/ui/command";
 import { useMainStore } from "@/lib/main-store";
 
-const isInternalRoute = (slug: string): slug is Route => slug.startsWith("/");
-
 export const Cmd = () => {
   const isCmdOpen = useMainStore((state) => state.isCmdOpen);
   const setCmd = useMainStore((state) => state.setCmd);
-  const { push } = useRouter();
+  const navigate = useNavigate();
   const previousFocus = useRef(document.activeElement);
 
   const goTo = (slug: string) => {
     if (slug.startsWith("mailto:")) {
       window.location.href = slug;
-      setCmd(false);
-
-      return;
-    }
-
-    if (isInternalRoute(slug)) {
-      push(slug);
       setCmd(false);
 
       return;
@@ -65,7 +53,14 @@ export const Cmd = () => {
           {navLinks
             .filter((i) => Boolean(i.enabled))
             .map(({ slug, name, icon }) => (
-              <CommandItem key={slug} onSelect={goTo} value={slug}>
+              <CommandItem
+                key={slug}
+                onSelect={() => {
+                  void navigate({ to: slug });
+                  setCmd(false);
+                }}
+                value={slug}
+              >
                 {icon}
                 <span className="ml-2">{name}</span>
               </CommandItem>

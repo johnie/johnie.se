@@ -1,21 +1,17 @@
-import { useMDXComponent } from "@content-collections/mdx/react";
+import { Link } from "@tanstack/react-router";
 import type { MDXComponents } from "mdx/types";
-import type { Route } from "next";
-import Image from "next/image";
-import type { ImageProps } from "next/image";
-import Link from "next/link";
-import { createElement } from "react";
+import { Suspense } from "react";
 import type * as React from "react";
 import { z } from "zod";
 
 import { Bio } from "@/components/bio";
+import { getMdxComponent } from "@/lib/mdx-modules";
 import type { CalloutProps } from "@/lib/types";
+import type { FileRouteTypes } from "@/src/routeTree.gen";
 
 import { Badge } from "./ui/badge";
 
-type CustomLinkProps = React.ComponentProps<typeof Link> & {
-  children?: React.ReactNode;
-} & React.ComponentProps<"a">;
+type CustomLinkProps = React.ComponentProps<"a">;
 
 const CustomLink: React.FC<CustomLinkProps> = ({
   children,
@@ -31,11 +27,11 @@ const CustomLink: React.FC<CustomLinkProps> = ({
   const linkHref = parsedHref.data;
 
   if (linkHref.startsWith("/")) {
-    // SAFETY: MDX links are validated absolute paths; Next cannot infer content-derived routes.
-    const route = linkHref as Route;
+    // SAFETY: MDX links are validated absolute paths; the router cannot infer content-derived routes.
+    const to = linkHref as FileRouteTypes["to"];
 
     return (
-      <Link href={route} {...props}>
+      <Link to={to} {...props}>
         {children}
       </Link>
     );
@@ -64,14 +60,22 @@ const CustomLink: React.FC<CustomLinkProps> = ({
   );
 };
 
-type CustomImageProps = ImageProps & {
+type RoundedImageProps = Omit<React.ComponentProps<"img">, "alt"> & {
   alt: string;
+  priority?: boolean;
 };
 
-const RoundedImage: React.FC<CustomImageProps> = ({ alt, ...props }) => (
-  <Image
+const RoundedImage = ({
+  alt,
+  priority = false,
+  ...props
+}: RoundedImageProps) => (
+  <img
     alt={alt}
     className="rounded-lg"
+    decoding="async"
+    fetchPriority={priority ? "high" : undefined}
+    loading={priority ? "eager" : "lazy"}
     sizes="(min-width: 768px) 648px, calc(100vw - 32px)"
     {...props}
   />
@@ -198,8 +202,13 @@ const components: MDXComponents = {
   ul: UL,
 };
 
-export const Mdx = ({ code }: { code: string }) => {
-  const Component = useMDXComponent(code);
+export const Mdx = ({ path }: { path: string }) => {
+  const Content = getMdxComponent(path);
 
-  return createElement(Component, { components });
+  return (
+    <Suspense fallback={null}>
+      {/* oxlint-disable-next-line react/static-components -- The module registry memoizes lazy component identity by path. */}
+      <Content components={components} />
+    </Suspense>
+  );
 };

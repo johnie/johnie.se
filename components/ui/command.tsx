@@ -1,5 +1,3 @@
-"use client";
-
 import { MagnifyingGlassIcon } from "@phosphor-icons/react";
 import { DialogTitle } from "@radix-ui/react-dialog";
 import type { DialogProps } from "@radix-ui/react-dialog";
@@ -118,7 +116,7 @@ const CommandItem = ({
 }: React.ComponentPropsWithRef<typeof CommandPrimitive.Item>) => (
   <CommandPrimitive.Item
     className={cn(
-      "aria-selected:bg-accent aria-selected:text-accent-foreground relative flex cursor-default items-center rounded-sm px-2 py-1.5 text-sm outline-hidden select-none data-disabled:pointer-events-none data-disabled:opacity-50",
+      "aria-selected:bg-accent aria-selected:text-accent-foreground relative flex cursor-default items-center rounded-sm px-2 py-1.5 text-sm outline-hidden select-none data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50",
       className
     )}
     {...props}
