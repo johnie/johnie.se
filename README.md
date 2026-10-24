@@ -42,7 +42,7 @@ Vite serves development and production preview on port 3000. If a clean checkout
 
 ### Cloudflare Workers
 
-`wrangler.jsonc` targets the existing `johnie` Worker in its default environment, with `johnie.se` as its primary Custom Domain. The `johnie.crip.workers.dev` endpoint and preview URLs remain enabled. The configuration also defines the static asset binding, the `DB` binding for the `johnie` D1 database, Node compatibility, and observability. Generated `worker-configuration.d.ts` is committed; run `pnpm cf-typegen` whenever the Wrangler configuration changes.
+`wrangler.jsonc` targets the existing `johnie` Worker in its default environment, with `johnie.se` as its primary Custom Domain. The `johnie.crip.workers.dev` endpoint and preview URLs remain enabled. The configuration defines the static asset binding, the production `DB` binding for `johnie` D1, Node compatibility, observability, and an intentionally empty `previews` block: the app still uses Turso, so remote previews must not bind to production D1. Generated `worker-configuration.d.ts` is committed; run `pnpm cf-typegen` whenever the Wrangler configuration changes. `pnpm preview` runs local Vite; `wrangler preview` creates a remote deployment and needs preview-safe Spotify/Turso credentials via `--secrets-file` if those routes are exercised.
 
 ```sh
 pnpm build

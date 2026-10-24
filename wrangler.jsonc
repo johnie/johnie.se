@@ -16,4 +16,5 @@
     },
   ],
   "observability": { "enabled": true },
+  "previews": {},
 }
