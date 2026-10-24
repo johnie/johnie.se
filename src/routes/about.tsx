@@ -2,7 +2,7 @@ import { createFileRoute, notFound } from "@tanstack/react-router";
 import { allPages } from "content-collections";
 
 import { Mdx } from "@/components/mdx";
-import { SITE_URL } from "@/lib/constants";
+import { SITE_DESCRIPTION, SITE_URL } from "@/lib/constants";
 import { preloadMdx } from "@/lib/mdx-modules";
 import { createPageHead } from "@/lib/metadata";
 
@@ -12,9 +12,13 @@ const About = () => {
   const personSchema = {
     "@context": "https://schema.org",
     "@type": "Person",
-    description:
-      "Committed to developing individuals and teams for success. Developer, engineering leader, and inclusive tech advocate focused on building products and leading teams.",
-    jobTitle: "Developer, Engineering Leader, and Inclusive Tech Advocate",
+    description: SITE_DESCRIPTION,
+    jobTitle: "Head of Engineering",
+    worksFor: {
+      "@type": "Organization",
+      name: "Omni",
+      url: "https://omni.se",
+    },
     name: "Johnie Hjelm",
     sameAs: [
       "https://github.com/johnie",
@@ -69,7 +73,7 @@ export const Route = createFileRoute("/about")({
   head: () =>
     createPageHead({
       description:
-        "Learn about Johnie Hjelm, a developer, engineering leader, and inclusive tech advocate focused on building products and leading teams to success.",
+        "How Johnie Hjelm went from self-taught developer to Head of Engineering at Omni, living with spinal muscular atrophy and using AI as assistive technology long before it was a trend.",
       path: "/about",
       title: "About",
     }),
