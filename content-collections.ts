@@ -191,6 +191,33 @@ export const TodayILearned = defineCollection({
   },
 });
 
+const UsesSection = defineCollection({
+  directory: "content/uses/",
+  include: "*.yml",
+  name: "UsesSection",
+  parser: "yaml",
+  schema: z.object({
+    description: z.string().trim().min(1).optional(),
+    /** Show every item instead of a short preview with a "Show more" toggle. */
+    expanded: z.boolean().default(false),
+    items: z
+      .array(
+        z.object({
+          description: z.string().trim().min(1),
+          name: z.string().trim().min(1),
+          url: z.url({ protocol: /^https$/u }),
+        })
+      )
+      .min(1, "A uses section needs at least one item"),
+    order: z.number().int(),
+    title: z.string(),
+  }),
+  transform: (document) => ({
+    ...document,
+    id: document._meta.path,
+  }),
+});
+
 export default defineConfig({
-  content: [Post, Page, Work, Project, TodayILearned],
+  content: [Post, Page, Work, Project, TodayILearned, UsesSection],
 });

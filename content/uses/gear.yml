@@ -1,0 +1,24 @@
+title: Gear
+order: 2
+items:
+  - name: Apple Magic Keyboard
+    url: https://www.apple.com/shop/product/MK2A3LL/A/magic-keyboard-us-english
+    description: My preferred wireless keyboard.
+  - name: Logitech MX Anywhere 3S
+    url: https://www.logitech.com/en-us/shop/p/mx-anywhere-3s
+    description: My everyday mouse. Compact, quiet clicks, and tracks on any surface.
+  - name: Elgato Wave Neo
+    url: https://www.elgato.com/us/en/p/wave-neo
+    description: My microphone, in white. Plug-and-play USB with tap to mute.
+  - name: OBSBOT Meet 2
+    url: https://www.obsbot.com/obsbot-meet-2-4k-webcam
+    description: A tiny 4K webcam with auto framing and gesture control.
+  - name: MacBook Neo
+    url: https://www.apple.com/macbook-neo/
+    description: My second laptop, in Citrus. The most fun color Apple has put on a Mac in years.
+  - name: Kindle Paperwhite
+    url: https://amzn.to/3mAbMmm
+    description: I love reading on my Kindle. It's the best way to disconnect.
+  - name: Xteink X4 Classic
+    url: https://eu.xteink.com/sv/products/xteink-x4-classic-pocket-ereader?variant=43315004506210
+    description: A pocket-sized e-reader. 4.3-inch E Ink, 68 grams, and physical buttons, so a book is always with me.

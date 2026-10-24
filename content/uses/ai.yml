@@ -1,0 +1,24 @@
+title: AI & Agents
+order: 3
+items:
+  - name: Claude
+    url: https://claude.com
+    description: The model behind most of my work, from code to writing. AI was assistive technology for me long before it was a trend.
+  - name: ChatGPT
+    url: https://chatgpt.com
+    description: OpenAI's assistant, which I use alongside Claude. Codex, its coding agent, is a great second opinion on tricky changes.
+  - name: OpenRouter
+    url: https://openrouter.ai
+    description: One API and one bill for hundreds of models, so trying a new one is a config change.
+  - name: ElevenLabs
+    url: https://elevenlabs.io
+    description: Lifelike text-to-speech and voice AI, with an API that's easy to build on.
+  - name: fal
+    url: https://fal.ai
+    description: Fast, serverless inference for image, video, and audio models behind a single API.
+  - name: OpenCode
+    url: https://opencode.ai
+    description: Open-source coding agent for the terminal that works with whichever model provider I point it at.
+  - name: Herdr
+    url: https://herdr.dev
+    description: Keeps all my agents running in the background, across projects and machines, so I check in on them instead of babysitting terminals.

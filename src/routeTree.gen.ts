@@ -17,6 +17,7 @@ import { Route as OgRouteImport } from './routes/og'
 import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as TilRouteImport } from './routes/til'
+import { Route as UsesRouteImport } from './routes/uses'
 import { Route as WpAdminRouteImport } from './routes/wp-admin'
 import { Route as WritingIndexRouteImport } from './routes/writing/index'
 import { Route as WritingSlugRouteImport } from './routes/writing/$slug'
@@ -61,6 +62,11 @@ const TilRoute = TilRouteImport.update({
   path: '/til',
   getParentRoute: () => rootRouteImport,
 } as any)
+const UsesRoute = UsesRouteImport.update({
+  id: '/uses',
+  path: '/uses',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const WpAdminRoute = WpAdminRouteImport.update({
   id: '/wp-admin',
   path: '/wp-admin',
@@ -86,6 +92,7 @@ export interface FileRoutesByFullPath {
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/til': typeof TilRoute
+  '/uses': typeof UsesRoute
   '/wp-admin': typeof WpAdminRoute
   '/writing/$slug': typeof WritingSlugRoute
   '/writing/': typeof WritingIndexRoute
@@ -99,6 +106,7 @@ export interface FileRoutesByTo {
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/til': typeof TilRoute
+  '/uses': typeof UsesRoute
   '/wp-admin': typeof WpAdminRoute
   '/writing/$slug': typeof WritingSlugRoute
   '/writing': typeof WritingIndexRoute
@@ -113,6 +121,7 @@ export interface FileRoutesById {
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/til': typeof TilRoute
+  '/uses': typeof UsesRoute
   '/wp-admin': typeof WpAdminRoute
   '/writing/$slug': typeof WritingSlugRoute
   '/writing/': typeof WritingIndexRoute
@@ -128,6 +137,7 @@ export interface FileRouteTypes {
     | '/robots.txt'
     | '/sitemap.xml'
     | '/til'
+    | '/uses'
     | '/wp-admin'
     | '/writing/$slug'
     | '/writing/'
@@ -141,6 +151,7 @@ export interface FileRouteTypes {
     | '/robots.txt'
     | '/sitemap.xml'
     | '/til'
+    | '/uses'
     | '/wp-admin'
     | '/writing/$slug'
     | '/writing'
@@ -154,6 +165,7 @@ export interface FileRouteTypes {
     | '/robots.txt'
     | '/sitemap.xml'
     | '/til'
+    | '/uses'
     | '/wp-admin'
     | '/writing/$slug'
     | '/writing/'
@@ -168,6 +180,7 @@ export interface RootRouteChildren {
   RobotsDottxtRoute: typeof RobotsDottxtRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TilRoute: typeof TilRoute
+  UsesRoute: typeof UsesRoute
   WpAdminRoute: typeof WpAdminRoute
   WritingSlugRoute: typeof WritingSlugRoute
   WritingIndexRoute: typeof WritingIndexRoute
@@ -231,6 +244,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TilRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/uses': {
+      id: '/uses'
+      path: '/uses'
+      fullPath: '/uses'
+      preLoaderRoute: typeof UsesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/wp-admin': {
       id: '/wp-admin'
       path: '/wp-admin'
@@ -264,6 +284,7 @@ const rootRouteChildren: RootRouteChildren = {
   RobotsDottxtRoute: RobotsDottxtRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   TilRoute: TilRoute,
+  UsesRoute: UsesRoute,
   WpAdminRoute: WpAdminRoute,
   WritingSlugRoute: WritingSlugRoute,
   WritingIndexRoute: WritingIndexRoute,

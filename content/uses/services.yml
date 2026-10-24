@@ -1,0 +1,15 @@
+title: Services
+order: 6
+items:
+  - name: Inleed
+    url: https://inleed.se
+    description: My Swedish hosting provider. Web hosting, VPS, and email from a local company with genuinely helpful support.
+  - name: Porkbun
+    url: https://porkbun.com
+    description: I buy and renew most of my domains here.
+  - name: Gandi
+    url: https://www.gandi.net
+    description: My other domain registrar. French, and around since 1999.
+  - name: Bahnhof
+    url: https://bahnhof.se
+    description: My internet provider. Fast Swedish fiber from an ISP known for standing up for privacy.

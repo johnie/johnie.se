@@ -30,6 +30,7 @@ const ROUTES: Record<FileRouteTypes["to"], SitemapRule | null> = {
   "/robots.txt": null,
   "/sitemap.xml": null,
   "/til": { changeFrequency: "weekly", priority: 0.6 },
+  "/uses": { changeFrequency: "monthly", priority: 0.6 },
   "/wp-admin": null,
   "/writing": { changeFrequency: "weekly", priority: 0.9 },
   "/writing/$slug": null,
