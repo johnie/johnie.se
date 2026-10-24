@@ -1,10 +1,10 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
-import { getAllViewCounts, incrementViewCount } from "@/lib/views.server";
+import { viewCounts } from "@/lib/views.server";
 
 export const getViewCounts = createServerFn({ method: "GET" }).handler(() =>
-  getAllViewCounts()
+  viewCounts.all()
 );
 
 export const incrementView = createServerFn({ method: "POST" })
@@ -14,5 +14,5 @@ export const incrementView = createServerFn({ method: "POST" })
       return;
     }
 
-    await incrementViewCount(data.slug);
+    await viewCounts.increment(data.slug);
   });

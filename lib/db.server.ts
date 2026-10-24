@@ -1,6 +1,5 @@
 import { env } from "cloudflare:workers";
-import { drizzle } from "drizzle-orm/d1";
 
-import { spotify, views } from "@/lib/db/schema";
+import { createDatabase } from "@/lib/db/database";
 
-export const db = drizzle(env.DB, { schema: { spotify, views } });
+export const db = createDatabase(env.DB);

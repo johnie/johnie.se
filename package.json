@@ -16,7 +16,8 @@
     "fix": "ultracite fix",
     "prepare": "lefthook install",
     "preview": "vite preview",
-    "test:seo": "vitest run scripts/seo.test.mjs --testTimeout=60000",
+    "test": "vitest run --project unit",
+    "test:seo": "vitest run --project seo --testTimeout=60000",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
