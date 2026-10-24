@@ -43,10 +43,6 @@ export interface View {
 
 export type ViewCounts = Record<string, number>;
 
-export interface SpotifyTokenResponse {
-  access_token: string;
-}
-
 export interface SpotifyArtist {
   name: string;
 }
