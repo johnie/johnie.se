@@ -10,13 +10,7 @@ import { createPageHead, serializeJsonLd } from "@/lib/metadata";
 import { getViewCounts } from "@/lib/views.functions";
 import { writing } from "@/lib/writing";
 
-const LATEST_POST_COUNT = 3;
-
 const featuredPosts = writing.posts.filter((post) => post.featured);
-
-const latestPosts = writing.posts
-  .filter((post) => !post.featured)
-  .slice(0, LATEST_POST_COUNT);
 
 const Home = () => {
   const { viewCounts } = Route.useLoaderData();
@@ -83,10 +77,6 @@ const Home = () => {
           <PostList posts={featuredPosts} viewCounts={viewCounts} />
         </>
       ) : null}
-      <h2 className="mt-10 mb-2 font-medium text-neutral-700 dark:text-neutral-200">
-        Latest Writing
-      </h2>
-      <PostList posts={latestPosts} viewCounts={viewCounts} />
       <h2 className="mt-10 mb-2 font-medium text-neutral-700 dark:text-neutral-200">
         Work
       </h2>
