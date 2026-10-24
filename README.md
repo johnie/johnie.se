@@ -42,7 +42,7 @@ Vite serves development and production preview on port 3000. If a clean checkout
 
 ### Cloudflare Workers
 
-`wrangler.jsonc` targets the existing `johnie` Worker in its default environment, with `johnie.se` as its primary Custom Domain. The `johnie.crip.workers.dev` endpoint and preview URLs remain enabled. The configuration also defines the static asset binding, Node compatibility, and observability. Generated `worker-configuration.d.ts` is committed; run `pnpm cf-typegen` whenever the Wrangler configuration changes.
+`wrangler.jsonc` targets the existing `johnie` Worker in its default environment, with `johnie.se` as its primary Custom Domain. The `johnie.crip.workers.dev` endpoint and preview URLs remain enabled. The configuration also defines the static asset binding, the `DB` binding for the `johnie` D1 database, Node compatibility, and observability. Generated `worker-configuration.d.ts` is committed; run `pnpm cf-typegen` whenever the Wrangler configuration changes.
 
 ```sh
 pnpm build
