@@ -42,7 +42,7 @@ Vite serves development and production preview on port 3000. If a clean checkout
 
 ### Cloudflare Workers
 
-`wrangler.jsonc` targets the existing `johnie` Worker and configures its static asset binding, Node compatibility, and observability. Generated `worker-configuration.d.ts` is committed; run `pnpm cf-typegen` whenever the Wrangler configuration changes.
+`wrangler.jsonc` targets the existing `johnie` Worker in its default environment, with `johnie.se` as its primary Custom Domain. The `johnie.crip.workers.dev` endpoint and preview URLs remain enabled. The configuration also defines the static asset binding, Node compatibility, and observability. Generated `worker-configuration.d.ts` is committed; run `pnpm cf-typegen` whenever the Wrangler configuration changes.
 
 ```sh
 pnpm build
@@ -53,6 +53,8 @@ pnpm exec wrangler deploy --dry-run
 The deployment target is **Workers Paid** (10 MiB compressed script limit, default 30-second CPU allowance). `/og` generates images at request time using bundled WebAssembly and the Inter Bold font from the asset binding. Public images are served as-is, without image optimization.
 
 When ready to publish, provision the five variables above with `wrangler secret put <NAME>`, then run `pnpm deploy`. Authentication, secret uploads, deployment, DNS, and custom-domain configuration are separate operator actions, not part of local verification.
+
+For routing-only changes without uploading application code, run `pnpm build` followed by `pnpm exec wrangler triggers deploy --config dist/server/wrangler.json` (experimental). Use the generated configuration because the Cloudflare Vite plugin supplies the asset directory. An existing externally managed DNS record for a Custom Domain must be removed before attaching it to the Worker; Cloudflare then manages DNS and HTTPS for that hostname.
 
 Static redirects live in `lib/redirects.ts`: `/ai` → `/writing/ai-manifesto` and `/skills` → GitHub. Add future entries there. Document security headers live in `lib/security-headers.ts`; `public/_headers` covers static assets. Spotify and the view-count row-set use the Worker Cache API with a 60-second TTL.
 
