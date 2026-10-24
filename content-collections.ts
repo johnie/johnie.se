@@ -40,6 +40,7 @@ const getFileCreationDate = (filePath: string) => {
 const PostSchema = z.object({
   content: z.string(),
   image: z.string().optional(),
+  featured: z.boolean().optional().default(false),
   leading: z.boolean().optional().default(false),
   publishedAt: z
     .string()

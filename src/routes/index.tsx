@@ -1,12 +1,20 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { LatestWriting } from "@/components/latest-writing";
+import { PostList } from "@/components/post-list";
 import { Projects } from "@/components/projects";
 import { SocialLinks } from "@/components/social-links";
 import { WorkExperience } from "@/components/work";
 import { SITE_URL } from "@/lib/constants";
 import { createPageHead, serializeJsonLd } from "@/lib/metadata";
-import { getViewCounts } from "@/lib/views.functions";
+import { writing } from "@/lib/writing";
+
+const LATEST_POST_COUNT = 3;
+
+const featuredPosts = writing.posts.filter((post) => post.featured);
+
+const latestPosts = writing.posts
+  .filter((post) => !post.featured)
+  .slice(0, LATEST_POST_COUNT);
 
 const Home = () => {
   const { viewCounts } = Route.useLoaderData();
@@ -47,10 +55,18 @@ const Home = () => {
         innovation, it&lsquo;s the execution that leads to success.
       </p>
       <SocialLinks />
+      {featuredPosts.length > 0 ? (
+        <>
+          <h2 className="mt-10 mb-2 font-medium text-neutral-700 dark:text-neutral-200">
+            Start Here
+          </h2>
+          <PostList posts={featuredPosts} viewCounts={viewCounts} />
+        </>
+      ) : null}
       <h2 className="mt-10 mb-2 font-medium text-neutral-700 dark:text-neutral-200">
         Latest Writing
       </h2>
-      <LatestWriting viewCounts={viewCounts} />
+      <PostList posts={latestPosts} viewCounts={viewCounts} />
       <h2 className="mt-10 mb-2 font-medium text-neutral-700 dark:text-neutral-200">
         Work
       </h2>
