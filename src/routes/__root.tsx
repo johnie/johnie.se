@@ -5,14 +5,15 @@ import {
   Outlet,
   Scripts,
 } from "@tanstack/react-router";
+import { MotionConfig } from "framer-motion";
 import type { ReactNode } from "react";
-import { Toaster } from "sonner";
 
 import { Cmd } from "@/components/cmd-loader";
 import { Footer } from "@/components/footer";
 import { Logo } from "@/components/logo";
 import Navigation from "@/components/nav";
 import NotFound from "@/components/not-found";
+import { Toaster } from "@/components/ui/toast";
 import { SITE_URL } from "@/lib/constants";
 import { getSpotifySong } from "@/lib/spotify.functions";
 
@@ -34,7 +35,7 @@ const RootLayout = () => {
   const { song } = Route.useLoaderData();
 
   return (
-    <>
+    <MotionConfig reducedMotion="user">
       <a
         className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:bg-white focus:p-4 focus:text-black dark:focus:bg-black dark:focus:text-white"
         href="#main-content"
@@ -44,7 +45,7 @@ const RootLayout = () => {
       <div className="mx-auto w-full px-4 text-neutral-700 md:max-w-170 dark:text-neutral-300">
         <div>
           <div className="flex min-h-dvh w-full flex-col justify-between">
-            <header className="grid grid-cols-2 items-center py-8 text-neutral-700 md:py-16 dark:text-neutral-300">
+            <header className="flex flex-wrap items-center justify-between gap-x-4 gap-y-6 py-8 text-neutral-700 md:py-16 dark:text-neutral-300">
               <Link rel="home" to="/">
                 <Logo />
               </Link>
@@ -57,9 +58,9 @@ const RootLayout = () => {
           </div>
         </div>
       </div>
-      <Toaster richColors />
+      <Toaster />
       <Cmd />
-    </>
+    </MotionConfig>
   );
 };
 

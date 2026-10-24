@@ -16,11 +16,24 @@ Built with modern web technologies:
 - **[MDX](https://mdxjs.com)** — React modules compiled at build time with `@mdx-js/rollup`; no runtime evaluation
 - **[Cloudflare D1](https://developers.cloudflare.com/d1/)** — Serverless SQLite database
 - **[Radix UI](https://www.radix-ui.com)** — Accessible component primitives
+- **[Base UI](https://base-ui.com)** — Composable toast primitives
 - **[Zustand](https://zustand-demo.pmnd.rs)** — State management
 - **[OpenPanel](https://openpanel.dev)** — Privacy-first analytics
 - **[Cloudflare Workers](https://workers.cloudflare.com)** — Hosting and deployment
 - **[Drizzle ORM](https://orm.drizzle.team)** — Database operations
 - **[Ultracite](https://www.ultracite.ai/)** — Code quality (Oxlint and Oxfmt presets)
+
+## Toast notifications
+
+Use the app-wide toast manager from client-side event handlers:
+
+```tsx
+import { toast } from "@/components/ui/toast";
+
+toast.add({ title: "Copied link", type: "success" });
+```
+
+`toast.add` supports `title`, `description`, `type`, and `actionProps`. Supported status types are `success`, `info`, `warning`, `error`, and `loading`. Use `toast.promise(promise, { loading, success, error })` to track an asynchronous operation.
 
 ## Development
 
