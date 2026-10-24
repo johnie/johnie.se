@@ -1,4 +1,5 @@
 import { useNavigate } from "@tanstack/react-router";
+import type { CSSProperties } from "react";
 import { useRef } from "react";
 
 import { NAV_LINKS as navLinks } from "@/components/nav";
@@ -13,12 +14,25 @@ import {
   CommandSeparator,
 } from "@/components/ui/command";
 import { useMainStore } from "@/lib/main-store";
+import type { ViewportPoint } from "@/lib/main-store";
+
+// The dialog is centred in the viewport, so its own centre is the viewport
+// centre; offsetting from 50% anchors the scale to the trigger.
+const originStyle = (
+  origin: ViewportPoint | null
+): CSSProperties | undefined =>
+  origin
+    ? {
+        transformOrigin: `calc(50% + ${origin.x - window.innerWidth / 2}px) calc(50% + ${origin.y - window.innerHeight / 2}px)`,
+      }
+    : undefined;
 
 export const Cmd = () => {
   const isCmdOpen = useMainStore((state) => state.isCmdOpen);
+  const cmdOrigin = useMainStore((state) => state.cmdOrigin);
   const setCmd = useMainStore((state) => state.setCmd);
   const navigate = useNavigate();
-  const previousFocus = useRef(document.activeElement);
+  const previousFocus = useRef<Element | null>(null);
 
   const goTo = (slug: string) => {
     if (slug.startsWith("mailto:")) {
@@ -43,8 +57,13 @@ export const Cmd = () => {
           previousFocus.current.focus();
         }
       }}
+      onOpenAutoFocus={() => {
+        // Runs before focus moves into the dialog, so this is the opener.
+        previousFocus.current = document.activeElement;
+      }}
       onOpenChange={setCmd}
       open={isCmdOpen}
+      style={originStyle(cmdOrigin)}
     >
       <CommandInput placeholder="Type a command or search..." />
       <CommandList>

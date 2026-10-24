@@ -6,6 +6,8 @@
    on <html>) instead of the user's prefers-color-scheme setting. */
 @custom-variant dark (&:where(.dark, .dark *));
 
+@custom-variant reduced-transparency (@media (prefers-reduced-transparency: reduce));
+
 @theme {
   --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
   --background-image-gradient-radial: radial-gradient(var(--tw-gradient-stops));
@@ -45,23 +47,53 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-sm: calc(var(--radius) - 4px);
 
-  --animate-accordion-down: accordion-down 0.2s ease-out;
-  --animate-accordion-up: accordion-up 0.2s ease-out;
+  /* Enter decelerates; exit uses the mirrored curve so both paths match. */
+  --animate-overlay-in: overlay-in 200ms cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-overlay-out: overlay-out 150ms cubic-bezier(0.7, 0, 0.84, 0);
+  --animate-dialog-in: dialog-in 200ms cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-dialog-out: dialog-out 150ms cubic-bezier(0.7, 0, 0.84, 0);
+}
 
-  @keyframes accordion-down {
+@keyframes overlay-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes overlay-out {
+  to {
+    opacity: 0;
+  }
+}
+
+/* Materialize: blur and scale arrive together with opacity. `scale` is
+   animated separately from `translate`, so centering stays intact. */
+@keyframes dialog-in {
+  from {
+    opacity: 0;
+    scale: 0.96;
+    filter: blur(4px);
+  }
+}
+
+@keyframes dialog-out {
+  to {
+    opacity: 0;
+    scale: 0.96;
+    filter: blur(4px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @keyframes dialog-in {
     from {
-      height: 0;
-    }
-    to {
-      height: var(--radix-accordion-content-height);
+      opacity: 0;
     }
   }
-  @keyframes accordion-up {
-    from {
-      height: var(--radix-accordion-content-height);
-    }
+
+  @keyframes dialog-out {
     to {
-      height: 0;
+      opacity: 0;
     }
   }
 }
@@ -162,6 +194,7 @@
   }
   body {
     @apply bg-background text-foreground;
+    -webkit-tap-highlight-color: transparent;
   }
 }
 
@@ -271,40 +304,4 @@ table {
 }
 [data-rehype-pretty-code-title] + pre {
   @apply mt-0 rounded-t-none border-t-0;
-}
-
-.card-shine-effect {
-  --shine-deg: 45deg;
-  position: relative;
-  overflow: hidden;
-
-  background-image: linear-gradient(
-    var(--shine-deg),
-    transparent 20%,
-    transparent 40%,
-    rgba(68, 68, 68, 0.2) 50%,
-    rgba(68, 68, 68, 0.2) 55%,
-    transparent 70%,
-    transparent 100%
-  );
-
-  background-repeat: no-repeat;
-  background-position:
-    -100% 0,
-    0 0;
-
-  background-size:
-    250% 250%,
-    100% 100%;
-
-  animation: shine 4s infinite;
-}
-
-@keyframes shine {
-  0% {
-    background-position: -100% 0;
-  }
-  100% {
-    background-position: 200% 0;
-  }
 }
