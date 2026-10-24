@@ -1,13 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
 
+import { siteIndex } from "@/lib/site-index";
+
 export const Route = createFileRoute("/robots.txt")({
   server: {
     handlers: {
       GET: () =>
-        new Response(
-          "User-Agent: *\nAllow: /\n\nHost: https://johnie.se\nSitemap: https://johnie.se/sitemap.xml\n",
-          { headers: { "Content-Type": "text/plain; charset=utf-8" } }
-        ),
+        new Response(siteIndex.robots(), {
+          headers: { "Content-Type": "text/plain; charset=utf-8" },
+        }),
     },
   },
 });
