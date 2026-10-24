@@ -8,8 +8,6 @@ import { defineCollection, defineConfig } from "@content-collections/core";
 import calcReadingTime from "reading-time";
 import { z } from "zod";
 
-import { SITE_URL } from "./lib/constants";
-
 const execFileAsync = promisify(execFile);
 
 const runGitLog = async (filePath: string): Promise<string> => {
@@ -39,38 +37,6 @@ const getFileCreationDate = (filePath: string) => {
   return new Date(stats.birthtime).toISOString();
 };
 
-const setStructuredData = (doc: {
-  title: string;
-  publishedAt: string;
-  summary: string;
-  image?: string;
-  _meta: { path: string };
-}) => ({
-  "@context": "https://schema.org",
-  "@type": "BlogPosting",
-  author: {
-    "@type": "Person",
-    name: "Johnie Hjelm",
-    url: SITE_URL,
-  },
-  dateModified: doc.publishedAt,
-  datePublished: doc.publishedAt,
-  description: doc.summary,
-  headline: doc.title,
-  image: doc.image
-    ? `${SITE_URL}${doc.image}`
-    : `${SITE_URL}/og?title=${encodeURIComponent(doc.title)}`,
-  mainEntityOfPage: {
-    "@id": `${SITE_URL}/writing/${doc._meta.path}`,
-    "@type": "WebPage",
-  },
-  publisher: {
-    "@type": "Person",
-    name: "Johnie Hjelm",
-  },
-  url: `${SITE_URL}/writing/${doc._meta.path}`,
-});
-
 const PostSchema = z.object({
   content: z.string(),
   image: z.string().optional(),
@@ -96,8 +62,6 @@ const Post = defineCollection({
       wordsPerMinute: 275,
     }).text;
 
-    const structuredData = setStructuredData(document);
-
     const lastModified = await context.cache(
       document._meta.filePath,
       async (filePath) => {
@@ -117,7 +81,6 @@ const Post = defineCollection({
       mdxPath: `/content/${document._meta.filePath}`,
       readingTime,
       slug,
-      structuredData,
     };
   },
 });

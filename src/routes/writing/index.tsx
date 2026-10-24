@@ -1,16 +1,15 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { allPosts } from "content-collections";
 import { Suspense } from "react";
 
 import { Views } from "@/components/views";
-import { groupPostsByYear } from "@/lib/content-utils";
 import { createPageHead } from "@/lib/metadata";
 import { formatDate } from "@/lib/utils";
 import { getViewCounts } from "@/lib/views.functions";
+import { writing } from "@/lib/writing";
 
 const BlogPage = () => {
   const { viewCounts } = Route.useLoaderData();
-  const postsByYear = groupPostsByYear(allPosts);
+  const { postsByYear } = writing;
 
   return (
     <section>

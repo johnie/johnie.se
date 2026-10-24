@@ -1,5 +1,28 @@
 import { SITE_URL } from "@/lib/constants";
 
+/** The generated Open Graph image for `title`. */
+export const ogImageUrl = (title: string): string =>
+  `${SITE_URL}/og?title=${encodeURIComponent(title)}`;
+
+type JsonValue =
+  | string
+  | number
+  | boolean
+  | null
+  | JsonValue[]
+  | { [key: string]: JsonValue };
+
+/** A schema.org JSON-LD document. */
+export interface JsonLd {
+  "@context": string;
+  "@type": string;
+  [property: string]: JsonValue;
+}
+
+/** JSON for an `application/ld+json` script; `<` is escaped so it cannot close the tag. */
+export const serializeJsonLd = (document: JsonLd): string =>
+  JSON.stringify(document).replaceAll("<", "\\u003c");
+
 export const createPageHead = ({
   title,
   description,
@@ -11,7 +34,7 @@ export const createPageHead = ({
 }) => {
   const url = new URL(path, SITE_URL).toString();
   const socialTitle = `${title} | Johnie Hjelm`;
-  const imageUrl = `${SITE_URL}/og?title=${encodeURIComponent(title)}`;
+  const imageUrl = ogImageUrl(title);
 
   return {
     links: [{ rel: "canonical", href: url }],

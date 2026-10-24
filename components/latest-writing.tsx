@@ -1,13 +1,11 @@
 import { Link } from "@tanstack/react-router";
-import { allPosts } from "content-collections";
-import type { Post } from "content-collections";
 import { Suspense } from "react";
 import type { JSX } from "react";
 
 import { Views } from "@/components/views";
-import { sortPostsByDate } from "@/lib/content-utils";
 import type { ViewCounts } from "@/lib/types";
 import { formatDate } from "@/lib/utils";
+import { writing } from "@/lib/writing";
 
 const TOTAL_ITEMS = 3;
 
@@ -16,15 +14,15 @@ export const LatestWriting = ({
 }: {
   viewCounts: Promise<ViewCounts>;
 }): JSX.Element | null => {
-  if (allPosts.length === 0) {
+  if (writing.posts.length === 0) {
     return null;
   }
 
-  const items = sortPostsByDate(allPosts).slice(0, TOTAL_ITEMS);
+  const items = writing.posts.slice(0, TOTAL_ITEMS);
 
   return (
     <div>
-      {items.map((post: Post) => (
+      {items.map((post) => (
         <Link
           className="group ease -mx-4 flex gap-x-4 rounded-xl border-none px-4 py-4 transition-colors hover:bg-neutral-50 dark:hover:bg-neutral-900"
           params={{ slug: post.slug }}

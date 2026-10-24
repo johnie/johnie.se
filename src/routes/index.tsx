@@ -5,7 +5,7 @@ import { Projects } from "@/components/projects";
 import { SocialLinks } from "@/components/social-links";
 import { WorkExperience } from "@/components/work";
 import { SITE_URL } from "@/lib/constants";
-import { createPageHead } from "@/lib/metadata";
+import { createPageHead, serializeJsonLd } from "@/lib/metadata";
 import { getViewCounts } from "@/lib/views.functions";
 
 const Home = () => {
@@ -24,7 +24,7 @@ const Home = () => {
     url: SITE_URL,
   };
 
-  const jsonLdString = JSON.stringify(jsonLd).replaceAll("<", "\\u003c");
+  const jsonLdString = serializeJsonLd(jsonLd);
 
   return (
     <div>

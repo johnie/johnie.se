@@ -1,73 +1,21 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { allPosts } from "content-collections";
 import { Suspense } from "react";
 
 import { Mdx } from "@/components/mdx";
 import { Views } from "@/components/views";
-import { SITE_URL } from "@/lib/constants";
 import { preloadMdx } from "@/lib/mdx-modules";
 import { cn, formatDate } from "@/lib/utils";
 import { getViewCounts } from "@/lib/views.functions";
+import { postHead, postJsonLd, writing } from "@/lib/writing";
 
 const Post = () => {
   const { post, viewCounts } = Route.useLoaderData();
-
-  const blogPostingSchema = {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    author: {
-      "@type": "Person",
-      name: "Johnie Hjelm",
-    },
-    dateModified: post.lastModified,
-    datePublished: post.publishedAt,
-    description: post.summary,
-    headline: post.title,
-    image: post.image
-      ? `${SITE_URL}${post.image}`
-      : `${SITE_URL}/og?title=${encodeURIComponent(post.title)}`,
-    url: `${SITE_URL}/writing/${post.slug}`,
-  };
-
-  const breadcrumbSchema = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      {
-        "@type": "ListItem",
-        item: SITE_URL,
-        name: "Home",
-        position: 1,
-      },
-      {
-        "@type": "ListItem",
-        item: `${SITE_URL}/writing`,
-        name: "Writing",
-        position: 2,
-      },
-      {
-        "@type": "ListItem",
-        item: `${SITE_URL}/writing/${post.slug}`,
-        name: post.title,
-        position: 3,
-      },
-    ],
-  };
-
-  const blogPostingSchemaJson = JSON.stringify(blogPostingSchema).replaceAll(
-    "<",
-    "\\u003c"
-  );
-
-  const breadcrumbSchemaJson = JSON.stringify(breadcrumbSchema).replaceAll(
-    "<",
-    "\\u003c"
-  );
+  const jsonLd = postJsonLd(post);
 
   return (
     <section>
-      <script type="application/ld+json">{blogPostingSchemaJson}</script>
-      <script type="application/ld+json">{breadcrumbSchemaJson}</script>
+      <script type="application/ld+json">{jsonLd.blogPosting}</script>
+      <script type="application/ld+json">{jsonLd.breadcrumbs}</script>
       <Link
         className="relative mb-4 inline-block text-sm font-semibold text-neutral-600 transition-colors duration-150 hover:text-neutral-700 dark:text-neutral-500 dark:hover:text-neutral-400"
         to="/writing"
@@ -115,7 +63,7 @@ const Post = () => {
 
 export const Route = createFileRoute("/writing/$slug")({
   loader: async ({ params }) => {
-    const post = allPosts.find((entry) => entry.slug === params.slug);
+    const post = writing.find(params.slug);
 
     if (!post) {
       throw notFound();
@@ -126,36 +74,6 @@ export const Route = createFileRoute("/writing/$slug")({
 
     return { post, viewCounts };
   },
-  head: ({ loaderData }) => {
-    if (!loaderData) {
-      return {};
-    }
-
-    const { post } = loaderData;
-    const url = `${SITE_URL}/writing/${post.slug}`;
-
-    const ogImage = post.image
-      ? `${SITE_URL}${post.image}`
-      : `${SITE_URL}/og?title=${encodeURIComponent(post.title)}`;
-
-    return {
-      links: [{ rel: "canonical", href: url }],
-      meta: [
-        { title: `${post.title} | Johnie Hjelm` },
-        { name: "description", content: post.summary },
-        { property: "og:title", content: post.title },
-        { property: "og:description", content: post.summary },
-        { property: "og:url", content: url },
-        { property: "og:image", content: ogImage },
-        { property: "og:type", content: "article" },
-        { property: "article:published_time", content: post.publishedAt },
-        { property: "article:modified_time", content: post.lastModified },
-        { name: "twitter:card", content: "summary_large_image" },
-        { name: "twitter:title", content: post.title },
-        { name: "twitter:description", content: post.summary },
-        { name: "twitter:image", content: ogImage },
-      ],
-    };
-  },
+  head: ({ loaderData }) => (loaderData ? postHead(loaderData.post) : {}),
   component: Post,
 });
