@@ -18,15 +18,9 @@ items:
   - name: Apple Studio Display XDR
     url: https://www.apple.com/studio-display-xdr/
     description: 27-inch 5K mini-LED at 120 Hz. When you review more code than you type, the screen matters more than the keyboard.
-  - name: Zed
-    url: https://zed.dev
-    description: Where I read and review code. Opens instantly and stays out of the way.
   - name: Cloudflare
     url: https://www.cloudflare.com
     description: My main provider for almost everything, this site included. Workers are a joy to build on, and most of what comes for free has an amazing developer experience.
-  - name: Obsidian
-    url: https://obsidian.md
-    description: Where my notes and thinking live, in plain Markdown files I own. I wrote about my setup in The Vault That Thinks With You.
   - name: Permobil F5 Corpus
     url: https://www.permobil.com/en-us/products/power-wheelchairs/permobil-f5-corpus
     description: I sit all day, so I might as well get a good chair.

@@ -10,6 +10,10 @@ items:
   - name: Raindrop.io
     url: https://raindrop.io
     description: Where my bookmarks live. Everything I want to read, watch, or come back to, searchable across devices.
+  - name: Obsidian
+    url: https://obsidian.md
+    description: Where my notes and thinking live, in plain Markdown files I own.
+    post: the-vault-that-thinks-with-you
   - name: Shottr
     url: https://shottr.cc
     description: Fast screenshots with scrolling capture, OCR, and quick annotations.
@@ -24,4 +28,4 @@ items:
     description: Where I design and prototype my ideas.
   - name: Audible
     url: https://www.audible.com/
-    description: The perfect choice to listen to a book while running outside.
+    description: Audiobooks, for when I'd rather listen than read.

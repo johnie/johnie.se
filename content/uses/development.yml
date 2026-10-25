@@ -12,13 +12,16 @@ items:
     description: Docker containers and Linux machines on macOS without the overhead. Starts in seconds and barely touches the battery.
   - name: Starship
     url: https://starship.rs/
-    description: The minimal, blazing-fast, and infinitely customizable prompt for any shell.
+    description: My shell prompt. Shows the git branch, runtime versions, and how long the last command took, without slowing the shell down.
   - name: Sheldon
     url: https://sheldon.cli.rs
     description: A fast, Rust-built plugin manager for my shell. One TOML file, and plugins load without slowing startup.
+  - name: Zed
+    url: https://zed.dev
+    description: Where I read and review code. Opens instantly and stays out of the way.
   - name: Neovim
     url: https://neovim.io/
-    description: A fork of Vim aiming to improve user experience, plugins, and GUIs.
+    description: For quick edits without leaving the terminal. Zed is where I read code; Neovim is where I fix the one line I found.
   - name: zoxide
     url: https://github.com/ajeetdsouza/zoxide
     description: A smarter cd. It learns the directories I visit, so a couple of letters gets me anywhere.

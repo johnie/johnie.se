@@ -3,7 +3,7 @@ order: 2
 items:
   - name: Apple Magic Keyboard
     url: https://www.apple.com/shop/product/MK2A3LL/A/magic-keyboard-us-english
-    description: My preferred wireless keyboard.
+    description: My keyboard. Low-profile, quiet, and the same layout as my MacBook.
   - name: Logitech MX Anywhere 3S
     url: https://www.logitech.com/en-us/shop/p/mx-anywhere-3s
     description: My everyday mouse. Compact, quiet clicks, and tracks on any surface.
@@ -17,8 +17,11 @@ items:
     url: https://www.apple.com/macbook-neo/
     description: My second laptop, in Citrus. The most fun color Apple has put on a Mac in years.
   - name: Kindle Paperwhite
-    url: https://amzn.to/3mAbMmm
+    url: https://www.amazon.com/dp/B0CFPJYX7P
     description: I love reading on my Kindle. It's the best way to disconnect.
   - name: Xteink X4 Classic
     url: https://eu.xteink.com/sv/products/xteink-x4-classic-pocket-ereader?variant=43315004506210
     description: A pocket-sized e-reader. 4.3-inch E Ink, 68 grams, and physical buttons, so a book is always with me.
+  - name: Bambu Lab A1 mini
+    url: https://bambulab.com/en/a1-mini
+    description: My 3D printer. Small, quiet, and reliable enough that I actually use it, mostly to play around and print whatever idea I had that day.
