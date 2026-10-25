@@ -1,0 +1,31 @@
+title: Apps
+order: 5
+items:
+  - name: Bitwarden
+    url: https://bitwarden.com/
+    description: The first thing I install on any new device.
+  - name: Spark
+    url: https://sparkmailapp.com
+    description: My email client. A smart inbox that surfaces what matters and makes clearing out the rest quick.
+  - name: Raindrop.io
+    url: https://raindrop.io
+    description: Where my bookmarks live. Everything I want to read, watch, or come back to, searchable across devices.
+  - name: Obsidian
+    url: https://obsidian.md
+    description: Where my notes and thinking live, in plain Markdown files I own.
+    post: the-vault-that-thinks-with-you
+  - name: Shottr
+    url: https://shottr.cc
+    description: Fast screenshots with scrolling capture, OCR, and quick annotations.
+  - name: DockDoor
+    url: https://dockdoor.net
+    description: Window previews when hovering the Dock, plus a proper window switcher.
+  - name: Tinycast
+    url: https://github.com/abue-ammar/tinycast
+    description: A tiny, fully native launcher with hotkeys and clipboard history.
+  - name: Figma
+    url: https://figma.com
+    description: Where I design and prototype my ideas.
+  - name: Audible
+    url: https://www.audible.com/
+    description: Audiobooks, for when I'd rather listen than read.

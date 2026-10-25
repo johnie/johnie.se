@@ -191,6 +191,72 @@ export const TodayILearned = defineCollection({
   },
 });
 
+const UsesSection = defineCollection({
+  directory: "content/uses/",
+  include: "*.yml",
+  name: "UsesSection",
+  parser: "yaml",
+  schema: z.object({
+    description: z.string().trim().min(1).optional(),
+    /** Show every item instead of a short preview with a "Show more" toggle. */
+    expanded: z.boolean().default(false),
+    items: z
+      .array(
+        z.object({
+          description: z.string().trim().min(1),
+          name: z.string().trim().min(1),
+          /** Slug of a post about this item, linked under its description. */
+          post: z.string().trim().min(1).optional(),
+          url: z.url({ protocol: /^https$/u }),
+        })
+      )
+      .min(1, "A uses section needs at least one item"),
+    order: z.number().int(),
+    title: z.string(),
+  }),
+  transform: async (document, context) => {
+    const posts = context.documents(Post);
+
+    const items = document.items.map(({ post: slug, ...item }) => {
+      if (!slug) {
+        return { ...item, post: undefined };
+      }
+
+      const post = posts.find((entry) => entry._meta.path === slug);
+
+      if (!post) {
+        throw new Error(
+          `Uses item "${item.name}" links to unknown post "${slug}"`
+        );
+      }
+
+      return { ...item, post: { slug, title: post.title } };
+    });
+
+    // Null until the file is committed; the page shows the newest date.
+    const lastModified = await context.cache(
+      document._meta.filePath,
+      async (filePath) => {
+        try {
+          const stdout = await runGitLog(`uses/${filePath}`);
+          const date = new Date(stdout.trim());
+
+          return Number.isNaN(date.getTime()) ? null : date.toISOString();
+        } catch {
+          return null;
+        }
+      }
+    );
+
+    return {
+      ...document,
+      id: document._meta.path,
+      items,
+      lastModified,
+    };
+  },
+});
+
 export default defineConfig({
-  content: [Post, Page, Work, Project, TodayILearned],
+  content: [Post, Page, Work, Project, TodayILearned, UsesSection],
 });

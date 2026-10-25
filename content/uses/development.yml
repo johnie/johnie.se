@@ -1,0 +1,57 @@
+title: Development
+order: 4
+items:
+  - name: Ghostty
+    url: https://ghostty.org
+    description: A fast, GPU-accelerated terminal with native macOS UI. It feels like a real Mac app.
+  - name: MonoLisa
+    url: https://www.monolisa.dev
+    description: My coding font. Designed for developers and comfortable to read through long sessions.
+  - name: OrbStack
+    url: https://orbstack.dev
+    description: Docker containers and Linux machines on macOS without the overhead. Starts in seconds and barely touches the battery.
+  - name: Starship
+    url: https://starship.rs/
+    description: My shell prompt. Shows the git branch, runtime versions, and how long the last command took, without slowing the shell down.
+  - name: Sheldon
+    url: https://sheldon.cli.rs
+    description: A fast, Rust-built plugin manager for my shell. One TOML file, and plugins load without slowing startup.
+  - name: Zed
+    url: https://zed.dev
+    description: Where I read and review code. Opens instantly and stays out of the way.
+  - name: Neovim
+    url: https://neovim.io/
+    description: For quick edits without leaving the terminal. Zed is where I read code; Neovim is where I fix the one line I found.
+  - name: zoxide
+    url: https://github.com/ajeetdsouza/zoxide
+    description: A smarter cd. It learns the directories I visit, so a couple of letters gets me anywhere.
+  - name: fzf
+    url: https://junegunn.github.io/fzf/
+    description: Fuzzy finder for files, history, branches, and anything else I pipe into it.
+  - name: eza
+    url: https://eza.rocks
+    description: A modern ls with colors, icons, git status, and a tree view.
+  - name: bat
+    url: https://github.com/sharkdp/bat
+    description: cat with syntax highlighting, line numbers, and git changes in the gutter.
+  - name: delta
+    url: https://dandavison.github.io/delta/
+    description: Makes git diffs readable, with syntax highlighting and word-level changes.
+  - name: GitHub CLI
+    url: https://cli.github.com
+    description: Pull requests, issues, and Actions without leaving the terminal.
+  - name: tre
+    url: https://github.com/dduan/tre
+    description: tree, but it respects .gitignore and can open any file it lists straight in my editor.
+  - name: k9s
+    url: https://k9scli.io
+    description: A terminal UI for Kubernetes. The quickest way I know to see what a cluster is doing.
+  - name: Mole
+    url: https://github.com/tw93/Mole
+    description: Mac maintenance from the terminal. Frees disk space, fully uninstalls apps, and purges old node_modules and build artifacts from projects.
+  - name: pnpm
+    url: https://pnpm.io
+    description: My package manager for JavaScript projects. Fast installs and a shared store that saves a lot of disk space.
+  - name: fnm
+    url: https://github.com/Schniz/fnm
+    description: A fast, Rust-built Node.js version manager that switches versions automatically per project.
