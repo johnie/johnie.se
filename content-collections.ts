@@ -205,6 +205,8 @@ const UsesSection = defineCollection({
         z.object({
           description: z.string().trim().min(1),
           name: z.string().trim().min(1),
+          /** Slug of a post about this item, linked under its description. */
+          post: z.string().trim().min(1).optional(),
           url: z.url({ protocol: /^https$/u }),
         })
       )
@@ -212,10 +214,47 @@ const UsesSection = defineCollection({
     order: z.number().int(),
     title: z.string(),
   }),
-  transform: (document) => ({
-    ...document,
-    id: document._meta.path,
-  }),
+  transform: async (document, context) => {
+    const posts = context.documents(Post);
+
+    const items = document.items.map(({ post: slug, ...item }) => {
+      if (!slug) {
+        return { ...item, post: undefined };
+      }
+
+      const post = posts.find((entry) => entry._meta.path === slug);
+
+      if (!post) {
+        throw new Error(
+          `Uses item "${item.name}" links to unknown post "${slug}"`
+        );
+      }
+
+      return { ...item, post: { slug, title: post.title } };
+    });
+
+    // Null until the file is committed; the page shows the newest date.
+    const lastModified = await context.cache(
+      document._meta.filePath,
+      async (filePath) => {
+        try {
+          const stdout = await runGitLog(`uses/${filePath}`);
+          const date = new Date(stdout.trim());
+
+          return Number.isNaN(date.getTime()) ? null : date.toISOString();
+        } catch {
+          return null;
+        }
+      }
+    );
+
+    return {
+      ...document,
+      id: document._meta.path,
+      items,
+      lastModified,
+    };
+  },
 });
 
 export default defineConfig({

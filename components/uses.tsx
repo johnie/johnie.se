@@ -1,37 +1,64 @@
 import { Collapsible } from "@base-ui/react/collapsible";
-import { ArrowUpRightIcon, CaretDownIcon } from "@phosphor-icons/react";
+import {
+  ArrowRightIcon,
+  ArrowUpRightIcon,
+  CaretDownIcon,
+} from "@phosphor-icons/react";
+import { Link } from "@tanstack/react-router";
 import { allUsesSections } from "content-collections";
 import type { UsesSection } from "content-collections";
 import { useState } from "react";
 import type { JSX } from "react";
+
+import { formatDate } from "@/lib/utils";
 
 /** Items a collapsed section shows before its "Show more" toggle. */
 const PREVIEW_COUNT = 3;
 
 const sections = allUsesSections.toSorted((a, b) => a.order - b.order);
 
+// ISO strings sort chronologically, so the max is the latest change.
+const lastModified = sections
+  .map((section) => section.lastModified)
+  .filter((date) => date !== null)
+  .toSorted()
+  .at(-1);
+
+// The row is a div whose name link stretches over it (after:inset-0), so a
+// post link can sit inside the row without nesting one link in another.
 const UsesItem = ({ item }: { item: UsesSection["items"][number] }) => (
-  <a
-    className="group -mx-4 flex items-center gap-x-4 rounded-xl px-4 py-3 transition-colors hover:bg-neutral-50 active:bg-neutral-100 active:duration-0 dark:hover:bg-neutral-900 dark:active:bg-neutral-800"
-    href={item.url}
-    rel="noopener noreferrer"
-    target="_blank"
-  >
+  <div className="group relative -mx-4 flex items-center gap-x-4 rounded-xl px-4 py-3 transition-colors hover:bg-neutral-50 has-[a:active]:bg-neutral-100 has-[a:active]:duration-0 dark:hover:bg-neutral-900 dark:has-[a:active]:bg-neutral-800">
     <div className="flex min-w-0 flex-auto flex-col gap-y-0.5">
-      <p className="text-sm text-neutral-700 dark:text-neutral-300">
+      <a
+        className="text-sm font-medium text-neutral-900 after:absolute after:inset-0 after:rounded-xl focus-visible:outline-none focus-visible:after:ring-2 focus-visible:after:ring-neutral-500 focus-visible:after:ring-inset dark:text-neutral-100"
+        href={item.url}
+        rel="noopener noreferrer"
+        target="_blank"
+      >
         {item.name}
-      </p>
+        <span className="sr-only"> (opens in a new tab)</span>
+      </a>
       <p className="text-[13px] leading-5 text-pretty text-neutral-500 dark:text-neutral-400">
         {item.description}
       </p>
+      {item.post ? (
+        <Link
+          className="relative mt-1 inline-flex items-center gap-x-1 self-start rounded-sm text-[13px] text-neutral-600 underline decoration-neutral-300 underline-offset-2 transition-colors hover:text-neutral-900 hover:decoration-neutral-500 focus-visible:ring-2 focus-visible:ring-neutral-500 focus-visible:outline-none dark:text-neutral-300 dark:decoration-neutral-700 dark:hover:text-neutral-100 dark:hover:decoration-neutral-400"
+          params={{ slug: item.post.slug }}
+          to="/writing/$slug"
+        >
+          Read: {item.post.title}
+          <ArrowRightIcon aria-hidden="true" size={12} weight="bold" />
+        </Link>
+      ) : null}
     </div>
     <span
       aria-hidden="true"
-      className="hidden size-7 shrink-0 -translate-x-1 items-center justify-center rounded-full bg-neutral-200/60 text-neutral-600 opacity-0 transition-[opacity,translate] duration-200 ease-out group-hover:translate-x-0 group-hover:opacity-100 group-focus-visible:translate-x-0 group-focus-visible:opacity-100 sm:flex dark:bg-neutral-800 dark:text-neutral-300"
+      className="hidden size-7 shrink-0 -translate-x-1 items-center justify-center rounded-full bg-neutral-200/60 text-neutral-600 opacity-0 transition-[opacity,translate] duration-200 ease-out group-hover:translate-x-0 group-hover:opacity-100 group-has-[a:focus-visible]:translate-x-0 group-has-[a:focus-visible]:opacity-100 sm:flex dark:bg-neutral-800 dark:text-neutral-300"
     >
       <ArrowUpRightIcon size={14} weight="bold" />
     </span>
-  </a>
+  </div>
 );
 
 const UsesItemList = ({ items }: { items: UsesSection["items"] }) => (
@@ -107,6 +134,12 @@ export const Uses = (): JSX.Element | null => {
 
   return (
     <div>
+      {lastModified ? (
+        <p className="mt-4 text-sm text-neutral-500 dark:text-neutral-400">
+          Last updated{" "}
+          <time dateTime={lastModified}>{formatDate(lastModified)}</time>
+        </p>
+      ) : null}
       <nav aria-label="Categories" className="mt-8 flex flex-wrap gap-2">
         {sections.map((section) => (
           <a
