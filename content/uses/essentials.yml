@@ -4,23 +4,23 @@ description: The short list. If you only try a few things from this page, make i
 expanded: true
 items:
   - name: Wispr Flow
-    url: https://www.flowvoice.ai/
+    url: https://johnie.link/wispr-flow
     description: Voice is how I keep working when my hands are done for the day. It turns speech into clean text in any app, prompts included.
   - name: OMP
-    url: https://omp.sh
+    url: https://johnie.link/omp
     description: The harness I spend most of my day in. The agent does the typing; I bring the judgment and review every change.
   - name: Orca
-    url: https://www.onorca.dev
+    url: https://johnie.link/orca
     description: An IDE built for agents. Each task gets its own worktree, terminal, and browser, so running several agents in parallel stays organized.
   - name: 'MacBook Pro 16" (M3 Pro)'
-    url: https://support.apple.com/en-us/117737
+    url: https://johnie.link/macbook-pro
     description: My main machine. 32 GB of memory and 1 TB of storage, plenty for a whole herd of agents.
   - name: Apple Studio Display XDR
-    url: https://www.apple.com/studio-display-xdr/
+    url: https://johnie.link/studio-display-xdr
     description: 27-inch 5K mini-LED at 120 Hz. When you review more code than you type, the screen matters more than the keyboard.
   - name: Cloudflare
-    url: https://www.cloudflare.com
+    url: https://johnie.link/cf
     description: My main provider for almost everything, this site included. Workers are a joy to build on, and most of what comes for free has an amazing developer experience.
   - name: Permobil F5 Corpus
-    url: https://www.permobil.com/en-us/products/power-wheelchairs/permobil-f5-corpus
+    url: https://johnie.link/permobil
     description: I sit all day, so I might as well get a good chair.
