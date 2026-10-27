@@ -2,7 +2,7 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "johnie",
   "routes": [{ "pattern": "johnie.se", "custom_domain": true }],
-  "workers_dev": true,
+  "workers_dev": false,
   "preview_urls": true,
   "main": "@tanstack/react-start/server-entry",
   "compatibility_date": "2026-10-01",
