@@ -38,14 +38,6 @@ const assertIndexablePageMarkup = (html, canonical) => {
   const ogTitle = html.match(ogTitlePattern)?.groups.title;
   const twitterTitle = html.match(twitterTitlePattern)?.groups.title;
   assert.isOk(title && ogTitle && twitterTitle);
-  assert.isTrue(
-    title.startsWith(ogTitle),
-    "Open Graph title must describe this page"
-  );
-  assert.isTrue(
-    title.startsWith(twitterTitle),
-    "Twitter title must describe this page"
-  );
   assert.match(html, /<meta name="twitter:description" content="[^"]+"/u);
   assert.notMatch(
     html,
@@ -116,6 +108,19 @@ describe("SEO", () => {
   it("removed TIL sitemap entries remain genuine 404s", async () => {
     const response = await fetchPage("/til/undici");
     assert.strictEqual(response.status, 404);
+  });
+
+  it("permanently redirects trailing slashes while preserving the query", async () => {
+    const response = await fetch(
+      new URL("/writing/i-already-lost-this-once/?source=search", baseUrl),
+      { redirect: "manual" }
+    );
+
+    assert.strictEqual(response.status, 308);
+    assert.strictEqual(
+      response.headers.get("location"),
+      "/writing/i-already-lost-this-once?source=search"
+    );
   });
 
   it("homepage work and project logos are lazy loaded", async () => {

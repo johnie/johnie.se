@@ -3,6 +3,7 @@ import type { Post } from "content-collections";
 
 import { SITE_URL } from "@/lib/constants";
 import { ogImageUrl, serializeJsonLd } from "@/lib/metadata";
+import type { JsonLd } from "@/lib/metadata";
 
 const AUTHOR = "Johnie Hjelm";
 
@@ -56,7 +57,7 @@ export const postHead = (post: Post) => {
   return {
     links: [{ rel: "canonical", href: url }],
     meta: [
-      { title: `${post.title} | ${AUTHOR}` },
+      { title: `${post.seoTitle ?? post.title} | ${AUTHOR}` },
       { name: "description", content: post.summary },
       { property: "og:title", content: post.title },
       { property: "og:description", content: post.summary },
@@ -64,7 +65,9 @@ export const postHead = (post: Post) => {
       { property: "og:image", content: image },
       { property: "og:type", content: "article" },
       { property: "article:published_time", content: post.publishedAt },
-      { property: "article:modified_time", content: post.lastModified },
+      ...(post.updatedAt
+        ? [{ property: "article:modified_time", content: post.updatedAt }]
+        : []),
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: post.title },
       { name: "twitter:description", content: post.summary },
@@ -77,18 +80,23 @@ export const postHead = (post: Post) => {
 export const postJsonLd = (post: Post) => {
   const url = postUrl(post);
 
+  const blogPosting: JsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    author: { "@type": "Person", name: AUTHOR },
+    datePublished: post.publishedAt,
+    description: post.summary,
+    headline: post.title,
+    image: postImageUrl(post),
+    url,
+  };
+
+  if (post.updatedAt) {
+    blogPosting.dateModified = post.updatedAt;
+  }
+
   return {
-    blogPosting: serializeJsonLd({
-      "@context": "https://schema.org",
-      "@type": "BlogPosting",
-      author: { "@type": "Person", name: AUTHOR },
-      dateModified: post.lastModified,
-      datePublished: post.publishedAt,
-      description: post.summary,
-      headline: post.title,
-      image: postImageUrl(post),
-      url,
-    }),
+    blogPosting: serializeJsonLd(blogPosting),
     breadcrumbs: serializeJsonLd({
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",

@@ -37,7 +37,7 @@ const getFileCreationDate = (filePath: string) => {
   return new Date(stats.birthtime).toISOString();
 };
 
-const PostSchema = z.object({
+export const PostSchema = z.object({
   content: z.string(),
   image: z.string().optional(),
   featured: z.boolean().optional().default(false),
@@ -46,8 +46,18 @@ const PostSchema = z.object({
     .string()
     .refine((value) => !Number.isNaN(Date.parse(value)), "Invalid date string")
     .transform<string>((value) => new Date(value).toISOString()),
+  seoTitle: z
+    .string()
+    .trim()
+    .min(1, "Post SEO title must not be empty")
+    .optional(),
   summary: z.string().trim().min(1, "Post summary must not be empty"),
   title: z.string(),
+  updatedAt: z
+    .string()
+    .refine((value) => !Number.isNaN(Date.parse(value)), "Invalid date string")
+    .transform<string>((value) => new Date(value).toISOString())
+    .optional(),
 });
 
 const Post = defineCollection({
@@ -55,7 +65,7 @@ const Post = defineCollection({
   include: "*.mdx",
   name: "Post",
   schema: PostSchema,
-  transform: async (document, context) => {
+  transform: (document) => {
     const { content, ...rest } = document;
     const slug = document._meta.path;
 
@@ -63,22 +73,8 @@ const Post = defineCollection({
       wordsPerMinute: 275,
     }).text;
 
-    const lastModified = await context.cache(
-      document._meta.filePath,
-      async (filePath) => {
-        try {
-          const stdout = await runGitLog(filePath);
-
-          return new Date(stdout.toString().trim()).toISOString();
-        } catch {
-          return document.publishedAt;
-        }
-      }
-    );
-
     return {
       ...rest,
-      lastModified,
       mdxPath: `/content/${document._meta.filePath}`,
       readingTime,
       slug,

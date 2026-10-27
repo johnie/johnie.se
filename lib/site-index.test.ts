@@ -13,7 +13,7 @@ const siteIndex = createSiteIndex({
   pages: [pageFixture("about"), pageFixture("uses")],
   writing: createWriting([
     postFixture({
-      lastModified: "2025-05-05T00:00:00.000Z",
+      updatedAt: "2025-05-05T00:00:00.000Z",
       publishedAt: "2025-01-01T00:00:00.000Z",
       slug: "older",
     }),
@@ -43,6 +43,12 @@ describe("sitemap", () => {
   it("dates Posts by their last modification", () => {
     expect(sitemap).toContain(
       "<loc>https://johnie.se/writing/older</loc><lastmod>2025-05-05T00:00:00.000Z</lastmod>"
+    );
+  });
+
+  it("omits lastmod when a Post has no explicit update date", () => {
+    expect(sitemap).toContain(
+      "<loc>https://johnie.se/writing/newer</loc><changefreq>"
     );
   });
 });
