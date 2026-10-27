@@ -1,11 +1,46 @@
 import { describe, expect, it } from "vitest";
 
+import { PostSchema } from "@/content-collections";
 import { postFixture } from "@/lib/testing/content-fixtures";
 import { createWriting, postHead, postJsonLd } from "@/lib/writing";
 
 const meta = (head: ReturnType<typeof postHead>, property: string) =>
   head.meta.find((tag) => "property" in tag && tag.property === property)
     ?.content;
+
+describe("Post frontmatter", () => {
+  const requiredFields = {
+    content: "",
+    publishedAt: "2026-03-01",
+    summary: "A summary",
+    title: "A title",
+  };
+
+  it("accepts absent optional fields and normalizes explicit dates", () => {
+    const withoutOptional = PostSchema.parse(requiredFields);
+
+    const withOptional = PostSchema.parse({
+      ...requiredFields,
+      seoTitle: " Search title ",
+      updatedAt: "2026-03-02",
+    });
+
+    expect(withoutOptional.updatedAt).toBeUndefined();
+    expect(withoutOptional.seoTitle).toBeUndefined();
+    expect(withOptional.publishedAt).toBe("2026-03-01T00:00:00.000Z");
+    expect(withOptional.updatedAt).toBe("2026-03-02T00:00:00.000Z");
+    expect(withOptional.seoTitle).toBe("Search title");
+  });
+
+  it("rejects invalid update dates and blank search titles", () => {
+    expect(
+      PostSchema.safeParse({ ...requiredFields, updatedAt: "invalid" }).success
+    ).toBeFalsy();
+    expect(
+      PostSchema.safeParse({ ...requiredFields, seoTitle: "  " }).success
+    ).toBeFalsy();
+  });
+});
 
 describe(createWriting, () => {
   const writing = createWriting([
@@ -46,7 +81,7 @@ describe(createWriting, () => {
 
 describe("Post SEO facts", () => {
   const post = postFixture({
-    lastModified: "2026-03-02T10:00:00.000Z",
+    updatedAt: "2026-03-02T10:00:00.000Z",
     publishedAt: "2026-03-01T00:00:00.000Z",
     slug: "hello",
     title: "Hello </script> world",
@@ -79,6 +114,42 @@ describe("Post SEO facts", () => {
       "2026-03-02T10:00:00.000Z"
     );
     expect(blogPosting.dateModified).toBe("2026-03-02T10:00:00.000Z");
+  });
+
+  it("preserves the published date and omits an unknown modification date", () => {
+    const withoutUpdate = postFixture({
+      publishedAt: "2026-03-01T00:00:00.000Z",
+      slug: "unmodified",
+    });
+
+    const head = postHead(withoutUpdate);
+    const blogPosting = JSON.parse(postJsonLd(withoutUpdate).blogPosting);
+
+    expect(meta(head, "article:published_time")).toBe(
+      withoutUpdate.publishedAt
+    );
+    expect(meta(head, "article:modified_time")).toBeUndefined();
+    expect(blogPosting.datePublished).toBe(withoutUpdate.publishedAt);
+    expect(blogPosting).not.toHaveProperty("dateModified");
+  });
+
+  it("uses the optional search title only for the HTML title", () => {
+    const withSeoTitle = { ...post, seoTitle: "A search title" };
+    const head = postHead(withSeoTitle);
+    const blogPosting = JSON.parse(postJsonLd(withSeoTitle).blogPosting);
+
+    expect(head.meta).toContainEqual({
+      title: "A search title | Johnie Hjelm",
+    });
+    expect(meta(head, "og:title")).toBe(post.title);
+    expect(head.meta).toContainEqual({
+      name: "twitter:title",
+      content: post.title,
+    });
+    expect(blogPosting.headline).toBe(post.title);
+    expect(postHead(post).meta).toContainEqual({
+      title: `${post.title} | Johnie Hjelm`,
+    });
   });
 
   it("escapes < so a title cannot close the JSON-LD script", () => {

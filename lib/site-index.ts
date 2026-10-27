@@ -104,7 +104,7 @@ export const createSiteIndex = ({
 
     const postEntries: SitemapEntry[] = posts.map((post) => ({
       changeFrequency: "monthly",
-      lastModified: post.lastModified,
+      lastModified: post.updatedAt,
       priority: 0.7,
       url: postUrl(post),
     }));

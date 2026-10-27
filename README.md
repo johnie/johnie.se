@@ -59,9 +59,11 @@ pnpm -s spotify:auth | pnpm exec wrangler secret put SPOTIFY_API_REFRESH_TOKEN
 
 Vite serves development and production preview on port 3000. If a clean checkout cannot resolve `content-collections` on first development startup, run `pnpm build` once to generate the metadata. MDX edits hot reload without a restart.
 
+Writing lives in `content/*.mdx`. Set `seoTitle` only when the search title should differ from the article headline. Set `updatedAt` to an ISO date when the article changes substantially; omit it when the modification date is unknown. It supplies the sitemap `lastmod` and article modification metadata. Mechanical edits do not require a new date.
+
 ### Cloudflare Workers
 
-`wrangler.jsonc` targets the existing `johnie` Worker in its default environment, with `johnie.se` as its primary Custom Domain. The `johnie.crip.workers.dev` endpoint and preview URLs remain enabled. The configuration defines the static asset binding, the `DB` binding for the `johnie` D1 database, Node compatibility, observability, and an intentionally empty `previews` block so remote previews never write view counts or Spotify plays to production D1; without a `DB` binding those reads and writes fail and fall back as they do on any database error. Generated `worker-configuration.d.ts` is committed; run `pnpm cf-typegen` whenever the Wrangler configuration changes. `pnpm preview` runs local Vite against local D1; `wrangler preview` creates a remote deployment and needs preview-safe Spotify credentials via `--secrets-file` if those routes are exercised.
+`wrangler.jsonc` targets the existing `johnie` Worker in its default environment, with `johnie.se` as its primary Custom Domain. The production `workers.dev` endpoint is disabled to avoid serving a duplicate site; preview URLs remain enabled. The configuration defines the static asset binding, the `DB` binding for the `johnie` D1 database, Node compatibility, observability, and an intentionally empty `previews` block so remote previews never write view counts or Spotify plays to production D1; without a `DB` binding those reads and writes fail and fall back as they do on any database error. Generated `worker-configuration.d.ts` is committed; run `pnpm cf-typegen` whenever the Wrangler configuration changes. `pnpm preview` runs local Vite against local D1; `wrangler preview` creates a remote deployment and needs preview-safe Spotify credentials via `--secrets-file` if those routes are exercised.
 
 ```sh
 pnpm build
@@ -75,7 +77,7 @@ When ready to publish, provision the three variables above with `wrangler secret
 
 For routing-only changes without uploading application code, run `pnpm build` followed by `pnpm exec wrangler triggers deploy --config dist/server/wrangler.json` (experimental). Use the generated configuration because the Cloudflare Vite plugin supplies the asset directory. An existing externally managed DNS record for a Custom Domain must be removed before attaching it to the Worker; Cloudflare then manages DNS and HTTPS for that hostname.
 
-Static redirects live in `lib/redirects.ts`: `/ai` → `/writing/ai-manifesto` and `/skills` → GitHub. Add future entries there. Document security headers live in `lib/security-headers.ts`; `public/_headers` covers static assets. Spotify and the view-count row-set use the Worker Cache API with a 60-second TTL.
+Static redirects live in `lib/redirects.ts`: `/ai` → `/writing/ai-manifesto` and `/skills` → GitHub. Add future entries there. Non-root trailing slashes redirect permanently to the slashless URL, preserving query parameters. Document security headers live in `lib/security-headers.ts`; `public/_headers` covers static assets. Spotify and the view-count row-set use the Worker Cache API with a 60-second TTL.
 
 ### Database
 

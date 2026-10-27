@@ -9,10 +9,19 @@ import { REDIRECTS } from "@/lib/redirects";
 import { SECURITY_HEADERS } from "@/lib/security-headers";
 
 const redirectMiddleware = createMiddleware().server(({ next, request }) => {
-  const destination = REDIRECTS.get(new URL(request.url).pathname);
+  const url = new URL(request.url);
+  const normalizedPath = url.pathname.replace(/\/+$/u, "") || "/";
+  const destination = REDIRECTS.get(normalizedPath);
 
   if (destination) {
     throw redirect({ href: destination, statusCode: 308 });
+  }
+
+  if (url.pathname !== normalizedPath) {
+    throw redirect({
+      href: `${normalizedPath}${url.search}`,
+      statusCode: 308,
+    });
   }
 
   return next();
