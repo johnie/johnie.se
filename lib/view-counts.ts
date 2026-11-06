@@ -3,10 +3,11 @@ import { sql } from "drizzle-orm";
 import type { Database } from "@/lib/db/database";
 import { views } from "@/lib/db/schema";
 import type { EdgeCache } from "@/lib/edge-cache";
-import type { ViewCounts } from "@/lib/types";
 
 const COUNTS_CACHE_KEY = "views-counts";
 const COUNTS_TTL_SECONDS = 60;
+
+export type ViewCounts = Record<string, number>;
 
 export interface ViewCountsModule {
   /**

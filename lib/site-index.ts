@@ -1,7 +1,7 @@
 import { allPages } from "content-collections";
 import type { Page } from "content-collections";
 
-import { SITE_DESCRIPTION, SITE_URL } from "@/lib/constants";
+import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/constants";
 import { postUrl, writing } from "@/lib/writing";
 import type { Writing } from "@/lib/writing";
 import type { FileRouteTypes } from "@/src/routeTree.gen";
@@ -36,7 +36,7 @@ const ROUTES: Record<FileRouteTypes["to"], SitemapRule | null> = {
   "/writing/$slug": null,
 };
 
-const isStaticRoute = (path: string): path is FileRouteTypes["to"] =>
+const isFileRoute = (path: string): path is FileRouteTypes["to"] =>
   Object.hasOwn(ROUTES, path);
 
 const renderUrl = (entry: SitemapEntry): string => {
@@ -48,10 +48,8 @@ const renderUrl = (entry: SitemapEntry): string => {
 };
 
 export interface SiteIndex {
-  /** RSS 2.0 feed of every Post, newest first. */
   feed: (builtAt: Date) => string;
   robots: () => string;
-  /** Every indexable route, Page, and Post. */
   sitemap: () => string;
 }
 
@@ -65,7 +63,7 @@ export const createSiteIndex = ({
   feed: (builtAt) => `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Johnie Hjelm</title>
+    <title>${SITE_NAME}</title>
     <link>${SITE_URL}</link>
     <description>${SITE_DESCRIPTION}</description>
     <language>en</language>
@@ -93,9 +91,8 @@ export const createSiteIndex = ({
         rule ? [{ ...rule, url: new URL(path, SITE_URL).toString() }] : []
     );
 
-    // A Page with its own route (e.g. /about) is listed once, as that route.
     const pageEntries: SitemapEntry[] = pages
-      .filter((page) => !isStaticRoute(`/${page.slug}`))
+      .filter((page) => !isFileRoute(`/${page.slug}`))
       .map((page) => ({
         changeFrequency: "monthly",
         priority: 0.5,

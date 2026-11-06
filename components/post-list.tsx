@@ -1,11 +1,11 @@
-import { Link } from "@tanstack/react-router";
+import { Await, Link } from "@tanstack/react-router";
 import type { Post } from "content-collections";
 import { Suspense } from "react";
 import type { JSX } from "react";
 
 import { Views } from "@/components/views";
-import type { ViewCounts } from "@/lib/types";
 import { formatDate } from "@/lib/utils";
+import type { ViewCounts } from "@/lib/view-counts";
 
 export const PostList = ({
   posts,
@@ -37,7 +37,9 @@ export const PostList = ({
               <p>{post.readingTime}</p>
               <span className="mx-4">•</span>
               <Suspense fallback={null}>
-                <Views counts={viewCounts} slug={post.slug} />
+                <Await promise={viewCounts}>
+                  {(counts) => <Views count={counts[post.slug] ?? 0} />}
+                </Await>
               </Suspense>
             </div>
           </div>

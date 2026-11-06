@@ -1,7 +1,6 @@
 import { MusicNoteIcon } from "@phosphor-icons/react/dist/ssr";
 
-import type { SongData } from "@/lib/types";
-import { cn } from "@/lib/utils";
+import type { SongData } from "@/lib/spotify-types";
 
 export const Spotify = ({ song }: { song: SongData | null }) => {
   if (!song) {
@@ -16,7 +15,7 @@ export const Spotify = ({ song }: { song: SongData | null }) => {
       target="_blank"
     >
       <MusicNoteIcon
-        className={cn(song.isPlaying ? "text-[#1DB954]" : "text-neutral-400")}
+        className={song.isPlaying ? "text-[#1DB954]" : "text-neutral-400"}
         size={16}
       />
       <div className="flex min-w-0 items-center gap-1">

@@ -1,4 +1,3 @@
-/** Omni wordmark; inherits text color via `currentColor`. */
 export const OmniLogo = ({ className }: { className?: string }) => (
   <svg
     aria-hidden="true"

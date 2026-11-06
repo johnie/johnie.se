@@ -1,12 +1,17 @@
 import { describe, expect, it } from "vitest";
 
-import { PostSchema } from "@/content-collections";
+import { PostSchema } from "@/lib/content-schema";
 import { postFixture } from "@/lib/testing/content-fixtures";
 import { createWriting, postHead, postJsonLd } from "@/lib/writing";
 
 const meta = (head: ReturnType<typeof postHead>, property: string) =>
-  head.meta.find((tag) => "property" in tag && tag.property === property)
-    ?.content;
+  head.meta
+    .filter(
+      (tag) =>
+        ("property" in tag && tag.property === property) ||
+        ("name" in tag && tag.name === property)
+    )
+    .map((tag) => tag.content);
 
 describe("Post frontmatter", () => {
   const requiredFields = {
@@ -46,7 +51,6 @@ describe(createWriting, () => {
   const writing = createWriting([
     postFixture({ publishedAt: "2024-06-01T00:00:00.000Z", slug: "middle" }),
     postFixture({ publishedAt: "2025-01-01T00:00:00.000Z", slug: "newest" }),
-    // 23:30 UTC on New Year's Eve still belongs to the old year.
     postFixture({ publishedAt: "2023-12-31T23:30:00.000Z", slug: "oldest" }),
     postFixture({ publishedAt: "2024-02-01T00:00:00.000Z", slug: "early" }),
   ]);
@@ -61,16 +65,27 @@ describe(createWriting, () => {
   });
 
   it("groups Posts by UTC year, newest year first", () => {
-    expect(
-      writing.postsByYear.map(([year, posts]) => [
-        year,
-        posts.map((post) => post.slug),
-      ])
-    ).toStrictEqual([
-      ["2025", ["newest"]],
-      ["2024", ["middle", "early"]],
-      ["2023", ["oldest"]],
-    ]);
+    const previousTimezone = process.env.TZ;
+
+    try {
+      process.env.TZ = "Asia/Tokyo";
+      expect(new Date("2023-12-31T23:30:00.000Z").getFullYear()).toBe(2024);
+
+      const grouped = createWriting(writing.posts).postsByYear;
+      expect(
+        grouped.map(([year, posts]) => [year, posts.map((post) => post.slug)])
+      ).toStrictEqual([
+        ["2025", ["newest"]],
+        ["2024", ["middle", "early"]],
+        ["2023", ["oldest"]],
+      ]);
+    } finally {
+      if (previousTimezone === undefined) {
+        delete process.env.TZ;
+      } else {
+        process.env.TZ = previousTimezone;
+      }
+    }
   });
 
   it("finds a Post by slug and misses unknown slugs", () => {
@@ -94,25 +109,41 @@ describe("Post SEO facts", () => {
     expect(head.links).toStrictEqual([
       { href: "https://johnie.se/writing/hello", rel: "canonical" },
     ]);
-    expect(meta(head, "og:url")).toBe("https://johnie.se/writing/hello");
+    expect(meta(head, "og:url")).toStrictEqual([
+      "https://johnie.se/writing/hello",
+    ]);
     expect(blogPosting.url).toBe("https://johnie.se/writing/hello");
   });
 
-  it("falls back to the generated OG image and prefers the Post image", () => {
-    expect(meta(postHead(post), "og:image")).toBe(
-      "https://johnie.se/og?title=Hello%20%3C%2Fscript%3E%20world"
-    );
-    expect(
-      meta(postHead({ ...post, image: "/images/hello.png" }), "og:image")
-    ).toBe("https://johnie.se/images/hello.png");
-  });
+  it.each([
+    {
+      image: undefined,
+      expected: "https://johnie.se/og?title=Hello%20%3C%2Fscript%3E%20world",
+    },
+    {
+      image: "/images/hello.png",
+      expected: "https://johnie.se/images/hello.png",
+    },
+  ])(
+    "uses $expected across social metadata and JSON-LD",
+    ({ image, expected }) => {
+      const withImage = { ...post, image };
+      const head = postHead(withImage);
+
+      expect(meta(head, "og:image")).toStrictEqual([expected]);
+      expect(meta(head, "twitter:image")).toStrictEqual([expected]);
+      expect(JSON.parse(postJsonLd(withImage).blogPosting).image).toBe(
+        expected
+      );
+    }
+  );
 
   it("reports the same modified date in head and JSON-LD", () => {
     const blogPosting = JSON.parse(postJsonLd(post).blogPosting);
 
-    expect(meta(postHead(post), "article:modified_time")).toBe(
-      "2026-03-02T10:00:00.000Z"
-    );
+    expect(meta(postHead(post), "article:modified_time")).toStrictEqual([
+      "2026-03-02T10:00:00.000Z",
+    ]);
     expect(blogPosting.dateModified).toBe("2026-03-02T10:00:00.000Z");
   });
 
@@ -125,10 +156,10 @@ describe("Post SEO facts", () => {
     const head = postHead(withoutUpdate);
     const blogPosting = JSON.parse(postJsonLd(withoutUpdate).blogPosting);
 
-    expect(meta(head, "article:published_time")).toBe(
-      withoutUpdate.publishedAt
-    );
-    expect(meta(head, "article:modified_time")).toBeUndefined();
+    expect(meta(head, "article:published_time")).toStrictEqual([
+      withoutUpdate.publishedAt,
+    ]);
+    expect(meta(head, "article:modified_time")).toStrictEqual([]);
     expect(blogPosting.datePublished).toBe(withoutUpdate.publishedAt);
     expect(blogPosting).not.toHaveProperty("dateModified");
   });
@@ -141,11 +172,8 @@ describe("Post SEO facts", () => {
     expect(head.meta).toContainEqual({
       title: "A search title | Johnie Hjelm",
     });
-    expect(meta(head, "og:title")).toBe(post.title);
-    expect(head.meta).toContainEqual({
-      name: "twitter:title",
-      content: post.title,
-    });
+    expect(meta(head, "og:title")).toStrictEqual([post.title]);
+    expect(meta(head, "twitter:title")).toStrictEqual([post.title]);
     expect(blogPosting.headline).toBe(post.title);
     expect(postHead(post).meta).toContainEqual({
       title: `${post.title} | Johnie Hjelm`,

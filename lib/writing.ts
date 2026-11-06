@@ -1,14 +1,11 @@
 import { allPosts } from "content-collections";
 import type { Post } from "content-collections";
 
-import { SITE_URL } from "@/lib/constants";
+import { SITE_NAME, SITE_URL } from "@/lib/constants";
 import { ogImageUrl, serializeJsonLd } from "@/lib/metadata";
 import type { JsonLd } from "@/lib/metadata";
 
-const AUTHOR = "Johnie Hjelm";
-
 export interface Writing {
-  /** Every Post, newest first. */
   posts: readonly Post[];
   /** Posts grouped by UTC publication year, newest year and Post first. */
   postsByYear: readonly (readonly [year: string, posts: readonly Post[]])[];
@@ -42,14 +39,12 @@ export const createWriting = (unordered: readonly Post[]): Writing => {
 
 export const writing = createWriting(allPosts);
 
-/** The canonical URL of a Post. */
 export const postUrl = (post: Pick<Post, "slug">): string =>
   `${SITE_URL}/writing/${post.slug}`;
 
 const postImageUrl = (post: Pick<Post, "image" | "title">): string =>
   post.image ? `${SITE_URL}${post.image}` : ogImageUrl(post.title);
 
-/** Route `head` for a Post page: canonical link, article, OG and Twitter tags. */
 export const postHead = (post: Post) => {
   const url = postUrl(post);
   const image = postImageUrl(post);
@@ -57,7 +52,7 @@ export const postHead = (post: Post) => {
   return {
     links: [{ rel: "canonical", href: url }],
     meta: [
-      { title: `${post.seoTitle ?? post.title} | ${AUTHOR}` },
+      { title: `${post.seoTitle ?? post.title} | ${SITE_NAME}` },
       { name: "description", content: post.summary },
       { property: "og:title", content: post.title },
       { property: "og:description", content: post.summary },
@@ -76,14 +71,13 @@ export const postHead = (post: Post) => {
   };
 };
 
-/** Serialized BlogPosting and BreadcrumbList JSON-LD for a Post page. */
 export const postJsonLd = (post: Post) => {
   const url = postUrl(post);
 
   const blogPosting: JsonLd = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    author: { "@type": "Person", name: AUTHOR },
+    author: { "@type": "Person", name: SITE_NAME },
     datePublished: post.publishedAt,
     description: post.summary,
     headline: post.title,

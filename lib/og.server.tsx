@@ -1,28 +1,67 @@
+import { Buffer } from "node:buffer";
+
 import { ImageResponse } from "@cf-wasm/og/workerd";
 import { env } from "cloudflare:workers";
 
+import { SITE_NAME } from "@/lib/constants";
+
 let fontPromise: Promise<ArrayBuffer> | undefined;
+let backgroundPromise: Promise<string> | undefined;
+
+const loadFont = async (requestUrl: string): Promise<ArrayBuffer> => {
+  try {
+    const response = await env.ASSETS.fetch(
+      new URL("/fonts/Inter-Bold.ttf", requestUrl)
+    );
+
+    if (!response.ok) {
+      throw new Error(`Failed to load OG font: ${response.status}`);
+    }
+
+    return await response.arrayBuffer();
+  } catch (error) {
+    fontPromise = undefined;
+    throw error;
+  }
+};
+
+const loadBackground = async (requestUrl: string): Promise<string> => {
+  try {
+    const response = await env.ASSETS.fetch(
+      new URL("/images/og-image.png", requestUrl)
+    );
+
+    if (!response.ok) {
+      throw new Error(`Failed to load OG background: ${response.status}`);
+    }
+
+    const data = await response.arrayBuffer();
+
+    return `data:image/png;base64,${Buffer.from(data).toString("base64")}`;
+  } catch (error) {
+    backgroundPromise = undefined;
+    throw error;
+  }
+};
 
 export const renderOgImage = async (request: Request): Promise<Response> => {
   try {
-    fontPromise ??= env.ASSETS.fetch(
-      new URL("/fonts/Inter-Bold.ttf", request.url)
-    ).then((response) => {
-      if (!response.ok) {
-        throw new Error(`Failed to load OG font: ${response.status}`);
-      }
+    fontPromise ??= loadFont(request.url);
+    backgroundPromise ??= loadBackground(request.url);
 
-      return response.arrayBuffer();
-    });
-    const fontData = await fontPromise;
+    const [fontData, background] = await Promise.all([
+      fontPromise,
+      backgroundPromise,
+    ]);
+
     const { searchParams } = new URL(request.url);
-    const postTitle = searchParams.get("title") || "Johnie Hjelm";
+    const postTitle = searchParams.get("title") || SITE_NAME;
 
     return await ImageResponse.async(
       <div
         style={{
           alignItems: "flex-start",
-          backgroundImage: "url(https://johnie.se/images/og-image.png)",
+          backgroundImage: `url(${background})`,
           display: "flex",
           flexDirection: "column",
           height: "100%",
@@ -61,7 +100,6 @@ export const renderOgImage = async (request: Request): Promise<Response> => {
       }
     );
   } catch (error) {
-    fontPromise = undefined;
     console.error("Failed to generate OG image:", error);
 
     return new Response("Failed to generate image", { status: 500 });

@@ -1,6 +1,7 @@
 import { CopyIcon, FileImageIcon } from "@phosphor-icons/react";
 
 import { toast } from "@/components/ui/toast";
+import { HEADSHOT_URL } from "@/lib/constants";
 
 const downloadHeadshot = () => {
   toast.add({ title: "Downloading headshot", type: "success" });
@@ -54,7 +55,7 @@ export const AboutActions = ({
     <a
       className={`${ACTION_CLASS_NAME} no-underline`}
       download
-      href="/images/johnie-omni.jpg"
+      href={HEADSHOT_URL}
       onClick={downloadHeadshot}
     >
       <FileImageIcon className="mr-2 text-current" size={18} />

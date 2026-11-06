@@ -22,7 +22,7 @@ export const Projects = (): JSX.Element | null => {
           className="group -mx-4 flex gap-x-4 rounded-xl border-none px-4 pt-4 transition-colors hover:bg-neutral-50 active:bg-neutral-100 active:duration-0 dark:hover:bg-neutral-900 dark:active:bg-neutral-800"
           aria-label={`${project.name}: ${project.description}`}
           href={project.url}
-          key={project._id}
+          key={project._meta.path}
           rel="noopener noreferrer"
           target="_blank"
         >

@@ -44,7 +44,7 @@ export const WorkExperience = (): JSX.Element | null => {
               <div className="flex items-center justify-between gap-x-2 text-neutral-500 dark:text-neutral-400">
                 <div>{work.role}</div>
                 <div className="text-neutral-400 tabular-nums">
-                  {work.startYear} – {work?.present ? "Now" : work.endYear}
+                  {work.startYear} – {work.present ? "Now" : work.endYear}
                 </div>
               </div>
             </div>
@@ -60,7 +60,11 @@ export const WorkExperience = (): JSX.Element | null => {
 
         if (!work.url) {
           return (
-            <div aria-disabled="true" className={className} key={work._id}>
+            <div
+              aria-disabled="true"
+              className={className}
+              key={work._meta.path}
+            >
               {content}
             </div>
           );
@@ -71,7 +75,7 @@ export const WorkExperience = (): JSX.Element | null => {
             aria-label={`${work.company}: ${work.role}`}
             className={className}
             href={work.url}
-            key={work._id}
+            key={work._meta.path}
             rel="noopener noreferrer"
             target="_blank"
           >

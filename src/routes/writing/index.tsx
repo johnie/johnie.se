@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { Await, createFileRoute, Link } from "@tanstack/react-router";
 import { Suspense } from "react";
 
 import { Views } from "@/components/views";
@@ -47,7 +47,9 @@ const BlogPage = () => {
                     <p>{post.readingTime}</p>
                     <span>•</span>
                     <Suspense fallback={<p className="h-4" />}>
-                      <Views counts={viewCounts} slug={post.slug} />
+                      <Await promise={viewCounts}>
+                        {(counts) => <Views count={counts[post.slug] ?? 0} />}
+                      </Await>
                     </Suspense>
                   </div>
                 </div>
