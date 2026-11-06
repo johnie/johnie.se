@@ -1,9 +1,10 @@
 import { db } from "@/lib/db.server";
 import { createEdgeCache } from "@/lib/edge-cache";
 import { getServerEnv } from "@/lib/env.server";
-import { createNowPlaying, createSongLog } from "@/lib/now-playing";
-import type { SpotifyPlayer } from "@/lib/now-playing";
+import { createNowPlaying } from "@/lib/now-playing";
+import { createSongLog } from "@/lib/song-log";
 import { requestSpotifyToken } from "@/lib/spotify-token";
+import type { SpotifyPlayer } from "@/lib/spotify-types";
 
 const NOW_PLAYING_ENDPOINT =
   "https://api.spotify.com/v1/me/player/currently-playing";
@@ -27,7 +28,6 @@ const getAccessToken = async (): Promise<string> => {
   return access_token;
 };
 
-/** Spotify Web API adapter for the Now playing module. */
 const spotifyWebApi: SpotifyPlayer = {
   currentlyPlaying: async () => {
     const accessToken = await getAccessToken();

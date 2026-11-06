@@ -2,7 +2,7 @@ import { Await } from "@tanstack/react-router";
 import { Suspense } from "react";
 
 import { Spotify } from "@/components/spotify";
-import type { SongData } from "@/lib/types";
+import type { SongData } from "@/lib/spotify-types";
 
 const getCurrentYear = () => new Date().getFullYear().toString();
 

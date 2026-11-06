@@ -1,13 +1,17 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { createEdgeCache } from "@/lib/edge-cache";
-import { createNowPlaying, createSongLog } from "@/lib/now-playing";
-import type { SongLog, SpotifyPlayer } from "@/lib/now-playing";
+import { createNowPlaying } from "@/lib/now-playing";
+import { createSongLog } from "@/lib/song-log";
+import type { SongLog } from "@/lib/song-log";
+import type {
+  SpotifyCurrentlyPlayingResponse,
+  SpotifyPlayer,
+} from "@/lib/spotify-types";
 import {
   createLocalDatabase,
   createMemoryCacheStore,
 } from "@/lib/testing/local-runtime";
-import type { SpotifyCurrentlyPlayingResponse } from "@/lib/types";
 
 const GET_LUCKY = {
   album: "RAM",

@@ -1,54 +1,13 @@
-import { desc, sql } from "drizzle-orm";
-
-import type { Database } from "@/lib/db/database";
-import { spotify } from "@/lib/db/schema";
 import type { EdgeCache } from "@/lib/edge-cache";
-import type { SongData, SpotifyCurrentlyPlayingResponse } from "@/lib/types";
+import type { Song, SongLog } from "@/lib/song-log";
+import type {
+  SongData,
+  SpotifyCurrentlyPlayingResponse,
+  SpotifyPlayer,
+} from "@/lib/spotify-types";
 
 const NOW_PLAYING_CACHE_KEY = "spotify-current-song";
 const NOW_PLAYING_TTL_SECONDS = 60;
-
-export type Song = Omit<SongData, "isPlaying">;
-
-/** Spotify's currently-playing state; `null` when nothing is reported. */
-export interface SpotifyPlayer {
-  currentlyPlaying: () => Promise<SpotifyCurrentlyPlayingResponse | null>;
-}
-
-/** Songs heard on Spotify, most recent last. */
-export interface SongLog {
-  latest: () => Promise<Song | null>;
-  record: (song: Song) => Promise<void>;
-}
-
-export const createSongLog = (db: Database): SongLog => ({
-  latest: async () => {
-    const [song] = await db
-      .select({
-        album: spotify.album,
-        artist: spotify.artist,
-        songUrl: spotify.songUrl,
-        title: spotify.title,
-      })
-      .from(spotify)
-      .orderBy(desc(spotify.lastPlayedAt))
-      .limit(1);
-
-    return song ?? null;
-  },
-  record: async (song) => {
-    await db
-      .insert(spotify)
-      .values(song)
-      .onConflictDoUpdate({
-        set: {
-          lastPlayedAt: sql`(CURRENT_TIMESTAMP)`,
-          playCount: sql`${spotify.playCount} + 1`,
-        },
-        target: spotify.songUrl,
-      });
-  },
-});
 
 const toPlayingTrack = (
   state: SpotifyCurrentlyPlayingResponse | null
@@ -71,12 +30,7 @@ const toPlayingTrack = (
   };
 };
 
-/**
- * The song to show as Now playing: the track Spotify is playing, recorded in
- * the Song log, or else the Song log's latest song. Spotify and Song log
- * failures degrade to the fallback or `null`; results are edge-cached for
- * 60 seconds.
- */
+/** Spotify failures fall back to the log; failed recording never hides playback. */
 export const createNowPlaying = ({
   cache,
   player,
