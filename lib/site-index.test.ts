@@ -4,13 +4,28 @@ import { createSiteIndex } from "@/lib/site-index";
 import { pageFixture, postFixture } from "@/lib/testing/content-fixtures";
 import { createWriting } from "@/lib/writing";
 
-const LOC_PATTERN = /<loc>(?<url>[^<]+)<\/loc>/gu;
-
-const ITEM_LINK_PATTERN =
-  /<item>\s*<title>.*?<\/title>\s*<link>(?<url>[^<]+)/gsu;
+const xmlElements = (xml: string, tag: string): string[] =>
+  [
+    ...xml.matchAll(
+      new RegExp(`<${tag}\\b[^>]*>([\\s\\S]*?)<\\/${tag}>`, "gu")
+    ),
+  ].map((match) => match[1].trim());
 
 const siteIndex = createSiteIndex({
-  pages: [pageFixture("about"), pageFixture("uses")],
+  pages: [
+    ...[
+      "about",
+      "uses",
+      "writing",
+      "til",
+      "wp-admin",
+      "feed.xml",
+      "robots.txt",
+      "sitemap.xml",
+      "og",
+    ].map(pageFixture),
+    pageFixture("colophon"),
+  ],
   writing: createWriting([
     postFixture({
       updatedAt: "2025-05-05T00:00:00.000Z",
@@ -24,14 +39,14 @@ const siteIndex = createSiteIndex({
 describe("sitemap", () => {
   const sitemap = siteIndex.sitemap();
 
-  const urls = [...sitemap.matchAll(LOC_PATTERN)].map(
-    (match) => match.groups?.url
-  );
+  const entries = xmlElements(sitemap, "url");
+  const urls = entries.flatMap((entry) => xmlElements(entry, "loc"));
 
   it("lists indexable routes, Pages and Posts exactly once", () => {
     expect(urls.toSorted()).toStrictEqual([
       "https://johnie.se/",
       "https://johnie.se/about",
+      "https://johnie.se/colophon",
       "https://johnie.se/til",
       "https://johnie.se/uses",
       "https://johnie.se/writing",
@@ -40,40 +55,74 @@ describe("sitemap", () => {
     ]);
   });
 
-  it("dates Posts by their last modification", () => {
-    expect(sitemap).toContain(
-      "<loc>https://johnie.se/writing/older</loc><lastmod>2025-05-05T00:00:00.000Z</lastmod>"
+  it("keeps file-route ownership when a Page has a reserved slug", () => {
+    const about = entries.filter((entry) =>
+      xmlElements(entry, "loc").includes("https://johnie.se/about")
     );
+
+    expect(about.map((entry) => xmlElements(entry, "priority"))).toStrictEqual([
+      ["0.8"],
+    ]);
+    expect(
+      urls.filter((url) =>
+        ["/wp-admin", "/og", "/feed.xml", "/robots.txt", "/sitemap.xml"].some(
+          (path) => url === `https://johnie.se${path}`
+        )
+      )
+    ).toStrictEqual([]);
   });
 
-  it("omits lastmod when a Post has no explicit update date", () => {
-    expect(sitemap).toContain(
-      "<loc>https://johnie.se/writing/newer</loc><changefreq>"
-    );
-  });
+  it.each([
+    { slug: "older", lastModified: ["2025-05-05T00:00:00.000Z"] },
+    { slug: "newer", lastModified: [] },
+  ])(
+    "uses only explicit modification dates for $slug",
+    ({ slug, lastModified }) => {
+      const postEntries = entries.filter((entry) =>
+        xmlElements(entry, "loc").includes(`https://johnie.se/writing/${slug}`)
+      );
+
+      expect(
+        postEntries.map((entry) => xmlElements(entry, "lastmod"))
+      ).toStrictEqual([lastModified]);
+    }
+  );
 });
 
 describe("feed", () => {
   const builtAt = new Date("2026-02-03T04:05:06.000Z");
   const feed = siteIndex.feed(builtAt);
 
-  it("lists Posts newest first with permalinks", () => {
+  it("lists Posts newest first with permalink GUIDs and publication dates", () => {
+    const items = xmlElements(feed, "item");
     expect(
-      [...feed.matchAll(ITEM_LINK_PATTERN)].map((match) => match.groups?.url)
+      items.map((item) => ({
+        links: xmlElements(item, "link"),
+        guids: xmlElements(item, "guid"),
+        published: xmlElements(item, "pubDate"),
+      }))
     ).toStrictEqual([
-      "https://johnie.se/writing/newer",
-      "https://johnie.se/writing/older",
+      {
+        links: ["https://johnie.se/writing/newer"],
+        guids: ["https://johnie.se/writing/newer"],
+        published: ["Thu, 01 Jan 2026 00:00:00 GMT"],
+      },
+      {
+        links: ["https://johnie.se/writing/older"],
+        guids: ["https://johnie.se/writing/older"],
+        published: ["Wed, 01 Jan 2025 00:00:00 GMT"],
+      },
     ]);
-    expect(feed).toContain(
-      '<guid isPermaLink="true">https://johnie.se/writing/newer</guid>'
-    );
+
+    for (const item of items) {
+      expect(item).toMatch(/<guid\b[^>]*\bisPermaLink\s*=\s*["']true["']/u);
+    }
   });
 
-  it("stamps RFC 822 build and publication dates", () => {
-    expect(feed).toContain(
-      "<lastBuildDate>Tue, 03 Feb 2026 04:05:06 GMT</lastBuildDate>"
-    );
-    expect(feed).toContain("<pubDate>Thu, 01 Jan 2026 00:00:00 GMT</pubDate>");
+  it("stamps an RFC 822 build date", () => {
+    expect(xmlElements(feed, "lastBuildDate")).toStrictEqual([
+      "Tue, 03 Feb 2026 04:05:06 GMT",
+    ]);
   });
 });
 
