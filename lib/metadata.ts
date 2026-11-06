@@ -1,6 +1,5 @@
-import { SITE_URL } from "@/lib/constants";
+import { SITE_NAME, SITE_URL } from "@/lib/constants";
 
-/** The generated Open Graph image for `title`. */
 export const ogImageUrl = (title: string): string =>
   `${SITE_URL}/og?title=${encodeURIComponent(title)}`;
 
@@ -12,7 +11,6 @@ type JsonValue =
   | JsonValue[]
   | { [key: string]: JsonValue };
 
-/** A schema.org JSON-LD document. */
 export interface JsonLd {
   "@context": string;
   "@type": string;
@@ -33,7 +31,7 @@ export const createPageHead = ({
   path: string;
 }) => {
   const url = new URL(path, SITE_URL).toString();
-  const socialTitle = `${title} | Johnie Hjelm`;
+  const socialTitle = `${title} | ${SITE_NAME}`;
   const imageUrl = ogImageUrl(title);
 
   return {

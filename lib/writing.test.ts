@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { PostSchema } from "@/content-collections";
+import { PostSchema } from "@/lib/content-schema";
 import { postFixture } from "@/lib/testing/content-fixtures";
 import { createWriting, postHead, postJsonLd } from "@/lib/writing";
 

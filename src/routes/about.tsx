@@ -1,10 +1,15 @@
-import { createFileRoute, notFound } from "@tanstack/react-router";
-import { allPages } from "content-collections";
+import { createFileRoute } from "@tanstack/react-router";
 
 import { Mdx } from "@/components/mdx";
-import { SITE_DESCRIPTION, SITE_URL } from "@/lib/constants";
-import { preloadMdx } from "@/lib/mdx-modules";
-import { createPageHead } from "@/lib/metadata";
+import {
+  CONTENT_IMAGE_SIZES,
+  HEADSHOT_URL,
+  SITE_DESCRIPTION,
+  SITE_NAME,
+  SITE_URL,
+} from "@/lib/constants";
+import { createPageHead, serializeJsonLd } from "@/lib/metadata";
+import { loadPage } from "@/lib/pages";
 
 const About = () => {
   const { page } = Route.useLoaderData();
@@ -19,7 +24,7 @@ const About = () => {
       name: "Omni",
       url: "https://omni.se",
     },
-    name: "Johnie Hjelm",
+    name: SITE_NAME,
     sameAs: [
       "https://github.com/johnie",
       "https://www.linkedin.com/in/johniehjelm",
@@ -27,10 +32,7 @@ const About = () => {
     url: SITE_URL,
   };
 
-  const personSchemaJson = JSON.stringify(personSchema).replaceAll(
-    "<",
-    "\\u003c"
-  );
+  const personSchemaJson = serializeJsonLd(personSchema);
 
   return (
     <div>
@@ -41,14 +43,14 @@ const About = () => {
       <article className="prose prose-quoteless prose-neutral dark:prose-invert">
         <div className="mb-4 w-full">
           <img
-            alt="Johnie Hjelm"
+            alt={SITE_NAME}
             className="h-auto w-full rounded"
             decoding="async"
             fetchPriority="high"
             height={432}
             loading="eager"
-            sizes="(min-width: 768px) 648px, calc(100vw - 32px)"
-            src="/images/johnie-omni.jpg"
+            sizes={CONTENT_IMAGE_SIZES}
+            src={HEADSHOT_URL}
             width={648}
           />
         </div>
@@ -59,17 +61,7 @@ const About = () => {
 };
 
 export const Route = createFileRoute("/about")({
-  loader: async () => {
-    const page = allPages.find((entry) => entry._meta.path === "about");
-
-    if (!page) {
-      throw notFound();
-    }
-
-    await preloadMdx(page.mdxPath);
-
-    return { page };
-  },
+  loader: async () => ({ page: await loadPage("about") }),
   head: () =>
     createPageHead({
       description:

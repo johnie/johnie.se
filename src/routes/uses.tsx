@@ -1,10 +1,9 @@
-import { createFileRoute, notFound } from "@tanstack/react-router";
-import { allPages } from "content-collections";
+import { createFileRoute } from "@tanstack/react-router";
 
 import { Mdx } from "@/components/mdx";
 import { Uses } from "@/components/uses";
-import { preloadMdx } from "@/lib/mdx-modules";
 import { createPageHead } from "@/lib/metadata";
+import { loadPage } from "@/lib/pages";
 
 const UsesPage = () => {
   const { page } = Route.useLoaderData();
@@ -23,17 +22,7 @@ const UsesPage = () => {
 };
 
 export const Route = createFileRoute("/uses")({
-  loader: async () => {
-    const page = allPages.find((entry) => entry._meta.path === "uses");
-
-    if (!page) {
-      throw notFound();
-    }
-
-    await preloadMdx(page.mdxPath);
-
-    return { page };
-  },
+  loader: async () => ({ page: await loadPage("uses") }),
   head: ({ loaderData }) =>
     loaderData
       ? createPageHead({

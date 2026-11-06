@@ -1,12 +1,11 @@
 import { execFile } from "node:child_process";
-import { createHash } from "node:crypto";
-import { statSync } from "node:fs";
-import path from "node:path";
 import { promisify } from "node:util";
 
 import { defineCollection, defineConfig } from "@content-collections/core";
 import calcReadingTime from "reading-time";
 import { z } from "zod";
+
+import { dateSchema, PostSchema } from "./lib/content-schema";
 
 const execFileAsync = promisify(execFile);
 
@@ -21,44 +20,6 @@ const runGitLog = async (filePath: string): Promise<string> => {
 
   return stdout;
 };
-
-const generateId = (inputString: string): string => {
-  const hash = createHash("sha256").update(inputString).digest("hex");
-
-  const shortId = Buffer.from(hash).toString("base64").slice(0, 8);
-
-  return shortId;
-};
-
-const getFileCreationDate = (filePath: string) => {
-  const fullPath = path.join(process.cwd(), "content/til", filePath);
-  const stats = statSync(fullPath);
-
-  return new Date(stats.birthtime).toISOString();
-};
-
-export const PostSchema = z.object({
-  content: z.string(),
-  image: z.string().optional(),
-  featured: z.boolean().optional().default(false),
-  leading: z.boolean().optional().default(false),
-  publishedAt: z
-    .string()
-    .refine((value) => !Number.isNaN(Date.parse(value)), "Invalid date string")
-    .transform<string>((value) => new Date(value).toISOString()),
-  seoTitle: z
-    .string()
-    .trim()
-    .min(1, "Post SEO title must not be empty")
-    .optional(),
-  summary: z.string().trim().min(1, "Post summary must not be empty"),
-  title: z.string(),
-  updatedAt: z
-    .string()
-    .refine((value) => !Number.isNaN(Date.parse(value)), "Invalid date string")
-    .transform<string>((value) => new Date(value).toISOString())
-    .optional(),
-});
 
 const Post = defineCollection({
   directory: "content/",
@@ -88,7 +49,6 @@ const Page = defineCollection({
   name: "Page",
   schema: z.object({
     content: z.string(),
-    image: z.string().optional(),
     summary: z.string(),
     title: z.string(),
   }),
@@ -118,16 +78,6 @@ const Work = defineCollection({
     startYear: z.number().int(),
     url: z.string().optional(),
   }),
-  transform: (document) => {
-    const _id = generateId(
-      document.company + document.role + document.startYear
-    );
-
-    return {
-      ...document,
-      _id,
-    };
-  },
 });
 
 const Project = defineCollection({
@@ -144,14 +94,6 @@ const Project = defineCollection({
     projectType: z.string().optional(),
     url: z.string().optional(),
   }),
-  transform: (document) => {
-    const _id = generateId(document.name + document.url);
-
-    return {
-      ...document,
-      _id,
-    };
-  },
 });
 
 export const TodayILearned = defineCollection({
@@ -160,28 +102,15 @@ export const TodayILearned = defineCollection({
   name: "TodayILearned",
   schema: z.object({
     content: z.string(),
-    publishedAt: z
-      .string()
-      .refine(
-        (value) => !Number.isNaN(Date.parse(value)),
-        "Invalid date string"
-      )
-      .transform<string>((value) => new Date(value).toISOString())
-      .optional(),
-    type: z.enum(["article", "code", "podcast", "general"]).optional(),
-    url: z.string().optional(),
+    publishedAt: dateSchema,
   }),
   transform: (document) => {
     const { content: _content, ...rest } = document;
     const slug = document._meta.path;
 
-    const publishedAt =
-      document.publishedAt ?? getFileCreationDate(document._meta.filePath);
-
     return {
       ...rest,
       mdxPath: `/content/til/${document._meta.filePath}`,
-      publishedAt,
       slug,
     };
   },
@@ -229,7 +158,7 @@ const UsesSection = defineCollection({
       return { ...item, post: { slug, title: post.title } };
     });
 
-    // Null until the file is committed; the page shows the newest date.
+    // Git failures and files without a commit leave this optional date unset.
     const lastModified = await context.cache(
       document._meta.filePath,
       async (filePath) => {
