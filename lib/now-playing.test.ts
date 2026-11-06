@@ -1,3 +1,4 @@
+import { sql } from "drizzle-orm";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { createEdgeCache } from "@/lib/edge-cache";
@@ -23,6 +24,8 @@ const GET_LUCKY = {
 const playback = ({
   isPlaying = true,
   type = "track",
+  title = "Get Lucky",
+  songUrl = GET_LUCKY.songUrl,
 } = {}): SpotifyCurrentlyPlayingResponse => ({
   currently_playing_type: type,
   is_playing: isPlaying,
@@ -31,8 +34,8 @@ const playback = ({
       artists: [{ name: "Daft Punk" }, { name: "Pharrell" }],
       name: "RAM",
     },
-    external_urls: { spotify: GET_LUCKY.songUrl },
-    name: "Get Lucky",
+    external_urls: { spotify: songUrl },
+    name: title,
   },
 });
 
@@ -44,9 +47,13 @@ const failingPlayer: SpotifyPlayer = {
   currentlyPlaying: () => Promise.reject(new Error("Spotify is down")),
 };
 
-const nowPlaying = (player: SpotifyPlayer, songLog: SongLog) =>
+const nowPlaying = (
+  player: SpotifyPlayer,
+  songLog: SongLog,
+  now?: () => number
+) =>
   createNowPlaying({
-    cache: createEdgeCache(createMemoryCacheStore()),
+    cache: createEdgeCache(createMemoryCacheStore(now)),
     player,
     songLog,
   });
@@ -54,12 +61,12 @@ const nowPlaying = (player: SpotifyPlayer, songLog: SongLog) =>
 describe("Now playing", () => {
   const disposers: (() => Promise<void>)[] = [];
 
-  const localSongLog = async ({ migrate = true } = {}): Promise<SongLog> => {
-    const { db, dispose } = await createLocalDatabase({ migrate });
+  const localSongLog = async () => {
+    const { db, dispose } = await createLocalDatabase();
 
     disposers.push(dispose);
 
-    return createSongLog(db);
+    return { db, songLog: createSongLog(db) };
   };
 
   afterEach(async () => {
@@ -68,7 +75,7 @@ describe("Now playing", () => {
   });
 
   it("shows the playing track and records it in the Song log", async () => {
-    const songLog = await localSongLog();
+    const { songLog } = await localSongLog();
 
     await expect(
       nowPlaying(playerReturning(playback()), songLog)()
@@ -80,10 +87,14 @@ describe("Now playing", () => {
     ["nothing is reported", null],
     ["playback is paused", playback({ isPlaying: false })],
     ["a podcast is playing", playback({ type: "episode" })],
+    [
+      "the reported track is missing",
+      { currently_playing_type: "track", is_playing: true },
+    ],
   ])("falls back to the last recorded song when %s", async (_case, stopped) => {
-    const songLog = await localSongLog();
+    const { songLog } = await localSongLog();
 
-    await nowPlaying(playerReturning(playback()), songLog)();
+    await songLog.record(GET_LUCKY);
 
     await expect(
       nowPlaying(playerReturning(stopped), songLog)()
@@ -92,7 +103,7 @@ describe("Now playing", () => {
 
   it("falls back to the Song log when Spotify fails", async () => {
     vi.spyOn(console, "error").mockReturnValue();
-    const songLog = await localSongLog();
+    const { songLog } = await localSongLog();
 
     await songLog.record(GET_LUCKY);
 
@@ -103,35 +114,70 @@ describe("Now playing", () => {
   });
 
   it("shows nothing when nothing is playing and nothing was logged", async () => {
-    const songLog = await localSongLog();
+    const { songLog } = await localSongLog();
 
     await expect(
       nowPlaying(playerReturning(null), songLog)()
     ).resolves.toBeNull();
   });
 
-  it("still shows the playing track when the Song log is unavailable", async () => {
+  it("still shows the playing track when recording to the Song log fails", async () => {
     vi.spyOn(console, "error").mockReturnValue();
-    const songLog = await localSongLog({ migrate: false });
+    const { db, songLog } = await localSongLog();
+
+    await db.run(sql`DROP TABLE "SPOTIFY"`);
 
     await expect(
       nowPlaying(playerReturning(playback()), songLog)()
     ).resolves.toStrictEqual({ ...GET_LUCKY, isPlaying: true });
+  });
+
+  it("shows nothing when the Song log cannot be read", async () => {
+    vi.spyOn(console, "error").mockReturnValue();
+    const { db, songLog } = await localSongLog();
+
+    await db.run(sql`DROP TABLE "SPOTIFY"`);
+
     await expect(
       nowPlaying(playerReturning(null), songLog)()
     ).resolves.toBeNull();
   });
 
-  it("asks Spotify once per cache lifetime", async () => {
-    const currentlyPlaying = vi.fn<SpotifyPlayer["currentlyPlaying"]>(() =>
-      Promise.resolve(playback())
+  it("keeps displaying the cached track until the cache entry expires", async () => {
+    const { songLog } = await localSongLog();
+    let now = 0;
+    let state = playback();
+
+    const current = nowPlaying(
+      { currentlyPlaying: () => Promise.resolve(state) },
+      songLog,
+      () => now
     );
 
-    const current = nowPlaying({ currentlyPlaying }, await localSongLog());
+    await expect(current()).resolves.toStrictEqual({
+      ...GET_LUCKY,
+      isPlaying: true,
+    });
 
-    await current();
-    await current();
+    const nextSong = {
+      ...GET_LUCKY,
+      songUrl: "https://open.spotify.com/track/lose-yourself-to-dance",
+      title: "Lose Yourself to Dance",
+    };
 
-    expect(currentlyPlaying).toHaveBeenCalledOnce();
+    state = playback(nextSong);
+    now = 59_999;
+
+    await expect(current()).resolves.toStrictEqual({
+      ...GET_LUCKY,
+      isPlaying: true,
+    });
+
+    now = 60_000;
+
+    await expect(current()).resolves.toStrictEqual({
+      ...nextSong,
+      isPlaying: true,
+    });
   });
 });
