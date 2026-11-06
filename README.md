@@ -39,11 +39,12 @@ The lazy-loaded palette uses Base UI Dialog and inline Autocomplete, with no Rad
 
 ## Development
 
-Use Node.js **24.x** (exact version in `.nvmrc`) and the pnpm version declared in `package.json`. Production runs in workerd.
+Use Node.js **26.x LTS** (exact version in `.nvmrc`) and the pnpm version declared in `package.json`. Production runs in workerd.
 
 ```sh
 nvm install
 nvm use
+npm install --global corepack
 corepack enable
 pnpm install --frozen-lockfile
 pnpm dev
