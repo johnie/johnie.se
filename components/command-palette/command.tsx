@@ -1,10 +1,10 @@
 import { MagnifyingGlassIcon } from "@phosphor-icons/react";
-import { DialogTitle } from "@radix-ui/react-dialog";
+import { DialogTitle, Root as Dialog } from "@radix-ui/react-dialog";
 import type { DialogProps } from "@radix-ui/react-dialog";
 import { Command as CommandPrimitive } from "cmdk";
 import type * as React from "react";
 
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { DialogContent } from "@/components/command-palette/dialog";
 import { cn } from "@/lib/utils";
 
 const Command = ({
@@ -129,23 +129,7 @@ const CommandItem = ({
 
 CommandItem.displayName = CommandPrimitive.Item.displayName;
 
-const CommandShortcut = ({
-  className,
-  ...props
-}: React.HTMLAttributes<HTMLSpanElement>) => (
-  <span
-    className={cn(
-      "text-muted-foreground ml-auto text-xs tracking-widest",
-      className
-    )}
-    {...props}
-  />
-);
-
-CommandShortcut.displayName = "CommandShortcut";
-
 export {
-  Command,
   CommandDialog,
   CommandEmpty,
   CommandGroup,
@@ -153,5 +137,4 @@ export {
   CommandItem,
   CommandList,
   CommandSeparator,
-  CommandShortcut,
 };

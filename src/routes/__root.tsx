@@ -8,13 +8,13 @@ import {
 import { MotionConfig } from "framer-motion";
 import type { ReactNode } from "react";
 
-import { Cmd } from "@/components/cmd-loader";
+import { CommandPaletteProvider } from "@/components/command-palette/provider";
 import { Footer } from "@/components/footer";
 import { Logo } from "@/components/logo";
 import Navigation from "@/components/nav";
 import NotFound from "@/components/not-found";
 import { Toaster } from "@/components/ui/toast";
-import { SITE_DESCRIPTION, SITE_URL } from "@/lib/constants";
+import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/constants";
 import { getSpotifySong } from "@/lib/spotify.functions";
 
 import appCss from "../styles/globals.css?url";
@@ -36,14 +36,14 @@ const RootLayout = () => {
 
   return (
     <MotionConfig reducedMotion="user">
-      <a
-        className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:bg-white focus:p-4 focus:text-black dark:focus:bg-black dark:focus:text-white"
-        href="#main-content"
-      >
-        Skip to content
-      </a>
-      <div className="mx-auto w-full px-4 text-neutral-700 md:max-w-170 dark:text-neutral-300">
-        <div>
+      <CommandPaletteProvider>
+        <a
+          className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:bg-white focus:p-4 focus:text-black dark:focus:bg-black dark:focus:text-white"
+          href="#main-content"
+        >
+          Skip to content
+        </a>
+        <div className="mx-auto w-full px-4 text-neutral-700 md:max-w-170 dark:text-neutral-300">
           <div className="flex min-h-dvh w-full flex-col justify-between">
             <header className="flex flex-wrap items-center justify-between gap-x-4 gap-y-6 py-8 text-neutral-700 md:py-16 dark:text-neutral-300">
               <Link rel="home" to="/">
@@ -57,9 +57,8 @@ const RootLayout = () => {
             <Footer song={song} />
           </div>
         </div>
-      </div>
-      <Toaster />
-      <Cmd />
+        <Toaster />
+      </CommandPaletteProvider>
     </MotionConfig>
   );
 };
@@ -69,12 +68,12 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Johnie Hjelm" },
+      { title: SITE_NAME },
       {
         name: "description",
         content: SITE_DESCRIPTION,
       },
-      { name: "author", content: "Johnie Hjelm" },
+      { name: "author", content: SITE_NAME },
       {
         name: "keywords",
         content: "Johnie, Hjelm, Designer, Developer, Entrepreneur, Crip",
@@ -91,13 +90,13 @@ export const Route = createRootRoute({
       },
       { property: "og:image", content: `${SITE_URL}/og` },
       { property: "og:locale", content: "en_US" },
-      { property: "og:site_name", content: "Johnie Hjelm" },
-      { property: "og:title", content: "Johnie Hjelm" },
+      { property: "og:site_name", content: SITE_NAME },
+      { property: "og:title", content: SITE_NAME },
       { property: "og:type", content: "website" },
       { property: "og:url", content: SITE_URL },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:image", content: `${SITE_URL}/og` },
-      { name: "twitter:title", content: "Johnie Hjelm" },
+      { name: "twitter:title", content: SITE_NAME },
     ],
     links: [
       { rel: "stylesheet", href: appCss },

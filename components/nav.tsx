@@ -1,96 +1,42 @@
-import {
-  BrainIcon,
-  HouseIcon,
-  PencilSimpleIcon,
-  ToolboxIcon,
-  UserIcon,
-} from "@phosphor-icons/react";
-import { Link, useLocation } from "@tanstack/react-router";
-import { clsx } from "clsx";
+import { Link } from "@tanstack/react-router";
 import { LayoutGroup, motion } from "framer-motion";
-import { useCallback } from "react";
 import type { MouseEvent } from "react";
 
-import { preloadCommandPalette } from "@/components/cmd-loader";
-import { openCmdFrom } from "@/lib/main-store";
-import type { NavLink } from "@/lib/types";
-
-export const NAV_LINKS: NavLink[] = [
-  {
-    enabled: true,
-    icon: <HouseIcon size={18} />,
-    name: "Home",
-    slug: "/",
-  },
-  {
-    enabled: true,
-    icon: <UserIcon size={18} />,
-    name: "About",
-    slug: "/about",
-  },
-  {
-    enabled: true,
-    icon: <PencilSimpleIcon size={18} />,
-    name: "Writing",
-    slug: "/writing",
-  },
-  {
-    enabled: false,
-    icon: <BrainIcon size={18} />,
-    name: "TIL",
-    slug: "/til",
-  },
-  {
-    enabled: true,
-    icon: <ToolboxIcon size={18} />,
-    name: "Uses",
-    slug: "/uses",
-  },
-];
+import {
+  preloadCommandPalette,
+  useOpenCommandPalette,
+} from "@/components/command-palette/provider";
+import { NAV_LINKS } from "@/lib/site-links";
 
 const Navigation = () => {
-  let pathname = useLocation({ select: (location) => location.pathname });
+  const openFrom = useOpenCommandPalette();
 
-  if (pathname.includes("/writing/")) {
-    pathname = "/writing";
-  }
-
-  const openCommandPalette = useCallback(
-    (event: MouseEvent<HTMLButtonElement>) => {
-      const rect = event.currentTarget.getBoundingClientRect();
-      openCmdFrom({
-        x: rect.left + rect.width / 2,
-        y: rect.top + rect.height / 2,
-      });
-    },
-    []
-  );
+  const openCommandPalette = (event: MouseEvent<HTMLButtonElement>) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    openFrom({
+      x: rect.left + rect.width / 2,
+      y: rect.top + rect.height / 2,
+    });
+  };
 
   return (
     <LayoutGroup>
       <nav className="relative flex flex-row items-center justify-end">
         <div className="flex flex-row space-x-2 rounded-lg bg-neutral-50 p-1 text-sm dark:bg-black">
-          {NAV_LINKS.map(({ enabled, slug, name }) => {
-            if (!enabled) {
-              return null;
-            }
-
-            const isActive = slug === pathname;
-
-            return (
-              <Link
-                className={clsx(
-                  "relative flex align-middle transition-[color,scale] duration-150 before:absolute before:inset-x-0 before:-inset-y-2 active:scale-[0.96] active:duration-0",
-                  {
-                    "text-muted-foreground dark:text-muted-foreground active:text-neutral-200":
-                      !isActive,
-                  }
-                )}
-                to={slug}
-                key={slug}
-              >
+          {NAV_LINKS.map(({ slug, name }) => (
+            <Link
+              activeOptions={{ exact: slug === "/" }}
+              className="relative flex align-middle transition-[color,scale] duration-150 before:absolute before:inset-x-0 before:-inset-y-2 active:scale-[0.96] active:duration-0"
+              inactiveProps={{
+                className:
+                  "text-muted-foreground dark:text-muted-foreground active:text-neutral-200",
+              }}
+              key={slug}
+              to={slug}
+            >
+              {({ isActive }) => (
                 <span className="relative px-3 py-1">
-                  {slug === pathname ? (
+                  {isActive ? (
                     <motion.div
                       initial={false}
                       className="dark:bg-muted absolute inset-0 h-full rounded-md bg-neutral-200"
@@ -100,9 +46,9 @@ const Navigation = () => {
                   ) : null}
                   <span className="relative z-1">{name}</span>
                 </span>
-              </Link>
-            );
-          })}
+              )}
+            </Link>
+          ))}
         </div>
         <button
           aria-label="Open command palette (⌘K)"
