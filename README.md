@@ -113,6 +113,8 @@ pnpm build
 
 `pnpm test` runs the `unit` Vitest project (`lib/**/*.test.ts`) in Node. Writing and Site index use Post/Page fixtures. View counts and Now playing use in-memory D1 from Wrangler's `getPlatformProxy`, an expiring memory cache with an injected clock, and a fake Spotify player. No Spotify network requests or Cloudflare account are needed. Test database setup generates the current schema from `lib/db/schema.ts`; it does not validate deployment migration history. Configured future migrations belong in `lib/db/migrations`; ignored historical SQL under `src/lib/db/migrations` is not an authoritative migration chain and must not be replayed blindly.
 
+Each D1 suite starts one Worker runtime in `beforeAll` and disposes it at suite completion. Before each test, the fixture rebuilds the schema so rows and deliberately dropped tables cannot leak between cases; runtime startup does not consume an individual test's timeout.
+
 The SEO regression suite is the `seo` project and runs against a running application. Run `pnpm build && pnpm preview`, then `pnpm test:seo` in another terminal. Set `SEO_BASE_URL` to target a different address (default: `http://localhost:3000`).
 
 Oxlint's JavaScript plugins reserve roughly 6 GiB of virtual memory per worker. Small Linux hosts may need additional swap to satisfy the kernel's memory reservation policy; adding 6 GiB of swap resolved the allocator failure on a host with 4 GiB RAM and 1 GiB swap. See [the upstream allocator issue](https://github.com/oxc-project/oxc/issues/20331). Keep the configured plugins and rules enabled.

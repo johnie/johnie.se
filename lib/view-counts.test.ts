@@ -1,20 +1,37 @@
 import { sql } from "drizzle-orm";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import {
+  afterEach,
+  beforeAll,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  vi,
+} from "vitest";
 
 import { createEdgeCache } from "@/lib/edge-cache";
 import {
   createLocalDatabase,
   createMemoryCacheStore,
 } from "@/lib/testing/local-runtime";
+import type { LocalDatabase } from "@/lib/testing/local-runtime";
 import { createViewCounts } from "@/lib/view-counts";
 
 describe("View counts", () => {
-  const disposers: (() => Promise<void>)[] = [];
+  let database: LocalDatabase;
 
-  const setup = async (now?: () => number) => {
-    const { db, dispose } = await createLocalDatabase();
+  beforeAll(async () => {
+    database = await createLocalDatabase();
 
-    disposers.push(dispose);
+    return () => database.dispose();
+  });
+
+  beforeEach(async () => {
+    await database.reset();
+  });
+
+  const setup = (now?: () => number) => {
+    const { db } = database;
 
     return {
       db,
@@ -25,13 +42,12 @@ describe("View counts", () => {
     };
   };
 
-  afterEach(async () => {
-    await Promise.all(disposers.splice(0).map((dispose) => dispose()));
+  afterEach(() => {
     vi.restoreAllMocks();
   });
 
   it("atomically counts concurrent increments per slug", async () => {
-    const { viewCounts } = await setup();
+    const { viewCounts } = setup();
 
     await Promise.all([
       viewCounts.increment("a"),
@@ -44,7 +60,7 @@ describe("View counts", () => {
 
   it("serves cached counts until the cache entry expires", async () => {
     let now = 0;
-    const { viewCounts } = await setup(() => now);
+    const { viewCounts } = setup(() => now);
 
     await viewCounts.increment("a");
     await expect(viewCounts.all()).resolves.toStrictEqual({ a: 1 });
@@ -59,7 +75,7 @@ describe("View counts", () => {
 
   it("degrades to no counts when the database fails", async () => {
     vi.spyOn(console, "error").mockReturnValue();
-    const { db, viewCounts } = await setup();
+    const { db, viewCounts } = setup();
 
     await db.run(sql`DROP TABLE "VIEWS"`);
 

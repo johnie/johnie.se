@@ -1,5 +1,13 @@
 import { sql } from "drizzle-orm";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import {
+  afterEach,
+  beforeAll,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  vi,
+} from "vitest";
 
 import { createEdgeCache } from "@/lib/edge-cache";
 import { createNowPlaying } from "@/lib/now-playing";
@@ -13,6 +21,7 @@ import {
   createLocalDatabase,
   createMemoryCacheStore,
 } from "@/lib/testing/local-runtime";
+import type { LocalDatabase } from "@/lib/testing/local-runtime";
 
 const GET_LUCKY = {
   album: "RAM",
@@ -59,23 +68,29 @@ const nowPlaying = (
   });
 
 describe("Now playing", () => {
-  const disposers: (() => Promise<void>)[] = [];
+  let database: LocalDatabase;
 
-  const localSongLog = async () => {
-    const { db, dispose } = await createLocalDatabase();
+  beforeAll(async () => {
+    database = await createLocalDatabase();
 
-    disposers.push(dispose);
+    return () => database.dispose();
+  });
 
-    return { db, songLog: createSongLog(db) };
-  };
+  beforeEach(async () => {
+    await database.reset();
+  });
 
-  afterEach(async () => {
-    await Promise.all(disposers.splice(0).map((dispose) => dispose()));
+  afterEach(() => {
     vi.restoreAllMocks();
   });
 
+  const localSongLog = () => ({
+    db: database.db,
+    songLog: createSongLog(database.db),
+  });
+
   it("shows the playing track and records it in the Song log", async () => {
-    const { songLog } = await localSongLog();
+    const { songLog } = localSongLog();
 
     await expect(
       nowPlaying(playerReturning(playback()), songLog)()
@@ -92,7 +107,7 @@ describe("Now playing", () => {
       { currently_playing_type: "track", is_playing: true },
     ],
   ])("falls back to the last recorded song when %s", async (_case, stopped) => {
-    const { songLog } = await localSongLog();
+    const { songLog } = localSongLog();
 
     await songLog.record(GET_LUCKY);
 
@@ -103,7 +118,7 @@ describe("Now playing", () => {
 
   it("falls back to the Song log when Spotify fails", async () => {
     vi.spyOn(console, "error").mockReturnValue();
-    const { songLog } = await localSongLog();
+    const { songLog } = localSongLog();
 
     await songLog.record(GET_LUCKY);
 
@@ -114,7 +129,7 @@ describe("Now playing", () => {
   });
 
   it("shows nothing when nothing is playing and nothing was logged", async () => {
-    const { songLog } = await localSongLog();
+    const { songLog } = localSongLog();
 
     await expect(
       nowPlaying(playerReturning(null), songLog)()
@@ -123,7 +138,7 @@ describe("Now playing", () => {
 
   it("still shows the playing track when recording to the Song log fails", async () => {
     vi.spyOn(console, "error").mockReturnValue();
-    const { db, songLog } = await localSongLog();
+    const { db, songLog } = localSongLog();
 
     await db.run(sql`DROP TABLE "SPOTIFY"`);
 
@@ -134,7 +149,7 @@ describe("Now playing", () => {
 
   it("shows nothing when the Song log cannot be read", async () => {
     vi.spyOn(console, "error").mockReturnValue();
-    const { db, songLog } = await localSongLog();
+    const { db, songLog } = localSongLog();
 
     await db.run(sql`DROP TABLE "SPOTIFY"`);
 
@@ -144,7 +159,7 @@ describe("Now playing", () => {
   });
 
   it("keeps displaying the cached track until the cache entry expires", async () => {
-    const { songLog } = await localSongLog();
+    const { songLog } = localSongLog();
     let now = 0;
     let state = playback();
 

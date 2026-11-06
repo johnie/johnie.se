@@ -79,6 +79,7 @@ Scope: behavior-preserving structural refactor; remove implementation-restating 
 - `lib/view-counts.test.ts`, `lib/now-playing.test.ts`: cache-lifetime names overstate immortal cache fixtures. Model expiry with an injectable clock and exercise stale reads followed by refreshed behavior.
 - `lib/testing/local-runtime.ts`: `migrate:false` is a normal fixture option used only to manufacture database errors. Use explicit fault setup instead; dispose proxy when schema setup fails.
 - Playback fallback setup currently records through the entire cache/player pipeline; seed the actual SongLog directly. Preserve real D1 coverage for SQL behavior, avoid tests asserting only mocks/calls.
+- A final handoff run exposed Worker startup inside a playback test exceeding its five-second deadline. Scope each D1 runtime to its suite's setup/teardown and reset the schema before every case. This removes repeated runtime initialization and preserves isolation after injected table failures without retries, sleeps, or timeout overrides.
 
 ## Special cases intentionally retained
 
@@ -115,13 +116,14 @@ Scope: behavior-preserving structural refactor; remove implementation-restating 
 ## Completion evidence
 
 - `pnpm fix`, `pnpm typecheck`, `pnpm test`, `pnpm check`, and `pnpm build` passed on the completed source. Unit suite: 32 tests in four files.
+- After correcting test-runtime ownership, the 32-test unit suite passed in both normal order and shuffled order (`--sequence.shuffle --sequence.seed=20261106`); typecheck and quality checks also passed.
 - `pnpm test:seo` passed against the rebuilt production Worker preview: eight tests. The biography regression first failed against the previous build with expected 17, actual -39, then passed after the request-year cutover.
 - Browser comparison of seven hydrated routes preserved document titles, H1s, canonicals, and main-link destinations: home, About, Writing, Uses, TIL, an article, and a real 404. No hydration errors remained.
 - Exercised pointer-origin and keyboard-centred palette opening, exact command destinations, Escape focus restoration, selection navigation, descendant Writing activation, Uses expansion/collapse and its retained Essentials/four-item rules.
 - Production browser observed no view-recording request from home/archive, one successful recording request for the article visit, and no hydration errors.
 - About's server-rendered biography reports 17 years; browser hydration preserves it, the clipboard contains the same long biography, and copyright reports 2026.
 - `/og` returned a 1920×1080 PNG with the existing cache contract; visually inspected the generated image. Drizzle configuration resolved the deployment's DB binding without remote database access.
-- Final first-party graph: 71 source/test files, 133 resolved static import edges, no cycles or unresolved first-party source imports. This graph excludes generated routes and does not claim to model dynamic imports or MDX references; the audits and browser scenarios cover those.
+- Final first-party graph: 71 source/test files, 135 resolved static import edges, no cycles or unresolved first-party source imports. This graph excludes generated routes and does not claim to model dynamic imports or MDX references; the audits and browser scenarios cover those.
 - Independent content/UI and server repeat audits found no worthwhile residual issues after removing the obsolete direct dependencies. A further source audit of request-year ownership found no remaining module-time current-clock reads in presentation.
 - Updated README ownership, content-authoring and test/runtime guidance. Removed obsolete files and direct dependencies; retained the documented legitimate special cases and ignored historical SQL without replaying it.
 - Preserved pre-existing dependency/workspace updates; package changes from this refactor only remove the two obsolete direct dependencies and refresh their lockfile entries. No deployment performed.

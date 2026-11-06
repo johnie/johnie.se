@@ -2,6 +2,7 @@ import {
   generateSQLiteDrizzleJson,
   generateSQLiteMigration,
 } from "drizzle-kit/api";
+import { getTableName } from "drizzle-orm";
 import { getPlatformProxy } from "wrangler";
 
 import { createDatabase } from "@/lib/db/database";
@@ -9,11 +10,14 @@ import type { Database } from "@/lib/db/database";
 import { spotify, views } from "@/lib/db/schema";
 import type { CacheStore } from "@/lib/edge-cache";
 
-/** An in-memory D1 (Miniflare, via wrangler) with `lib/db/schema.ts` applied. */
-export const createLocalDatabase = async (): Promise<{
+export interface LocalDatabase {
   db: Database;
   dispose: () => Promise<void>;
-}> => {
+  reset: () => Promise<void>;
+}
+
+/** In-memory D1 with schema reset for isolated tests in one Worker runtime. */
+export const createLocalDatabase = async (): Promise<LocalDatabase> => {
   const proxy = await getPlatformProxy<{ DB: D1Database }>({ persist: false });
 
   try {
@@ -22,15 +26,28 @@ export const createLocalDatabase = async (): Promise<{
       await generateSQLiteDrizzleJson({ spotify, views })
     );
 
-    await proxy.env.DB.batch(
-      statements.map((statement) => proxy.env.DB.prepare(statement))
-    );
+    const resetStatements = [
+      ...[spotify, views].map(
+        (table) => `DROP TABLE IF EXISTS "${getTableName(table)}"`
+      ),
+      ...statements,
+    ].map((statement) => proxy.env.DB.prepare(statement));
+
+    const reset = async () => {
+      await proxy.env.DB.batch(resetStatements);
+    };
+
+    await reset();
+
+    return {
+      db: createDatabase(proxy.env.DB),
+      dispose: () => proxy.dispose(),
+      reset,
+    };
   } catch (error) {
     await proxy.dispose();
     throw error;
   }
-
-  return { db: createDatabase(proxy.env.DB), dispose: () => proxy.dispose() };
 };
 
 const requestKey = (request: RequestInfo | URL): string => {
