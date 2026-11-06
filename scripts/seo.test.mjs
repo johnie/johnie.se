@@ -341,6 +341,22 @@ describe("SEO", () => {
     }
   );
 
+  it("renders biography experience from the request year rather than the Worker startup clock", async () => {
+    const response = await fetchPage("/about");
+    assert.strictEqual(response.status, 200);
+    const html = await response.text();
+
+    const experience = [
+      ...html.matchAll(/with over (?<years>-?\d+) years in tech/gu),
+    ];
+
+    assert.lengthOf(experience, 1);
+    assert.strictEqual(
+      Number(experience[0].groups.years),
+      new Date().getUTCFullYear() - 2009
+    );
+  });
+
   it("homepage work and project logos reserve space and remain lazy loaded", async () => {
     const response = await fetchPage("/");
     assert.strictEqual(response.status, 200);

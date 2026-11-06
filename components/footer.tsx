@@ -3,12 +3,11 @@ import { Suspense } from "react";
 
 import { Spotify } from "@/components/spotify";
 import { SITE_NAME } from "@/lib/constants";
+import { useCurrentYear } from "@/lib/current-year";
 import type { SongData } from "@/lib/spotify-types";
 
-const getCurrentYear = () => new Date().getFullYear().toString();
-
 export const Footer = ({ song }: { song: Promise<SongData | null> }) => {
-  const year = getCurrentYear();
+  const year = useCurrentYear();
 
   return (
     <footer className="my-10">
