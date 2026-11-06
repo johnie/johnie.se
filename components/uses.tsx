@@ -12,12 +12,10 @@ import type { JSX } from "react";
 
 import { formatDate } from "@/lib/utils";
 
-/** Items a collapsed section shows before its "Show more" toggle. */
 const PREVIEW_COUNT = 3;
 
 const sections = allUsesSections.toSorted((a, b) => a.order - b.order);
 
-// ISO strings sort chronologically, so the max is the latest change.
 const lastModified = sections
   .map((section) => section.lastModified)
   .filter((date) => date !== null)

@@ -2,39 +2,26 @@ import { Await } from "@tanstack/react-router";
 import { Suspense } from "react";
 
 import { Spotify } from "@/components/spotify";
+import { SITE_NAME } from "@/lib/constants";
 import type { SongData } from "@/lib/spotify-types";
 
 const getCurrentYear = () => new Date().getFullYear().toString();
 
-const GetInTouch = ({ show }: { show: boolean }) => {
-  if (!show) {
-    return null;
-  }
+export const Footer = ({ song }: { song: Promise<SongData | null> }) => {
+  const year = getCurrentYear();
 
   return (
-    <div className="mb-8 flex items-center text-sm text-neutral-400">
-      <div className="absolute mr-2 inline-block h-2 w-2 animate-ping rounded-full bg-green-400 motion-reduce:hidden" />
-      <div className="mr-2 inline-block h-2 w-2 rounded-full bg-green-400" />
-      Actively looking for new projects.{" "}
-      <a className="border-b border-neutral-400" href="mailto:johnie@hjelm.im">
-        Get in touch!
-      </a>
-    </div>
+    <footer className="my-10">
+      <div className="mb-2 min-h-5">
+        <Suspense fallback={null}>
+          <Await promise={song}>
+            {(resolved) => <Spotify song={resolved} />}
+          </Await>
+        </Suspense>
+      </div>
+      <p className="mb-2 text-sm text-neutral-400">
+        © {year} {SITE_NAME}.
+      </p>
+    </footer>
   );
 };
-
-export const Footer = ({ song }: { song: Promise<SongData | null> }) => (
-  <footer className="my-10">
-    <GetInTouch show={false} />
-    <div className="mb-2 min-h-5">
-      <Suspense fallback={null}>
-        <Await promise={song}>
-          {(resolved) => <Spotify song={resolved} />}
-        </Await>
-      </Suspense>
-    </div>
-    <p className="mb-2 text-sm text-neutral-400">
-      © {getCurrentYear()} Johnie Hjelm.
-    </p>
-  </footer>
-);

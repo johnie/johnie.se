@@ -5,30 +5,30 @@ import type * as React from "react";
 import { z } from "zod";
 
 import { Bio } from "@/components/bio";
+import { CONTENT_IMAGE_SIZES } from "@/lib/constants";
 import { getMdxComponent } from "@/lib/mdx-modules";
-import type { CalloutProps } from "@/lib/types";
 import type { FileRouteTypes } from "@/src/routeTree.gen";
 
-import { Badge } from "./ui/badge";
-
 type CustomLinkProps = React.ComponentProps<"a">;
+
+const hrefSchema = z.string();
 
 const CustomLink: React.FC<CustomLinkProps> = ({
   children,
   href,
   ...props
 }) => {
-  const parsedHref = z.string().safeParse(href);
+  const destination = hrefSchema.safeParse(href);
 
-  if (!parsedHref.success) {
+  if (!destination.success) {
     return children;
   }
 
-  const linkHref = parsedHref.data;
+  const url = destination.data;
 
-  if (linkHref.startsWith("/")) {
-    // SAFETY: MDX links are validated absolute paths; the router cannot infer content-derived routes.
-    const to = linkHref as FileRouteTypes["to"];
+  if (url.startsWith("/")) {
+    // SAFETY: MDX supplies runtime paths; the router handles unknown paths as not-found.
+    const to = url as FileRouteTypes["to"];
 
     return (
       <Link to={to} {...props}>
@@ -37,24 +37,16 @@ const CustomLink: React.FC<CustomLinkProps> = ({
     );
   }
 
-  if (linkHref.startsWith("#")) {
+  if (url.startsWith("http")) {
     return (
-      <a href={linkHref} {...props}>
-        {children}
-      </a>
-    );
-  }
-
-  if (linkHref.startsWith("http")) {
-    return (
-      <a href={linkHref} rel="noopener noreferrer" target="_blank" {...props}>
+      <a href={url} rel="noopener noreferrer" target="_blank" {...props}>
         {children}
       </a>
     );
   }
 
   return (
-    <a href={linkHref} {...props}>
+    <a href={url} {...props}>
       {children}
     </a>
   );
@@ -76,10 +68,15 @@ const RoundedImage = ({
     decoding="async"
     fetchPriority={priority ? "high" : undefined}
     loading={priority ? "eager" : "lazy"}
-    sizes="(min-width: 768px) 648px, calc(100vw - 32px)"
+    sizes={CONTENT_IMAGE_SIZES}
     {...props}
   />
 );
+
+interface CalloutProps {
+  children: React.ReactNode;
+  emoji: string;
+}
 
 const Callout: React.FC<CalloutProps> = ({ emoji, children }) => (
   <div className="mb-8 flex items-center rounded border border-neutral-200 bg-neutral-50 p-1 px-4 py-3 text-sm text-neutral-900 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-100">
@@ -123,78 +120,10 @@ const UL = (props: React.ComponentProps<"ul">) => (
   <ul className="my-6 list-disc [&>li]:mt-2" {...props} />
 );
 
-interface ProsCardProps {
-  pros: string[];
-  title: string;
-}
-
-const ProsCard = ({ title, pros }: ProsCardProps) => (
-  <div className="my-4 w-full rounded-xl border border-emerald-200 bg-neutral-50 p-6 dark:border-emerald-900 dark:bg-neutral-900">
-    <span>{`You might use ${title} if...`}</span>
-    <div className="mt-4">
-      {pros.map((pro) => (
-        <div className="mb-2 flex items-baseline font-medium" key={pro}>
-          <div className="mr-2 h-4 w-4">
-            <svg
-              aria-hidden="true"
-              className="h-4 w-4 text-emerald-500"
-              viewBox="0 0 24 24"
-            >
-              <g
-                fill="none"
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-              >
-                <path d="M22 11.08V12a10 10 0 11-5.93-9.14" />
-                <path d="M22 4L12 14.01l-3-3" />
-              </g>
-            </svg>
-          </div>
-          <span>{pro}</span>
-        </div>
-      ))}
-    </div>
-  </div>
-);
-
-interface ConsCardProps {
-  cons: string[];
-  title: string;
-}
-
-const ConsCard = ({ title, cons }: ConsCardProps) => (
-  <div className="my-6 w-full rounded-xl border border-red-200 bg-neutral-50 p-6 dark:border-red-900 dark:bg-neutral-900">
-    <span>{`You might not use ${title} if...`}</span>
-    <div className="mt-4">
-      {cons.map((con) => (
-        <div className="mb-2 flex items-baseline font-medium" key={con}>
-          <div className="mr-2 h-4 w-4">
-            <svg
-              aria-hidden="true"
-              className="h-4 w-4 text-red-500"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
-            </svg>
-          </div>
-          <span>{con}</span>
-        </div>
-      ))}
-    </div>
-  </div>
-);
-
 const components: MDXComponents = {
-  Badge,
   Bio,
   Callout,
-  ConsCard,
   Image: RoundedImage,
-  ProsCard,
   a: CustomLink,
   h1: H1,
   h2: H2,

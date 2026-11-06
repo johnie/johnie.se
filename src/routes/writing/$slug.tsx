@@ -1,12 +1,20 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { Suspense } from "react";
+import { Await, createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { Suspense, useEffect } from "react";
 
 import { Mdx } from "@/components/mdx";
 import { Views } from "@/components/views";
 import { preloadMdx } from "@/lib/mdx-modules";
 import { cn, formatDate } from "@/lib/utils";
-import { getViewCounts } from "@/lib/views.functions";
+import { getViewCounts, incrementView } from "@/lib/views.functions";
 import { postHead, postJsonLd, writing } from "@/lib/writing";
+
+const ArticleViews = ({ count, slug }: { count: number; slug: string }) => {
+  useEffect(() => {
+    incrementView({ data: { slug } }).catch(() => null);
+  }, [slug]);
+
+  return <Views count={count} />;
+};
 
 const Post = () => {
   const { post, viewCounts } = Route.useLoaderData();
@@ -46,7 +54,11 @@ const Post = () => {
           <p>{post.readingTime}</p>
           <span>•</span>
           <Suspense fallback={<p className="h-5" />}>
-            <Views counts={viewCounts} slug={post.slug} trackView />
+            <Await promise={viewCounts}>
+              {(counts) => (
+                <ArticleViews count={counts[post.slug] ?? 0} slug={post.slug} />
+              )}
+            </Await>
           </Suspense>
         </div>
       </div>
