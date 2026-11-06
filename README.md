@@ -15,8 +15,7 @@ Built with modern web technologies:
 - **[Content Collections](https://www.content-collections.dev)** — Type-safe content metadata
 - **[MDX](https://mdxjs.com)** — React modules compiled at build time with `@mdx-js/rollup`; no runtime evaluation
 - **[Cloudflare D1](https://developers.cloudflare.com/d1/)** — Serverless SQLite database
-- **[Radix UI](https://www.radix-ui.com)** — Accessible component primitives
-- **[Base UI](https://base-ui.com)** — Composable toast primitives
+- **[Base UI](https://base-ui.com)** — Accessible dialog, autocomplete, collapsible, and toast primitives
 - **Self-hosted analytics** — `pulse.hjelm.cloud`
 - **[Cloudflare Workers](https://workers.cloudflare.com)** — Hosting and deployment
 - **[Drizzle ORM](https://orm.drizzle.team)** — Database operations
@@ -33,6 +32,10 @@ toast.add({ title: "Copied link", type: "success" });
 ```
 
 `toast.add` supports `title`, `description`, `type`, and `actionProps`. Supported status types are `success`, `info`, `warning`, `error`, and `loading`. Use `toast.promise(promise, { loading, success, error })` to track an asynchronous operation.
+
+## Command palette
+
+The lazy-loaded palette uses Base UI Dialog and inline Autocomplete, with no Radix UI or `cmdk` dependency. Open it with ⌘K / Ctrl+K or the desktop navigation button. Search uses substring matching on command names and destinations rather than `cmdk`'s fuzzy ranking; arrow keys highlight commands and Enter activates them. Escape, the backdrop, or the close button dismisses the palette and restores focus.
 
 ## Development
 
