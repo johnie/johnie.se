@@ -1,9 +1,8 @@
 import { createEnv } from "@t3-oss/env-core";
 import { defineConfig } from "drizzle-kit";
+import { unstable_readConfig } from "wrangler";
+import type { Unstable_Config } from "wrangler";
 import { z } from "zod";
-
-// Same database as the `DB` binding in wrangler.jsonc.
-const D1_DATABASE_ID = "49db3441-c286-4ab9-bd7f-bc3b14e1246f";
 
 const env = createEnv({
   emptyStringAsUndefined: true,
@@ -14,10 +13,24 @@ const env = createEnv({
   },
 });
 
+const workerConfig: Pick<Unstable_Config, "d1_databases"> = unstable_readConfig(
+  {
+    config: "./wrangler.jsonc",
+  }
+);
+
+const databaseId = workerConfig.d1_databases.find(
+  (database) => database.binding === "DB"
+)?.database_id;
+
+if (!databaseId) {
+  throw new Error("The DB binding in wrangler.jsonc must have a database_id");
+}
+
 export default defineConfig({
   dbCredentials: {
     accountId: env.CLOUDFLARE_ACCOUNT_ID,
-    databaseId: D1_DATABASE_ID,
+    databaseId,
     token: env.CLOUDFLARE_D1_TOKEN,
   },
   dialect: "sqlite",
